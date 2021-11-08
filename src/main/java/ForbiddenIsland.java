@@ -8,7 +8,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ForbiddenIsland extends Application {
+public class
+ForbiddenIsland extends Application {
 
     private static final Stage primaryStage = new Stage();
 
