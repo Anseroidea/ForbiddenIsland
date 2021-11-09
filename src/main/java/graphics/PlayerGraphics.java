@@ -1,3 +1,5 @@
+package graphics;
+
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;

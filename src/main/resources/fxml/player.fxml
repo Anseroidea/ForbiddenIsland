@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="1080" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="PlayerGraphics">
+            fx:controller="graphics.PlayerGraphics">
    <StackPane layoutX="-72.0" layoutY="832.0">
       <Polygon fx:id="playerHand" fill="#0084ff" points="916.0, 828.0, 855.0, 608.0, 94.0, 608.0, 94.0, 828.0"
                stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
