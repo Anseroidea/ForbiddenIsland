@@ -1,3 +1,5 @@
+package card;
+
 import java.util.*;
 
 public class TreasureDeck{
@@ -17,7 +19,7 @@ public class TreasureDeck{
     }
 
     /* will pass the number of treasure cards to be
-    drawn and return the List of TreasureCard objects
+    drawn and return the List of card.TreasureCard objects
     after depleting them from activeCards */
     public List<TreasureCard> draw(int treasureCardsToBeDrawn) {
         List<TreasureCard> drawn = new ArrayList<TreasureCard>();

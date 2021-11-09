@@ -1,3 +1,5 @@
+package card;
+
 import java.awt.image.BufferedImage;
 
 public abstract class Card {

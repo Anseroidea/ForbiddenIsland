@@ -1,4 +1,8 @@
-public class TreasureCard extends Card{
+package card;
+
+import card.Card;
+
+public class TreasureCard extends Card {
     private int treasureId;
 
     public int getTreasureId(){
