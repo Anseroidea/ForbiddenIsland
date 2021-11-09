@@ -1,3 +1,7 @@
+package card;
+
+import card.FloodCard;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -19,7 +23,7 @@ public class FloodDeck{
     }
 
     /* will pass the number of treasure cards to be
-    drawn and return the List of TreasureCard objects
+    drawn and return the List of card.TreasureCard objects
     after depleting them from activeCards */
     public List<FloodCard> draw(int floodCardsToBeDrawn) {
         List<FloodCard> drawn = new ArrayList<FloodCard>();

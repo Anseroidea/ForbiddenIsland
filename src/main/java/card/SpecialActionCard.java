@@ -1,4 +1,6 @@
-public class SpecialActionCard extends TreasureCard{
+package card;
+
+public class SpecialActionCard extends TreasureCard {
     private String name;
 
     public String getName(){
