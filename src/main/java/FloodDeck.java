@@ -1,8 +1,10 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
-public class TreasureDeck{
-    private Stack<TreasureCard> activeCards;
-    private Stack<TreasureCard> discardedCards;
+public class FloodDeck{
+    private Stack<FloodCard> activeCards;
+    private Stack<FloodCard> discardedCards;
 
     /* will shuffle activeCards when the
      initial treasure cards are being initialized */
@@ -19,8 +21,8 @@ public class TreasureDeck{
     /* will pass the number of treasure cards to be
     drawn and return the List of TreasureCard objects
     after depleting them from activeCards */
-    public List<TreasureCard> draw(int treasureCardsToBeDrawn) {
-        List<TreasureCard> drawn = new ArrayList<TreasureCard>();
+    public List<FloodCard> draw(int floodCardsToBeDrawn) {
+        List<FloodCard> drawn = new ArrayList<FloodCard>();
 
         return drawn;
     }
