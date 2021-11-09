@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Polygon?>
+
+<AnchorPane prefHeight="1080" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PlayerGraphics">
+   <children>
+      <Polygon fx:id="playerHand" fill="#0084ff" points="916.0, 828.0, 856.0, 608.0, 144.0, 608.0, 144.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+      <Polygon fx:id="playerHand2" fill="#0084ff" points="904.0, 828.0, 835.0, 980.0, 200.0, 980.0, 144.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+      <Polygon fx:id="playerHand3" fill="#0084ff" points="901.0, 828.0, 843.0, 981.0, 203.0, 981.0, 144.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+      <Polygon fx:id="playerHand4" fill="#0084ff" points="900.0, 828.0, 844.0, 974.0, 188.0, 974.0, 144.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+   </children>
+</AnchorPane>
