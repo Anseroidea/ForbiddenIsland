@@ -1,13 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="1080" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PlayerGraphics">
-   <children>
-      <Polygon fx:id="playerHand" fill="#0084ff" points="916.0, 828.0, 856.0, 608.0, 144.0, 608.0, 144.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
-      <Polygon fx:id="playerHand2" fill="#0084ff" points="904.0, 828.0, 835.0, 980.0, 200.0, 980.0, 144.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
-      <Polygon fx:id="playerHand3" fill="#0084ff" points="901.0, 828.0, 843.0, 981.0, 203.0, 981.0, 144.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
-      <Polygon fx:id="playerHand4" fill="#0084ff" points="900.0, 828.0, 844.0, 974.0, 188.0, 974.0, 144.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
-   </children>
+<AnchorPane prefHeight="1080" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="PlayerGraphics">
+   <StackPane layoutX="-72.0" layoutY="832.0">
+      <Polygon fx:id="playerHand" fill="#0084ff" points="916.0, 828.0, 855.0, 608.0, 94.0, 608.0, 94.0, 828.0"
+               stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+      <HBox prefHeight="60.0" prefWidth="822.0" spacing="10.0">
+         <padding>
+            <Insets bottom="16.0" left="80.0" top="16.0"/>
+         </padding>
+         <ImageView fitHeight="188.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true"/>
+         <ImageView fitHeight="188.0" fitWidth="128.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true"
+                    preserveRatio="true"/>
+         <ImageView fitHeight="188.0" fitWidth="128.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true"
+                    preserveRatio="true"/>
+         <ImageView fitHeight="188.0" fitWidth="128.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true"
+                    preserveRatio="true"/>
+         <ImageView fitHeight="188.0" fitWidth="128.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true"
+                    preserveRatio="true"/>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="10.0" prefHeight="60.0" prefWidth="822.0" spacing="10.0">
+         <padding>
+            <Insets bottom="16.0" left="80.0" top="16.0"/>
+         </padding>
+         <ImageView fitHeight="188.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true"/>
+         <ImageView fitHeight="188.0" fitWidth="128.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true"
+                    preserveRatio="true"/>
+         <ImageView fitHeight="188.0" fitWidth="128.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true"
+                    preserveRatio="true"/>
+         <ImageView fitHeight="188.0" fitWidth="128.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true"
+                    preserveRatio="true"/>
+         <ImageView fitHeight="188.0" fitWidth="128.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true"
+                    preserveRatio="true"/>
+      </HBox>
+   </StackPane>
+   <Text layoutX="12.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hands [Change Font!]"
+         wrappingWidth="392.13671875">
+      <font>
+         <Font size="38.0"/>
+      </font>
+   </Text>
+   <VBox layoutX="-120.0" layoutY="209.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0">
+      <StackPane prefHeight="150.0" prefWidth="724.0">
+         <Polygon fx:id="playerHand3" fill="#0084ff" points="901.0, 828.0, 843.0, 981.0, 95.0, 981.0, 95.0, 828.0"
+                  stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+         <HBox prefWidth="726.0" spacing="10.0">
+            <padding>
+               <Insets bottom="16.0" left="140.0" top="16.0"/>
+            </padding>
+            <ImageView fitHeight="120.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true"/>
+            <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true"
+                       preserveRatio="true"/>
+            <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true"
+                       preserveRatio="true"/>
+            <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true"
+                       preserveRatio="true"/>
+            <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true"
+                       preserveRatio="true"/>
+         </HBox>
+      </StackPane>
+      <StackPane>
+         <Polygon fx:id="playerHand4" fill="#0084ff" points="874.0, 828.0, 816.0, 977.0, 68.0, 979.0, 68.0, 828.0"
+                  stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0"/>
+         <HBox prefWidth="726.0" spacing="10.0">
+            <padding>
+               <Insets bottom="16.0" left="140.0" top="16.0"/>
+            </padding>
+            <ImageView fitHeight="120.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true"/>
+            <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true"
+                       preserveRatio="true"/>
+            <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true"
+                       preserveRatio="true"/>
+            <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true"
+                       preserveRatio="true"/>
+            <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true"
+                       preserveRatio="true"/>
+         </HBox>
+      </StackPane>
+      <StackPane>
+         <Polygon fx:id="playerHand2" fill="#0084ff"
+                  points="941.0, 828.0, 885.0, 980.0, 144.0, 980.0, 144.0, 828.0" stroke="BLACK"
+                  strokeType="INSIDE" strokeWidth="2.0"/>
+         <HBox prefWidth="726.0" spacing="10.0">
+            <padding>
+               <Insets bottom="16.0" left="140.0" top="16.0"/>
+            </padding>
+            <ImageView fitHeight="120.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true"/>
+            <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true"
+                       preserveRatio="true"/>
+            <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true"
+                       preserveRatio="true"/>
+            <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true"
+                       preserveRatio="true"/>
+            <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true"
+                       preserveRatio="true"/>
+         </HBox>
+      </StackPane>
+   </VBox>
+   <Rectangle fx:id="playerBar" arcHeight="100.0" arcWidth="100.0" fill="DODGERBLUE" height="190.0" layoutX="-107.0"
+              layoutY="-97.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE"
+              strokeWidth="2.0" width="762.0"/>
+   <Text fx:id="undoButton" layoutX="185.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="[Name]: [Role]">
+      <font>
+         <Font size="43.0"/>
+      </font>
+   </Text>
+   <Button layoutX="774.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#undo" prefHeight="77.0"
+           prefWidth="172.0" text="Undo">
+      <font>
+         <Font size="31.0"/>
+      </font>
+   </Button>
+   <Button layoutX="775.0" layoutY="137.0" mnemonicParsing="false" onMouseClicked="#endTurn" prefHeight="83.0"
+           prefWidth="170.0" text="End Turn">
+      <font>
+         <Font size="31.0"/>
+      </font>
+   </Button>
+   <Button layoutX="1482.0" layoutY="57.0" mnemonicParsing="false" onMouseClicked="#playSpecialCards" prefHeight="172.0"
+           prefWidth="171.0" text="Play Special Cards" textAlignment="CENTER" wrapText="true">
+      <font>
+         <Font size="31.0"/>
+      </font>
+   </Button>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="332.0" layoutX="1700.0" layoutY="385.0"
+              stroke="BLACK" strokeType="INSIDE" width="244.0"/>
+   <Text layoutX="1751.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Action Log">
+      <font>
+         <Font size="28.0"/>
+      </font>
+   </Text>
 </AnchorPane>

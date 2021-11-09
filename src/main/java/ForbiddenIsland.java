@@ -1,12 +1,17 @@
 import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class
 ForbiddenIsland extends Application {
@@ -18,8 +23,9 @@ ForbiddenIsland extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Forbidden Island");
+        /*
         GridPane gp = new GridPane();
         List<ArrayList<TileFloodState>> tileStates = new ArrayList<>();
         for (int i = 0; i < 6; i++){
@@ -53,6 +59,9 @@ ForbiddenIsland extends Application {
         }
         gp.setGridLinesVisible(true);
         Scene s = new Scene(gp, 600, 400);
+        */
+        AnchorPane ap = FXMLLoader.load(Objects.requireNonNull(ForbiddenIsland.class.getResource("/fxml/player.fxml")));
+        Scene s = new Scene(ap, 1920, 1080);
         primaryStage.setScene(s);
         primaryStage.setFullScreen(true);
         primaryStage.show();

@@ -1,4 +1,4 @@
-public class TreasureCard extends Card, Player{
+public class TreasureCard extends Card{
     private int treasureId;
 
     public int getTreasureId(){
