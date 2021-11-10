@@ -1,6 +1,7 @@
 plugins {
     java
     id("org.openjfx.javafxplugin") version "0.0.10"
+    id("eu.hansolo.Medusa") version "5.7"
 }
 
 group = "org.ansere"
