@@ -1,6 +1,23 @@
 package board;
 
 public class BoardGame {
+
+    private WaterLevel waterLevel;
+
+    public BoardGame(int diff){
+        try {
+            waterLevel = new WaterLevel(diff);
+        } catch (InvalidDifficultyException e) {
+            e.printStackTrace();
+            try {
+                waterLevel = new WaterLevel();
+            } catch (InvalidDifficultyException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    /*
     private List<List<Tile>> board;
     private TreasureDeck treasureDeck;
     private FloodDeck floodDeck;
@@ -34,9 +51,10 @@ public class BoardGame {
     public List<Tile> getMovableTilePos(Player player){
 
     }
+     */
 
-    public watergetWaterLevel(){
-
+    public WaterLevel getWaterLevel(){
+        return waterLevel;
     }
 
 }

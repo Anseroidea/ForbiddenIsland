@@ -1,5 +1,7 @@
 package app;
 
+import board.BoardGame;
+import board.WaterLevel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +15,8 @@ public class
 ForbiddenIsland extends Application {
 
     private static final Stage primaryStage = new Stage();
+
+    private static BoardGame board;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -57,10 +61,15 @@ ForbiddenIsland extends Application {
         Scene s = new Scene(gp, 600, 400);
         */
         AnchorPane ap = FXMLLoader.load(ForbiddenIsland.class.getResource("/fxml/board.fxml"));
+        board = new BoardGame(WaterLevel.NOVICE);
         Scene s = new Scene(ap, 1920, 1080);
         primaryStage.setScene(s);
         primaryStage.setFullScreen(true);
         primaryStage.show();
+    }
+
+    public static BoardGame getBoard(){
+        return board;
     }
 }
 

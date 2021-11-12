@@ -32,9 +32,9 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <StackPane alignment="BOTTOM_CENTER" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+            <StackPane alignment="BOTTOM_CENTER" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1" fx:id = "waterPane">
                <children>
-                  <Gauge backgroundPaint="#6db3f7" borderPaint="BLACK" borderWidth="2.0" knobVisible="false" majorTickMarkLengthFactor="0.9" majorTickMarkWidthFactor="1.0" mediumTickMarksVisible="false" minorTickMarksVisible="false" needleShape="ROUND" tickLabelsVisible="false" valueVisible="false">
+                  <Gauge backgroundPaint="#6db3f7" borderPaint="BLACK" borderWidth="2.0" knobVisible="false" majorTickMarkLengthFactor="0.9" majorTickMarkWidthFactor="1.0" mediumTickMarksVisible="false" minorTickMarksVisible="false" needleShape="ROUND" tickLabelsVisible="false" valueVisible="false" fx:id="waterLevelGauge" maxValue="2.0" minValue="0.0">
                      <barColor>
                         <Color opacity="0.0" />
                      </barColor>

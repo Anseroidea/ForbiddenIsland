@@ -4,8 +4,10 @@ import board.Tile;
 
 public class Gate extends Tile
 {
-    //tile ID explenation- Gates-1-6 |treasureTile 7-14 (fire 7,8)(water 9,10)(wind 11,12)(earth 13,14)|Misalanous 15-24
+    //tile ID explanation- Gates-1-6 |treasureTile 7-14 (fire 7,8)(water 9,10)(wind 11,12)(earth 13,14)|Miscellaneous 15-24
     //"Fools' Landing","Bronze board.Gate","Copper board.Gate","Gold board.Gate","Iron board.Gate","Silver board.Gate"
+
+    /*
 
     public Gate(int Tileints)
     {
@@ -27,4 +29,5 @@ public class Gate extends Tile
         {return MESSENGER;}
 
     }
+     */
 }
