@@ -1,5 +1,7 @@
 package graphics;
 
+import eu.hansolo.medusa.Gauge;
+import eu.hansolo.medusa.GaugeBuilder;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -23,5 +25,8 @@ public class PlayerGraphics {
 
     public void undo(MouseEvent mouseEvent) {
         System.out.println("The player wants to undo!");
+    }
+
+    public void q(){
     }
 }

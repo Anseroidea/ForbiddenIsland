@@ -56,7 +56,7 @@ ForbiddenIsland extends Application {
         gp.setGridLinesVisible(true);
         Scene s = new Scene(gp, 600, 400);
         */
-        AnchorPane ap = FXMLLoader.load(Objects.requireNonNull(ForbiddenIsland.class.getResource("/fxml/player.fxml")));
+        AnchorPane ap = FXMLLoader.load(ForbiddenIsland.class.getResource("/fxml/board.fxml"));
         Scene s = new Scene(ap, 1920, 1080);
         primaryStage.setScene(s);
         primaryStage.setFullScreen(true);
