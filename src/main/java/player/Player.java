@@ -1,3 +1,5 @@
+package player;
+
 import java.util.List;
 import java.util.BufferedImage;
 
@@ -12,7 +14,27 @@ public class Player
     public Player(String s)
     {
         name = s;
-        //role = r;
+        switch(s)
+        {
+            case "DIVER":
+                role = new Diver();
+                break;
+            case "Engineer":
+                role = new Engineer();
+                break;
+            case "Explorer":
+                role = new Explorer();
+                break;
+            case "Messenger":
+                role = new Messenger();
+                break;
+            case "Navigator":
+                role = new Navigator();
+                break;
+            case "Pilot":
+                role = new Pilot();
+                break;
+        }
     }
     public List<TreasureCard> getDeck()
     {
@@ -31,8 +53,12 @@ public class Player
 
     public void move(int x, int y)
     {
-        positionX = x;
-        positionY = y;
+        if(Math.abs(positionX - x) + Math.abs(positionY - y) <= 1) {
+            positionX = x;
+            positionY = y;
+        }
+        else
+            System.out.println("Out of moving range!!!");
     }
 
     public void addCard(TreasureCard t)
@@ -51,8 +77,13 @@ public class Player
 
     public void giveCard(Player p, TreasureCard t)
     {
-        this.removeCard(t);
-        p.addCard(t);
+        if(this.positionX == p.positionX || this.positionY == p.positionY)
+        {
+            this.removeCard(t);
+            p.addCard(t);
+        }
+        else
+            System.out.println("Not on same tile -- Cannot give card to another player");
     }
 
 }
