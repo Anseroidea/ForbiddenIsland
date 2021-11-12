@@ -3,9 +3,9 @@ package card;
 import card.Card;
 
 public class FloodCard extends Card {
-    //private Tile tile;
+    //private board.Tile tile;
 
-    /*public Tile getTile(){
+    /*public board.Tile getTile(){
         return tile;
     }
 

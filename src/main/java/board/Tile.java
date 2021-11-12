@@ -1,3 +1,4 @@
+package board;
 
 public class Tile
 {
@@ -8,11 +9,11 @@ public class Tile
     private TileFloodState floodState;
     private String tileName;
     private int tileID;
-    private static String[] nameList= {"Fools' Landing","Bronze Gate","Copper Gate","Gold Gate","Iron Gate","Silver Gate","Cave of Embers","Cave of Shadows","Coral Palace","Tidal Palace","Howling Garden","Whispering Garden","Temple of the Moon","Temple of the Sun","Breakers Bridge","Cliffs of Abandon","Crimson Forest","Dunes of Deceptions","Lost Lagoon","Misty Marsh","Observatory","Phantom Rock","Twilight Hollow","Watchtower"};
+    private static String[] nameList= {"Fools' Landing","Bronze board.Gate","Copper board.Gate","Gold board.Gate","Iron board.Gate","Silver board.Gate","Cave of Embers","Cave of Shadows","Coral Palace","Tidal Palace","Howling Garden","Whispering Garden","Temple of the Moon","Temple of the Sun","Breakers Bridge","Cliffs of Abandon","Crimson Forest","Dunes of Deceptions","Lost Lagoon","Misty Marsh","Observatory","Phantom Rock","Twilight Hollow","Watchtower"};
 
     public Tile(int instaNum)
     {
-        floodState=TileFloodState.LAND;
+        floodState= TileFloodState.LAND;
         tileName=nameList[instaNum-1];
         tileID=instaNum;
     }
@@ -60,26 +61,26 @@ public class Tile
     {
         if(floodState.equals(TileFloodState.LAND))
         {
-            floodState=TileFloodState.FLOOD;
+            floodState= TileFloodState.FLOOD;
         }
         else if(floodState.equals(TileFloodState.FLOOD))
         {
-            floodState=TileFloodState.SUNK;
+            floodState= TileFloodState.SUNK;
         }
         else if(floodState.equals(TileFloodState.SUNK))
         {
-            System.out.print("Error in Tile,trying to flood a sunken tile");
+            System.out.print("Error in board.Tile,trying to flood a sunken tile");
         }
     }
     public void shoreUp()
     {
         if(floodState.equals(TileFloodState.LAND))
         {
-            System.out.print("Error in Tile,trying to shore up a dry tile");
+            System.out.print("Error in board.Tile,trying to shore up a dry tile");
         }
         else if(floodState.equals(TileFloodState.FLOOD))
         {
-            floodState=TileFloodState.LAND;
+            floodState= TileFloodState.LAND;
         }
         else if(floodState.equals(TileFloodState.SUNK))
         {
