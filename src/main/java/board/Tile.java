@@ -2,7 +2,7 @@ package board;
 
 public class Tile
 {
-    //tile ID explenation- Gates-1-6 |treasureTile 7-14 (fire 7,8)(water 9,10)(wind 11,12)(earth 13,14)|Misalanous 15-24
+    //tile ID explenation- Gates-1-6 |treasureTile 7-14 (fire 7,8)(water 9,10)(wind 11,12)(SPACE 13,14)|Misalanous 15-24
 
 
 
