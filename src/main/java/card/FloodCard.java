@@ -1,13 +1,14 @@
 package card;
 
+import board.Tile;
 import card.Card;
 
 public class FloodCard extends Card {
-    //private board.Tile tile;
+    private Tile tile;
 
-    /*public board.Tile getTile(){
+    public Tile getTile(){
         return tile;
     }
 
-     */
+
 }

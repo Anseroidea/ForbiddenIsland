@@ -1,5 +1,12 @@
 package board;
 
+import card.FloodDeck;
+import card.TreasureDeck;
+
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
+
 public class BoardGame {
 
     private WaterLevel waterLevel;
@@ -49,12 +56,39 @@ public class BoardGame {
     }
 
     public List<Tile> getMovableTilePos(Player player){
+        List<Tile> listOfMovableTiles = new ArrayList<>();                                                                                                                                          les = new ArrayList<>();
+
+        return listOfMovableTiles;
+    }
+
+    private WaterLevel getWaterLevel(){
+        return waterLevel;
+    }
+
+    public TreasureDeck getTreasureDeck(){
+        return treasureDeck;
+    }
+
+    public FloodDeck getFloodDeck(){
+        return floodDeck;
+    }
+
+    public boolean isWon(){
+        return false; //return true or false
+    }
+
+    public boolean isLost(){
+        return false; //return true or false
+    }
+
+    public void revert(BoardGame boardGame){
 
     }
-     */
 
-    public WaterLevel getWaterLevel(){
-        return waterLevel;
+    public List<Players> getPlayers(){
+        List<Players> players = new ArrayList<Players>();
+
+        return players;
     }
 
 }
