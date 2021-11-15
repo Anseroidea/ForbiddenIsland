@@ -1,11 +1,13 @@
 package player;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.BufferedImage;
+import java.util.ArrayList;
+import java.awt.image.BufferedImage;
 
 public abstract class Role
 {
-    private List<Role> roleList = new ArrayList<>();
+    private static List<Role> roleList = Arrays.toList(new Engineer(), new Explorer(), new Pilot(), new Navigator(), new Diver(), new Messenger());
 
     public Role()
     {
@@ -22,5 +24,9 @@ public abstract class Role
         return roleList;
     }
 
+    public String identify(int i)
+    {
+
+    }
     public void doSpecialAction(Player p){}
 }

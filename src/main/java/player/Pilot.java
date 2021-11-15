@@ -6,5 +6,6 @@ public class Pilot extends Role
     {
         //Can move to any unsunken tile
 
+
     }
 }

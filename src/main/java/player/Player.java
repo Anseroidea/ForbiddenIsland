@@ -1,7 +1,10 @@
 package player;
+import card.TreasureCard;
+
 
 import java.util.List;
-import java.util.BufferedImage;
+import java.util.ArrayList;
+import java.awt.image.BufferedImage;
 
 public class Player
 {
@@ -48,7 +51,7 @@ public class Player
 
     public Role getRole()
     {
-        return Role;
+        return role;
     }
 
     public void move(int x, int y)
@@ -71,8 +74,14 @@ public class Player
 
     public void removeCard(TreasureCard t)
     {
-        if(!deck.remove(t))
-            System.out.println("No such card exists!");
+        for(int i = 0; i < deck.size(); i++)
+            if(deck.get(i).equals(t))
+            {
+                deck.remove(i);
+                return;
+            }
+
+        System.out.println("No such card exists!");
     }
 
     public void giveCard(Player p, TreasureCard t)
