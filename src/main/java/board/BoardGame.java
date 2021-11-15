@@ -18,8 +18,15 @@ public class BoardGame {
     private String cardGraphicsURL;
     private String playerGraphicsURL;
 
-    public void generateIsland(){
+    public BoardGame()
+    {
+        initializeTiles();
+        initializeCards();
+        initializePlayers();
+        generateIsland();
+    }
 
+    public void generateIsland(){
     }
 
     private void initializeTiles(){
