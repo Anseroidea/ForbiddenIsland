@@ -11,7 +11,7 @@ public class BoardGame {
 
     private WaterLevel waterLevel;
 
-    public BoardGame(int diff){
+    public BoardGame(int diff) {
         try {
             waterLevel = new WaterLevel(diff);
         } catch (InvalidDifficultyException e) {
@@ -23,6 +23,12 @@ public class BoardGame {
             }
         }
     }
+
+    public WaterLevel getWaterLevel() {
+        return waterLevel;
+    }
+}
+
 
     /*
     private List<List<Tile>> board;
@@ -92,3 +98,4 @@ public class BoardGame {
     }
 
 }
+     */

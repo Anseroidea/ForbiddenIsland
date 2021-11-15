@@ -1,11 +1,12 @@
 package player;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.BufferedImage;
 
 public abstract class Role
 {
     private List<Role> roleList = new ArrayList<>();
+
 
     public Role()
     {
@@ -15,7 +16,6 @@ public abstract class Role
         roleList.add(new Navigator());
         roleList.add(new Diver());
         roleList.add(new Messenger());
-
     }
     public List<Role> getRoles()
     {
