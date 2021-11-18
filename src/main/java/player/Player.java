@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 
-public class Player
+public class Player extends Comparable
 {
     private List<TreasureCard> deck = new ArrayList<>();
     private String name;
@@ -19,7 +19,7 @@ public class Player
         name = s;
         switch(s)
         {
-            case "DIVER":
+            case "Diver":
                 role = new Diver();
                 break;
             case "Engineer":
@@ -38,6 +38,11 @@ public class Player
                 role = new Pilot();
                 break;
         }
+        role.setName(s);
+    }
+    public int compareTo(Player p)
+    {
+
     }
     public List<TreasureCard> getDeck()
     {
@@ -54,9 +59,23 @@ public class Player
         return role;
     }
 
-    public void move(int x, int y)
+    public int getX()
     {
-        if(Math.abs(positionX - x) + Math.abs(positionY - y) <= 1) {
+        return positionX;
+    }
+
+    public int getY()
+    {
+        return positionY;
+    }
+    public void move(int x, int y, boolean special)
+    {
+        if(special)
+        {
+            positionX = x;
+            positionY= y;
+        }
+        else if(Math.abs(positionX - x) + Math.abs(positionY - y) <= 1) {
             positionX = x;
             positionY = y;
         }

@@ -52,6 +52,15 @@ public class Tile
             return true;
     }
 
+    public boolean isLand()
+    {
+        if(floodState.equals(TileFloodState.SUNK)||floodState.equals(TileFloodState.FLOOD))
+        {
+            return false;
+        }
+        else
+            return true;
+    }
     public boolean isMovable()// will return false if FLOOD;
     {
         System.out.print("isMovable(0 in tile class Is a work inprogress,need player class/location, return false");
