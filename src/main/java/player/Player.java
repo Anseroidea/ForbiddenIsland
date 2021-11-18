@@ -1,7 +1,10 @@
 package player;
 
+import card.TreasureCard;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.BufferedImage;
+import java.awt.image.BufferedImageBufferedImage;
 
 public class Player
 {
@@ -48,7 +51,7 @@ public class Player
 
     public Role getRole()
     {
-        return Role;
+        return role;
     }
 
     public void move(int x, int y)
