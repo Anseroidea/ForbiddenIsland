@@ -2,17 +2,20 @@ package player;
 
 import board.BoardGame;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class TurnManager {
 
     private static int actions;
-    private static Object ArrayList;
     private static Stack<String> actionStrings = new Stack<>(); //notation [role first letter] [coords]
     private static Stack<BoardGame> boardGameStates = new Stack<>();
     private static Player currentPlayer;
+    private static Queue<Player> playerQueue = new LinkedList<>();
+
+    public static void setPlayers(Player[] players){
+        playerQueue.addAll(Arrays.stream(players).toList());
+        endTurn();
+    }
 
     public static Player getCurrentPlayer(){
         return currentPlayer;
@@ -23,19 +26,45 @@ public class TurnManager {
     }
 
     public static void endTurn() {
-
+        actions = 0;
+        actionStrings.clear();
+        boardGameStates.clear();
+        currentPlayer = playerQueue.remove();
     }
 
     public static boolean addAction(String s){
-        if (actions < 3){
+        if (actions <= 3){
             String lastAction = actionStrings.peek();
-            String player = lastAction.substring(1);
-            String coord1 = lastAction.substring(lastAction.indexOf("("), lastAction.indexOf("(") + 6);
-            String coord2 = lastAction.substring(lastAction.indexOf(")"), lastAction.indexOf("(") + 6);
-            if (lastAction.startsWith("N") && isTwoSpaces(coord1, coord2){
+            if (lastAction.startsWith("N")){
+                String player = lastAction.substring(1);
+                String coord1 = lastAction.substring(lastAction.indexOf("("), lastAction.indexOf("(") + 6);
+                String s2 = s.substring(s.lastIndexOf("("), s.lastIndexOf("(") + 6);
+                if (isTwoSpaces(coord1, s2)){
+                    actionStrings.pop();
+                    String finalAction = "N" + player + " " + coord1 + ", " + s2;
+                    actionStrings.push(finalAction);
+                    return true;
+                } else if (actions == 3) {
+                    return false;
+                } else {
+                    actionStrings.push(s);
+                    actions++;
+                    return true;
+                }
+            } else if (lastAction.startsWith("E")) {
+                String shoreCoord = lastAction.substring(lastAction.indexOf("("), lastAction.indexOf("(") + 6);
+                String sShoreCoord = s.substring(s.indexOf("("), s.indexOf("(") + 6);
                 actionStrings.pop();
-
-            } else if (lastAction.startsWith("E"))
+                String finalAction = "E " + shoreCoord + ", " + sShoreCoord;
+                actionStrings.push(finalAction);
+                return true;
+            } else {
+                actionStrings.push(s);
+                actions++;
+                return true;
+            }
+        } else {
+            return false;
         }
     }
 
