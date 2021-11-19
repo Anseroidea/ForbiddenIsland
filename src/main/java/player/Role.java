@@ -15,7 +15,7 @@ public abstract class Role
         return roleList;
     }
 
-    public void doSpecialAction(Player p, int x, int y){}
+    public void doSpecialAction(Player p, int x, int y, Player other){}
     public void setName(String s)
     {
         role = s;

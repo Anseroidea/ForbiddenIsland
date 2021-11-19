@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 
-public class Player extends Comparable
-{
+public class Player implements Comparable {
     private List<TreasureCard> deck = new ArrayList<>();
     private String name;
     private Role role;
     private int positionX, positionY;
     private BufferedImage graphics;
+    private BoardGame board;
 
     public Player(String s)
     {
@@ -40,9 +40,10 @@ public class Player extends Comparable
         }
         role.setName(s);
     }
-    public int compareTo(Player p)
-    {
 
+    public void BoardGame getBoard()
+    {
+        return board;
     }
     public List<TreasureCard> getDeck()
     {
@@ -70,6 +71,11 @@ public class Player extends Comparable
     }
     public void move(int x, int y, boolean special)
     {
+        if(board.get(x).get(y).isSunk()) {
+            System.out.println("Can't move to a sunken tile!");
+            return;
+        }
+
         if(special)
         {
             positionX = x;
@@ -103,9 +109,14 @@ public class Player extends Comparable
         System.out.println("No such card exists!");
     }
 
-    public void giveCard(Player p, TreasureCard t)
+    public void giveCard(Player p, TreasureCard t, boolean messenger)
     {
-        if(this.positionX == p.positionX || this.positionY == p.positionY)
+        if(messenger)
+        {
+            this.removeCard(t);
+            p.addCard(t);
+        }
+        else if(this.positionX == p.positionX || this.positionY == p.positionY)
         {
             this.removeCard(t);
             p.addCard(t);
@@ -114,4 +125,9 @@ public class Player extends Comparable
             System.out.println("Not on same tile -- Cannot give card to another player");
     }
 
+    @Override
+    public int compareTo(Object o)
+    {
+        return this.name.compareTo(((Player)o).name);
+    }
 }
