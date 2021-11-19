@@ -4,7 +4,7 @@ import card.TreasureCard;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.image.BufferedImageBufferedImage;
+import java.awt.image.BufferedImage;
 
 public class Player
 {
