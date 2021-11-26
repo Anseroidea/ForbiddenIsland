@@ -2,13 +2,13 @@ package app;
 
 public class ProgramStateManager {
 
-    private ProgramState currentState = ProgramState.MAINMENU;
+    private static ProgramState currentState = ProgramState.MAINMENU;
 
-    public ProgramState getCurrentState() {
+    public static ProgramState getCurrentState() {
         return currentState;
     }
 
-    public void goToState(ProgramState ps){
+    public static void goToState(ProgramState ps){
         currentState = ps;
     }
 }

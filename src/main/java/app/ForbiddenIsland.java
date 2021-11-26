@@ -2,19 +2,23 @@ package app;
 
 import board.BoardGame;
 import board.WaterLevel;
+import graphics.BoardGraphicsInitializer;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Objects;
 
 public class
 ForbiddenIsland extends Application {
 
-    private static final Stage primaryStage = new Stage();
+    private static Stage primaryStage = new Stage();
 
     private static BoardGame board;
 
@@ -22,8 +26,18 @@ ForbiddenIsland extends Application {
         Application.launch(args);
     }
 
+    public static void setBoardGame(int difficulty, int numPlayers) {
+        board = new BoardGame(difficulty, numPlayers);
+    }
+
+    public static void refreshDisplay() {
+        System.out.println(ProgramStateManager.getCurrentState().name());
+        primaryStage.setScene(ProgramStateManager.getCurrentState().getScene());
+    }
+
     @Override
     public void start(Stage primaryStage) throws IOException {
+        ForbiddenIsland.primaryStage = primaryStage;
         primaryStage.setTitle("Forbidden Island");
         /*
         GridPane gp = new GridPane();
@@ -60,8 +74,20 @@ ForbiddenIsland extends Application {
         gp.setGridLinesVisible(true);
         Scene s = new Scene(gp, 600, 400);
         */
-        AnchorPane ap = FXMLLoader.load(ForbiddenIsland.class.getResource("/fxml/board.fxml"));
-        board = new BoardGame(WaterLevel.NOVICE);
+        for (ProgramState ps : ProgramState.values()){
+            try {
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ForbiddenIsland.class.getResource("/fxml/" + ps.name().toLowerCase() + ".fxml")));
+                AnchorPane ap = loader.load();
+                ps.setAnchorPane(ap);
+                if (ps.name().equals("BOARD")){
+                    BoardGraphicsInitializer.setBg(loader.getController());
+                }
+            } catch (Exception e){
+
+            }
+        }
+        ProgramStateManager.goToState(ProgramState.INPUT);
+        AnchorPane ap = ProgramStateManager.getCurrentState().getAnchorPane();
         Scene s = new Scene(ap, 1920, 1080);
         primaryStage.setScene(s);
         primaryStage.setFullScreen(true);

@@ -1,33 +1,35 @@
 package board;
 
 import board.Tile;
+import player.*;
+
+import java.awt.image.BufferedImage;
 
 public class Gate extends Tile
 {
     //tile ID explanation- Gates-1-6 |treasureTile 7-14 (fire 7,8)(water 9,10)(wind 11,12)(earth 13,14)|Miscellaneous 15-24
     //"Fools' Landing","Bronze board.Gate","Copper board.Gate","Gold board.Gate","Iron board.Gate","Silver board.Gate"
 
-    /*
-
-    public Gate(int Tileints)
+    public Gate(String name, BufferedImage flooded, BufferedImage landed)
     {
-        super(Tileints);// IN boardgame Class , must instiate and check for gate
+        super(name, flooded, landed);// IN boardgame Class , must instiate and check for gate
     }
     public Role getRole()
     {
         if(getID()==1)
-        {return PILOT;}
+        {return new Pilot();}
         if(getID()==2)
-        {return ENGINEER;}
+        {return new Engineer();}
         if(getID()==3)
-        {return EXPLORER;}
+        {return new Explorer();}
         if(getID()==4)
-        {return NAVIGATOR;}
+        {return new Navigator();}
         if(getID()==5)
-        {return DIVER;}
-        if(getID()==6)
-        {return MESSENGER;}
+        {return new Diver();}
+        else
+        {return new Messenger();}
 
     }
-     */
+
+
 }
