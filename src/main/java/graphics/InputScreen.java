@@ -46,7 +46,7 @@ public class InputScreen implements Initializable{
                 numPlayers = 4;
             }
             ForbiddenIsland.setBoardGame(difficulty, numPlayers);
-            BoardGraphicsInitializer.initialize();
+            BoardStateGraphicsInitializer.initialize();
             ProgramStateManager.goToState(ProgramState.BOARD);
             ForbiddenIsland.refreshDisplay();
         } else if (numPlayersButtons.stream().noneMatch(ToggleButton::isSelected)){

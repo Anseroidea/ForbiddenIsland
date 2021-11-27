@@ -2,6 +2,7 @@ package app;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 public enum ProgramState {
 
@@ -11,16 +12,16 @@ public enum ProgramState {
     WIN,
     LOSE;
 
-    private AnchorPane ap;
+    private Pane p;
 
     public Scene getScene(){
-        return new Scene(ap, 1920, 1080);
+        return new Scene(p, 1920, 1080);
     }
-    public AnchorPane getAnchorPane(){
-        return ap;
+    public Pane getPane(){
+        return p;
     }
-    public void setAnchorPane(AnchorPane a){
-        ap = a;
+    public void setPane(Pane a){
+        p = a;
     }
 
 }

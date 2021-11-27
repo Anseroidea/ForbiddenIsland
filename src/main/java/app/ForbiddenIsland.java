@@ -1,18 +1,15 @@
 package app;
 
 import board.BoardGame;
-import board.WaterLevel;
-import graphics.BoardGraphicsInitializer;
+import graphics.BoardStateGraphicsInitializer;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Objects;
 
 public class
@@ -78,17 +75,22 @@ ForbiddenIsland extends Application {
             try {
                 FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ForbiddenIsland.class.getResource("/fxml/" + ps.name().toLowerCase() + ".fxml")));
                 AnchorPane ap = loader.load();
-                ps.setAnchorPane(ap);
-                if (ps.name().equals("BOARD")){
-                    BoardGraphicsInitializer.setBg(loader.getController());
+                ps.setPane(ap);
+                if (ps.name().equalsIgnoreCase("BOARD")){
+                    BoardStateGraphicsInitializer.setBg(loader.getController());
+                    FXMLLoader loader1 = new FXMLLoader(Objects.requireNonNull(ForbiddenIsland.class.getResource("/fxml/player.fxml")));
+                    AnchorPane ap1 = loader1.load();
+                    System.out.println("3247897329432");
+                    BoardStateGraphicsInitializer.setPg(loader1.getController());
+                    StackPane s = new StackPane(ap, ap1);
+                    ps.setPane(s);
                 }
             } catch (Exception e){
-
+                e.printStackTrace();
             }
         }
         ProgramStateManager.goToState(ProgramState.INPUT);
-        AnchorPane ap = ProgramStateManager.getCurrentState().getAnchorPane();
-        Scene s = new Scene(ap, 1920, 1080);
+        Scene s = new Scene(ProgramStateManager.getCurrentState().getPane(), 1920, 1080);
         primaryStage.setScene(s);
         primaryStage.setFullScreen(true);
         primaryStage.show();
