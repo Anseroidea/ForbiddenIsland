@@ -15,13 +15,16 @@ public class Tile
     private int tileID;
     private BufferedImage graphic;
     private BufferedImage floodedGraphic;
-    private static List<String> nameList= Arrays.asList("Fools' Landing","Bronze board.Gate","Copper board.Gate","Gold board.Gate","Iron board.Gate","Silver board.Gate","Cave of Embers","Cave of Shadows","Coral Palace","Tidal Palace","Howling Garden","Whispering Garden","Temple of the Moon","Temple of the Sun","Breakers Bridge","Cliffs of Abandon","Crimson Forest","Dunes of Deceptions","Lost Lagoon","Misty Marsh","Observatory","Phantom Rock","Twilight Hollow","Watchtower");
+    private static List<String> nameList= Arrays.asList("Iron Gate","Bronze Gate","Copper Gate","Silver Gate","Gold Gate", "Fools Landing", "Cave of Embers","Cave of Shadows","Coral Palace","Tidal Palace","Howling Garden","Whispering Garden","Temple of the Moon","Temple of the Sun","Breakers Bridge","Cliffs of Abandon","Crimson Forest","Dunes of Deceptions","Lost Lagoon","Misty Marsh","Observatory","Phantom Rock","Twilight Hollow","Watchtower");
+    private int positionX;
+    private int positionY;
+
 
     public Tile(String name, BufferedImage landed, BufferedImage flooded)
     {
         floodState= TileFloodState.LAND;
         tileName=name;
-        tileID= nameList.indexOf(name);
+        tileID= getTileID(name);
         graphic = landed;
         floodedGraphic = flooded;
     }
@@ -65,8 +68,7 @@ public class Tile
 
     public boolean isMovable()// will return false if FLOOD;
     {
-        System.out.print("isMovable(0 in tile class Is a work inprogress,need player class/location, return false");
-        return false;
+        return !floodState.equals(TileFloodState.SUNK);
     }
     public void floodTile()
     {
@@ -98,6 +100,24 @@ public class Tile
             System.out.print("You can not shore up a SUNK TILE");
         }
     }
+
+    public int getPositionX() {
+        return positionX;
+    }
+
+    public int getPositionY() {
+        return positionY;
+    }
+
+    public void setPos(int x, int y){
+        positionX = x;
+        positionY = y;
+    }
+
+    public static int getTileID(String s){
+        return nameList.indexOf(s) + 1;
+    }
+
 }
 
 

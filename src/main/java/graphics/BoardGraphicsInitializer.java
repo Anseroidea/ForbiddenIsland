@@ -13,7 +13,8 @@ public class BoardGraphicsInitializer {
         BoardGraphicsInitializer.bg = bg;
     }
 
-    public static void initializeTiles(){
+    public static void initialize(){
         bg.initializeTiles();
+        bg.initializePlayers();
     }
 }

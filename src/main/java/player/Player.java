@@ -9,44 +9,31 @@ import java.awt.image.BufferedImage;
 public class Player
 {
     private List<TreasureCard> deck = new ArrayList<>();
-    private String name;
     private Role role;
     private int positionX, positionY;
     private BufferedImage graphics;
 
-    public Player(String s)
+    public Player(Role r, int x, int y, BufferedImage icon)
     {
-        name = s;
-        switch(s)
-        {
-            case "DIVER":
-                role = new Diver();
-                break;
-            case "Engineer":
-                role = new Engineer();
-                break;
-            case "Explorer":
-                role = new Explorer();
-                break;
-            case "Messenger":
-                role = new Messenger();
-                break;
-            case "Navigator":
-                role = new Navigator();
-                break;
-            case "Pilot":
-                role = new Pilot();
-                break;
-        }
+        role = r;
+        positionX = x;
+        positionY = y;
+        graphics = icon;
     }
+
+    public Player(Role r, BufferedImage icon){
+        role = r;
+        graphics = icon;
+    }
+
+    public void setPos(int x, int y){
+        positionX = x;
+        positionY = y;
+    }
+
     public List<TreasureCard> getDeck()
     {
         return deck;
-    }
-
-    public String getName()
-    {
-        return name;
     }
 
     public Role getRole()
@@ -89,4 +76,15 @@ public class Player
             System.out.println("Not on same tile -- Cannot give card to another player");
     }
 
+    public int getPositionX(){
+        return positionX;
+    }
+
+    public int getPositionY(){
+        return positionY;
+    }
+
+    public BufferedImage getGraphics() {
+        return graphics;
+    }
 }

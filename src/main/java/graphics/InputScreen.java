@@ -6,7 +6,6 @@ import app.ProgramStateManager;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 
 import java.net.URL;
@@ -29,7 +28,6 @@ public class InputScreen implements Initializable{
     private int numPlayers;
 
     public void submit(){
-        System.out.println(difficultyButtons);
         if (difficultyButtons.stream().filter(ToggleButton::isSelected).count() == 1 && numPlayersButtons.stream().filter(ToggleButton::isSelected).count() == 1){
             if (noviceButton.isSelected()){
                 difficulty = 20;
@@ -48,7 +46,7 @@ public class InputScreen implements Initializable{
                 numPlayers = 4;
             }
             ForbiddenIsland.setBoardGame(difficulty, numPlayers);
-            BoardGraphicsInitializer.initializeTiles();
+            BoardGraphicsInitializer.initialize();
             ProgramStateManager.goToState(ProgramState.BOARD);
             ForbiddenIsland.refreshDisplay();
         } else if (numPlayersButtons.stream().noneMatch(ToggleButton::isSelected)){
@@ -69,7 +67,7 @@ public class InputScreen implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        difficultyButtons = Arrays.asList(twoButton, threeButton, fourButton);
-        numPlayersButtons = Arrays.asList(noviceButton, normalButton, eliteButton, legendaryButton);
+        numPlayersButtons = Arrays.asList(twoButton, threeButton, fourButton);
+        difficultyButtons = Arrays.asList(noviceButton, normalButton, eliteButton, legendaryButton);
     }
 }
