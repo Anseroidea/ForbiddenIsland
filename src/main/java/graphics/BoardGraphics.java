@@ -50,7 +50,7 @@ public class BoardGraphics implements Initializable {
         System.out.println(waterLevelGauge);
     }
 
-    public void initializeTiles(){
+    public void refreshTiles(){
         List<List<Tile>> board = ForbiddenIsland.getBoard().getBoard();
         for (int r = 0; r < 6; r++){
             for (int c = 0; c < 6; c++){
@@ -78,5 +78,8 @@ public class BoardGraphics implements Initializable {
     }
 
 
+    public void refreshDisplay() {
+        refreshTiles();
+    }
 }
 

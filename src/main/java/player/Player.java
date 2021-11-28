@@ -87,4 +87,12 @@ public class Player
     public BufferedImage getGraphics() {
         return graphics;
     }
+
+    public boolean equals(Object o){
+        if (o instanceof Player){
+            Player p = (Player) o;
+            return getRole().getId() == p.getRole().getId();
+        }
+        return false;
+    }
 }

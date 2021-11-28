@@ -30,10 +30,15 @@ public class TurnManager {
         actionStrings.clear();
         boardGameStates.clear();
         currentPlayer = playerQueue.remove();
+        playerQueue.add(currentPlayer);
     }
 
     public static boolean addAction(String s){
-        if (actions <= 3){
+        if (actions == 0){
+            actionStrings.push(s);
+            actions++;
+            return true;
+        } else if (actions <= 3){
             String lastAction = actionStrings.peek();
             if (lastAction.startsWith("N")){
                 String player = lastAction.substring(1);
@@ -58,6 +63,8 @@ public class TurnManager {
                 String finalAction = "E " + shoreCoord + ", " + sShoreCoord;
                 actionStrings.push(finalAction);
                 return true;
+            } else if (actions == 3){
+                return false;
             } else {
                 actionStrings.push(s);
                 actions++;

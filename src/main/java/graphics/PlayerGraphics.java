@@ -2,24 +2,31 @@ package graphics;
 
 import app.ForbiddenIsland;
 import board.Tile;
-import eu.hansolo.medusa.Gauge;
-import eu.hansolo.medusa.GaugeBuilder;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.Initializable;
+import javafx.geometry.Side;
+import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import player.Player;
+import player.TurnManager;
 
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class PlayerGraphics {
+public class PlayerGraphics implements Initializable {
     public Rectangle topLabelBox;
     public Label topLabel;
     public StackPane hand1;
@@ -27,6 +34,9 @@ public class PlayerGraphics {
     public StackPane hand3;
     public StackPane mainHand;
     public GridPane board;
+    public AnchorPane screenPane;
+    private Player playerClicked;
+    private Player currentPlayer;
 
     public void playSpecialCards(MouseEvent mouseEvent) {
         System.out.println("The player wants to play special cards!");
@@ -41,28 +51,58 @@ public class PlayerGraphics {
     }
 
 
-    public void initializePlayers(){
+    public void refreshPlayers(){
+        currentPlayer = TurnManager.getCurrentPlayer();
         List<Player> players = ForbiddenIsland.getBoard().getPlayers();
+        board.getChildren().clear();
         for (List<Tile> t : ForbiddenIsland.getBoard().getBoard()){
             for (Tile ti : t){
                 if (ti != null)
                     board.add(new StackPane(), ti.getPositionX(), ti.getPositionY());
             }
         }
+        System.out.println(board.getChildren());
         for (Player p : players){
             int x = p.getPositionX();
             int y = p.getPositionY();
             StackPane s = (StackPane) board.getChildren().get(to1DArrayIndex(x, y));
             ImageView img = new ImageView(SwingFXUtils.toFXImage(p.getGraphics(), null));
-            img.setOnMouseClicked((event) -> {
-                for (Tile t : ForbiddenIsland.getBoard().getMovableTilePos(p)){
-                    StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(t.getPositionX(), t.getPositionY()));
-                    Circle c = new Circle();
-                    c.setRadius(20);
-                    c.setFill(Color.GRAY);
-                    sp.getChildren().add(c);
-                }
-            });
+            if (p.equals(currentPlayer)) {
+                img.setOnMouseClicked((event) -> {
+                    for (Node n : board.getChildren()) {
+                        StackPane s1 = (StackPane) n;
+                        for (int i = 0; i < s1.getChildren().size(); i++) {
+                            if (s1.getChildren().get(i) instanceof Circle) {
+                                s1.getChildren().remove(i--);
+                            }
+                        }
+                    }
+                    playerClicked = p;
+                    for (Tile t : ForbiddenIsland.getBoard().getMovableTilePos(p)) {
+                        int x1 = t.getPositionX();
+                        int y1 = t.getPositionY();
+                        StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x1, y1));
+                        Circle c = new Circle();
+                        c.setRadius(20);
+                        c.setFill(Color.GRAY);
+                        c.setOnMouseClicked((event1) -> {
+                            ContextMenu menu = new ContextMenu();
+                            MenuItem moveMenu = new MenuItem("Move");
+                            moveMenu.setOnAction(event2 -> {
+                                if (TurnManager.addAction("M (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
+                                    p.setPos(x1, y1);
+                                    refreshDisplay();
+                                }
+                            });
+                            menu.getItems().add(moveMenu);
+                            menu.getItems().add(new MenuItem("Shore Up"));
+                            menu.show(c, Side.BOTTOM, 0, 0);
+                            playerClicked = p;
+                        });
+                        sp.getChildren().add(c);
+                    }
+                });
+            }
             s.getChildren().add(img);
         }
         hand2.setVisible(false);
@@ -87,7 +127,6 @@ public class PlayerGraphics {
         }
     }
 
-
     public static int to1DArrayIndex(int x, int y){
         return switch (y) {
             case 0 -> x - 2;
@@ -99,4 +138,30 @@ public class PlayerGraphics {
             default -> -1;
         };
     }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        board.setGridLinesVisible(true);
+        screenPane.setOnMouseClicked((event) -> {
+            System.out.println("Player Clicked" + playerClicked);
+            if (playerClicked == null){
+                for (Node n : board.getChildren()){
+                    StackPane s = (StackPane) n;
+                    for (int i = 0; i < s.getChildren().size(); i++){
+                        if (s.getChildren().get(i) instanceof Circle){
+                            s.getChildren().remove(i--);
+                        }
+                    }
+                }
+            } else {
+                playerClicked = null;
+            }
+        });
+    }
+
+    public void refreshDisplay(){
+        refreshPlayers();
+    }
+
+
 }

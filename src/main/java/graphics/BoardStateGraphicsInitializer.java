@@ -23,7 +23,11 @@ public class BoardStateGraphicsInitializer {
     }
 
     public static void initialize(){
-        bg.initializeTiles();
-        pg.initializePlayers();
+        refreshDisplay();
+    }
+
+    public static void refreshDisplay(){
+        pg.refreshDisplay();
+        bg.refreshDisplay();
     }
 }

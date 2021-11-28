@@ -152,7 +152,7 @@ public class BoardGame {
         if (y > 0 && board.get(y - 1).get(x) != null && board.get(y - 1).get(x).isMovable()){
             getMovableTiles.add(board.get(y - 1).get(x));
         }
-        if (x < 5 && board.get(y + 1).get(x) != null && board.get(y + 1).get(x).isMovable()){
+        if (y < 5 && board.get(y + 1).get(x) != null && board.get(y + 1).get(x).isMovable()){
             getMovableTiles.add(board.get(y + 1).get(x));
         }
         return getMovableTiles;
