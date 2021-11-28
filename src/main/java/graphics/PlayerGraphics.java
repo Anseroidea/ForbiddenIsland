@@ -4,6 +4,7 @@ import app.ForbiddenIsland;
 import board.Tile;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
@@ -23,6 +24,7 @@ import player.Player;
 import player.TurnManager;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -35,6 +37,7 @@ public class PlayerGraphics implements Initializable {
     public StackPane mainHand;
     public GridPane board;
     public AnchorPane screenPane;
+    public Label actionStrings;
     private Player playerClicked;
     private Player currentPlayer;
 
@@ -43,7 +46,10 @@ public class PlayerGraphics implements Initializable {
     }
 
     public void endTurn(MouseEvent mouseEvent) {
-        System.out.println("The player wants to end their turn!");
+        TurnManager.endTurn();
+        refreshDisplay();
+        System.out.println(currentPlayer.getRole().getName());
+        System.out.println("hi");
     }
 
     public void undo(MouseEvent mouseEvent) {
@@ -53,15 +59,17 @@ public class PlayerGraphics implements Initializable {
 
     public void refreshPlayers(){
         currentPlayer = TurnManager.getCurrentPlayer();
-        List<Player> players = ForbiddenIsland.getBoard().getPlayers();
+        List<Player> players = new ArrayList<>(ForbiddenIsland.getBoard().getPlayers());
         board.getChildren().clear();
         for (List<Tile> t : ForbiddenIsland.getBoard().getBoard()){
             for (Tile ti : t){
-                if (ti != null)
-                    board.add(new StackPane(), ti.getPositionX(), ti.getPositionY());
+                if (ti != null) {
+                    StackPane s = new StackPane();
+                    s.setAlignment(Pos.CENTER);
+                    board.add(s, ti.getPositionX(), ti.getPositionY());
+                }
             }
         }
-        System.out.println(board.getChildren());
         for (Player p : players){
             int x = p.getPositionX();
             int y = p.getPositionY();
@@ -69,14 +77,6 @@ public class PlayerGraphics implements Initializable {
             ImageView img = new ImageView(SwingFXUtils.toFXImage(p.getGraphics(), null));
             if (p.equals(currentPlayer)) {
                 img.setOnMouseClicked((event) -> {
-                    for (Node n : board.getChildren()) {
-                        StackPane s1 = (StackPane) n;
-                        for (int i = 0; i < s1.getChildren().size(); i++) {
-                            if (s1.getChildren().get(i) instanceof Circle) {
-                                s1.getChildren().remove(i--);
-                            }
-                        }
-                    }
                     playerClicked = p;
                     for (Tile t : ForbiddenIsland.getBoard().getMovableTilePos(p)) {
                         int x1 = t.getPositionX();
@@ -87,43 +87,81 @@ public class PlayerGraphics implements Initializable {
                         c.setFill(Color.GRAY);
                         c.setOnMouseClicked((event1) -> {
                             ContextMenu menu = new ContextMenu();
-                            MenuItem moveMenu = new MenuItem("Move");
-                            moveMenu.setOnAction(event2 -> {
-                                if (TurnManager.addAction("M (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
-                                    p.setPos(x1, y1);
-                                    refreshDisplay();
-                                }
-                            });
-                            menu.getItems().add(moveMenu);
-                            menu.getItems().add(new MenuItem("Shore Up"));
+                            if (currentPlayer.getRole().getName().equalsIgnoreCase("Pilot")){
+                                MenuItem moveMenu = new MenuItem("Fly");
+                                moveMenu.setOnAction(event2 -> {
+                                    if (TurnManager.addAction("P (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
+                                        p.setPos(x1, y1);
+                                        refreshDisplay();
+                                    }
+                                });
+                                menu.getItems().add(moveMenu);
+                            } else {
+                                MenuItem moveMenu = new MenuItem("Move");
+                                moveMenu.setOnAction(event2 -> {
+                                    if (TurnManager.addAction("M (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
+                                        p.setPos(x1, y1);
+                                        refreshDisplay();
+                                    }
+                                });
+                                menu.getItems().add(moveMenu);
+                            }
+                            if (ForbiddenIsland.getBoard().getBoard().get(y1).get(x1).isFlooded()) {
+                                menu.getItems().add(new MenuItem("Shore Up"));
+                            }
                             menu.show(c, Side.BOTTOM, 0, 0);
                             playerClicked = p;
                         });
                         sp.getChildren().add(c);
                     }
                 });
+            } else {
+                img.setOnMouseClicked(event -> {
+                    ContextMenu menu = new ContextMenu();
+                    if (currentPlayer.getPositionX() == p.getPositionX() && currentPlayer.getPositionY() == p.getPositionY() || currentPlayer.getRole().getName().equals("Messenger")) {
+                        menu.getItems().add(new MenuItem("Give Cards"));
+                    }
+                    if (currentPlayer.getRole().getName().equals("Navigator")){
+                        menu.getItems().add(new MenuItem("Navigate"));
+                    }
+                    menu.show(img, Side.BOTTOM, 0, 0);
+                });
             }
-            s.getChildren().add(img);
+            if (s.getChildren().size() >= 1 && !(s.getChildren().get(0) instanceof GridPane)){
+                GridPane gp = new GridPane();
+                gp.add(s.getChildren().get(0), 0, 0);
+                gp.setPrefSize(50, 73);
+                gp.setAlignment(Pos.CENTER);
+                s.getChildren().add(gp);
+            }
+            if (s.getChildren().size() >= 1){
+                GridPane gp = (GridPane) s.getChildren().get(0);
+                int numOnTile = gp.getChildren().size();
+                gp.add(img, numOnTile % 2, numOnTile/2);
+            }else {
+                s.getChildren().add(img);
+            }
         }
         hand2.setVisible(false);
         hand3.setVisible(false);
         Polygon p = (Polygon) mainHand.getChildren().get(0);
-        p.setFill(players.get(0).getRole().getColor());
-        topLabelBox.setFill(players.get(0).getRole().getColor());
-        topLabel.setText(players.get(0).getRole().getClass().getSimpleName());
+        players = new ArrayList<>(TurnManager.getPlayers());
+        p.setFill(players.get(players.size() - 1).getRole().getColor());
+        topLabelBox.setFill(players.get(players.size() - 1).getRole().getColor());
+        topLabel.setText(players.get(players.size() - 1).getRole().getClass().getSimpleName());
         if (players.size() >= 2){
             Polygon p1 = (Polygon) hand1.getChildren().get(0);
-            p1.setFill(players.get(1).getRole().getColor());
+            p1.setFill(players.get(0).getRole().getColor());
         }
         if (players.size() >= 3){
             hand2.setVisible(true);
             Polygon p1 = (Polygon) hand2.getChildren().get(0);
-            p1.setFill(players.get(2).getRole().getColor());
+            p1.setFill(players.get(1).getRole().getColor());
         }
         if (players.size() == 4){
             hand3.setVisible(true);
             Polygon p1 = (Polygon) hand3.getChildren().get(0);
-            p1.setFill(players.get(3).getRole().getColor());
+            p1.setFill(players.get(2).getRole().getColor());
         }
     }
 
@@ -161,6 +199,15 @@ public class PlayerGraphics implements Initializable {
 
     public void refreshDisplay(){
         refreshPlayers();
+        refreshActions();
+    }
+
+    public void refreshActions() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < TurnManager.toFormattedStrings().size(); i++){
+            sb.append((i + 1)).append(". ").append(TurnManager.toFormattedStrings().get(i)).append("\n");
+        }
+        actionStrings.setText(sb.toString());
     }
 
 

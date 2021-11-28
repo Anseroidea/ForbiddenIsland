@@ -118,6 +118,16 @@ public class Tile
         return nameList.indexOf(s) + 1;
     }
 
+    public boolean equals(Object o){
+        if (o instanceof Tile){
+            return false;
+        } else {
+            Tile t = (Tile) o;
+            return getTileID(getName()) == getTileID(t.getName());
+        }
+
+    }
+
 }
 
 

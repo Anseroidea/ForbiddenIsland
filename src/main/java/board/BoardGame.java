@@ -104,7 +104,7 @@ public class BoardGame {
     }
 
     private void initializePlayers(int numPlayers){
-        List<Role> roleList = Role.getRoles();
+        List<Role> roleList = new ArrayList<>(Role.getRoles());
         Collections.shuffle(roleList);
         Queue<Role> roleQueue = new LinkedList<>(roleList);
         for (int i = 0; i < numPlayers; i++){
@@ -142,18 +142,43 @@ public class BoardGame {
         List<Tile> getMovableTiles = new ArrayList<>();
         int x = player.getPositionX();
         int y = player.getPositionY();
-        System.out.println(player.getRole().getName() + " " + x + ", " + y);
-        if (x > 0 && board.get(y).get(x - 1) != null && board.get(y).get(x - 1).isMovable()){
-            getMovableTiles.add(board.get(y).get(x - 1));
-        }
-        if (x < 5 && board.get(y).get(x + 1) != null && board.get(y).get(x + 1).isMovable()){
-            getMovableTiles.add(board.get(y).get(x + 1));
-        }
-        if (y > 0 && board.get(y - 1).get(x) != null && board.get(y - 1).get(x).isMovable()){
-            getMovableTiles.add(board.get(y - 1).get(x));
-        }
-        if (y < 5 && board.get(y + 1).get(x) != null && board.get(y + 1).get(x).isMovable()){
-            getMovableTiles.add(board.get(y + 1).get(x));
+        if (TurnManager.getCurrentPlayer().getRole().getName().equals("Pilot")) {
+            for (int r = 0; r < 6; r++) {
+                for (int c = 0; c < 6; c++) {
+                    if (!(r == y && c == x) && board.get(r).get(c) != null && board.get(r).get(c).isMovable()) {
+                        getMovableTiles.add(board.get(r).get(c));
+                    }
+                }
+            }
+        } else if (TurnManager.getCurrentPlayer().getRole().getName().equals("Diver")){
+            getMovableTiles.addAll(diverMovement(x, y));
+        }else {
+            if (x > 0 && board.get(y).get(x - 1) != null && board.get(y).get(x - 1).isMovable()) {
+                getMovableTiles.add(board.get(y).get(x - 1));
+            }
+            if (x < 5 && board.get(y).get(x + 1) != null && board.get(y).get(x + 1).isMovable()) {
+                getMovableTiles.add(board.get(y).get(x + 1));
+            }
+            if (y > 0 && board.get(y - 1).get(x) != null && board.get(y - 1).get(x).isMovable()) {
+                getMovableTiles.add(board.get(y - 1).get(x));
+            }
+            if (y < 5 && board.get(y + 1).get(x) != null && board.get(y + 1).get(x).isMovable()) {
+                getMovableTiles.add(board.get(y + 1).get(x));
+            }
+            if (TurnManager.getCurrentPlayer().getRole().getName().equals("Explorer")){
+                if (x > 0 && y > 0 && board.get(y - 1).get(x - 1) != null && board.get(y - 1).get(x - 1).isMovable()) {
+                    getMovableTiles.add(board.get(y - 1).get(x - 1));
+                }
+                if (x < 5 && y > 0 && board.get(y - 1).get(x + 1) != null && board.get(y - 1).get(x + 1).isMovable()) {
+                    getMovableTiles.add(board.get(y - 1).get(x + 1));
+                }
+                if (y < 5 && x > 0 && board.get(y - 1).get(x - 1) != null && board.get(y - 1).get(x - 1).isMovable()) {
+                    getMovableTiles.add(board.get(y + 1).get(x - 1));
+                }
+                if (y < 5 && x < 5 && board.get(y + 1).get(x + 1) != null && board.get(y + 1).get(x + 1).isMovable()) {
+                    getMovableTiles.add(board.get(y + 1).get(x + 1));
+                }
+            }
         }
         return getMovableTiles;
     }
@@ -184,6 +209,40 @@ public class BoardGame {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public List<Tile> diverMovement(int x, int y){
+        List<Tile> tiles = new ArrayList<>();
+        diverMovement(x, y, tiles);
+        return tiles;
+    }
+
+    //precondition, x, y not in tiles already
+    public void diverMovement(int x, int y, List<Tile> tiles){
+        if (x > 0 && board.get(y).get(x - 1) != null && !board.get(y).get(x - 1).isMovable() && !tiles.contains(board.get(y).get(x - 1))) {
+            diverMovement(x - 1, y, tiles);
+        } else if (x > 0){
+            if (!tiles.contains(board.get(y).get(x - 1)))
+                tiles.add(board.get(y).get(x - 1));
+        }
+        if (x < 5 && board.get(y).get(x + 1) != null && !board.get(y).get(x + 1).isMovable() && !tiles.contains(board.get(y).get(x + 1))) {
+            diverMovement(x + 1, y, tiles);
+        } else if (x < 5){
+            if (!tiles.contains(board.get(y).get(x + 1)))
+                tiles.add(board.get(y).get(x + 1));
+        }
+        if (y > 0 && board.get(y - 1).get(x) != null && !board.get(y - 1).get(x).isMovable() && !tiles.contains(board.get(y - 1).get(x))) {
+            diverMovement(x, y - 1, tiles);
+        } else if (y > 0){
+            if (!tiles.contains(board.get(y - 1).get(x)))
+                tiles.add(board.get(y - 1).get(x));
+        }
+        if (y < 5 && board.get(y + 1).get(x) != null && !board.get(y + 1).get(x).isMovable() && !tiles.contains(board.get(y + 1).get(x))) {
+            diverMovement(x, y + 1, tiles);
+        } else if (y < 5){
+            if (!tiles.contains(board.get(y + 1).get(x)))
+                tiles.add(board.get(y + 1).get(x));
+        }
     }
 
 }

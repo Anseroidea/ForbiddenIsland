@@ -1,5 +1,6 @@
 package player;
 
+import app.ForbiddenIsland;
 import board.BoardGame;
 
 import java.util.*;
@@ -11,6 +12,15 @@ public class TurnManager {
     private static Stack<BoardGame> boardGameStates = new Stack<>();
     private static Player currentPlayer;
     private static Queue<Player> playerQueue = new LinkedList<>();
+    private static Map<String, String> moveMap = new HashMap<>(){
+        {
+            put("M", "Moved to ");
+            put("S", "Shore up ");
+            put("G", "Give Cards ");
+            put("N", "Navigated ");
+            put("P", "Flew to ");
+        }
+    };
 
     public static void setPlayers(Player[] players){
         playerQueue.addAll(Arrays.stream(players).toList());
@@ -40,8 +50,8 @@ public class TurnManager {
             return true;
         } else if (actions <= 3){
             String lastAction = actionStrings.peek();
-            if (lastAction.startsWith("N")){
-                String player = lastAction.substring(1);
+            if (lastAction.startsWith("N") && currentPlayer.getRole().getName().equals("Navigator")){
+                String player = lastAction.substring(1, 2);
                 String coord1 = lastAction.substring(lastAction.indexOf("("), lastAction.indexOf("(") + 6);
                 String s2 = s.substring(s.lastIndexOf("("), s.lastIndexOf("(") + 6);
                 if (isTwoSpaces(coord1, s2)){
@@ -56,11 +66,11 @@ public class TurnManager {
                     actions++;
                     return true;
                 }
-            } else if (lastAction.startsWith("E")) {
+            } else if (lastAction.startsWith("S") && currentPlayer.getRole().getName().equals("Engineer")) {
                 String shoreCoord = lastAction.substring(lastAction.indexOf("("), lastAction.indexOf("(") + 6);
                 String sShoreCoord = s.substring(s.indexOf("("), s.indexOf("(") + 6);
                 actionStrings.pop();
-                String finalAction = "E " + shoreCoord + ", " + sShoreCoord;
+                String finalAction = "X " + shoreCoord + ", " + sShoreCoord;
                 actionStrings.push(finalAction);
                 return true;
             } else if (actions == 3){
@@ -92,11 +102,44 @@ public class TurnManager {
     }
 
     private static boolean isTwoSpaces(int x1, int x2, int y1, int y2){
-        return (Math.abs(x1 - x2) + Math.abs(y1 - y2)) <= 2;
+        System.out.println(x1 + ", " + x2 + ")(" + y1 + ", " + y2);
+        return (Math.abs(x1 - x2) + Math.abs(y1 - y2)) <= 2.5;
     }
 
     public static List<String> toFormattedStrings(){
-        return actionStrings;
+        List<String> actions = new ArrayList<>(actionStrings);
+        List<String> formattedStrings = new ArrayList<>();
+        for (String s : actions){
+            System.out.println(s);
+            StringBuilder sb = new StringBuilder();
+            String move = s.substring(0, 1);
+            switch(move){
+                case "M":
+                case "P": {
+                    sb.append(moveMap.get(move));
+                    String coord1 = s.substring(s.indexOf("("), s.indexOf("(") + 6);
+                    String coord2 = s.substring(s.lastIndexOf("("), s.lastIndexOf("(") + 6);
+                    String[] coords1 = coord1.replace("(", "").replace(")", "").split(", ");
+                    String[] coords2 = coord2.replace("(", "").replace(")", "").split(", ");
+                    sb.append(ForbiddenIsland.getBoard().getBoard().get(Integer.parseInt(coords2[1])).get(Integer.parseInt(coords2[0])).getName());
+                    formattedStrings.add(sb.toString());
+                    break;
+                }
+                case "S": {
+                    break;
+                }
+                case "N": {
+                    sb.append(moveMap.get(move)).append(Role.fromNotation(s.substring(1, 2)).getName()).append(" to ");
+                    System.out.println(Role.fromNotation("N"));
+                    String coord1 = s.substring(s.lastIndexOf("("), s.lastIndexOf("(") + 6);
+                    String[] coords1 = coord1.replace("(", "").replace(")", "").split(", ");
+                    sb.append(ForbiddenIsland.getBoard().getBoard().get(Integer.parseInt(coords1[1])).get(Integer.parseInt(coords1[0])).getName());
+                    formattedStrings.add(sb.toString());
+                    break;
+                }
+            }
+        }
+        return formattedStrings;
     }
 
     public static boolean undoAction(){
@@ -110,4 +153,7 @@ public class TurnManager {
         }
     }
 
+    public static Queue<Player> getPlayers() {
+        return playerQueue;
+    }
 }

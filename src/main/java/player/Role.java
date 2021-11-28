@@ -31,4 +31,15 @@ public abstract class Role
     public Color getColor(){
         return color;
     }
+
+    public static Role fromNotation(String s){
+        if (s.length() != 1){
+            return null;
+        } else {
+            List<String> notationList = Arrays.asList("D", "E", "X", "G", "N", "P");
+            System.out.println(notationList.indexOf(s));
+            System.out.println(roleList);
+            return roleList.get(notationList.indexOf(s));
+        }
+    }
 }
