@@ -142,7 +142,14 @@ public class BoardGame {
             }
         }
 
-
+        Deque<Card> floodDeck = new ArrayDeque<>();
+        File floodCardImagePath = null;
+        Card floodCard;
+        try {
+            floodCardImagePath = new File(ForbiddenIsland.class.getResource("/images/cards").toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initializePlayers(int numPlayers){
