@@ -51,6 +51,12 @@ public class Player
             System.out.println("Out of moving range!!!");
     }
 
+    public void shoreUpTile(int x, int y)
+    {
+        Tile check = BoardGame.getBoard().get(x).get(y);
+        check.shoreUp();
+    }
+            
     public void addCard(TreasureCard t)
     {
         deck.add(t);

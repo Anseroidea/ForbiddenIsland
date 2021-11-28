@@ -22,7 +22,7 @@ public abstract class Role
 
     public abstract int getId();
 
-    public void doSpecialAction(Player p, int goToX, int goToY){}
+    public void doSpecialAction(Player p, int aimX, int aimY){}
 
     public String getName(){
         return getClass().getSimpleName();

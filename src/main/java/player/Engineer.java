@@ -14,8 +14,9 @@ public class Engineer extends Role
         return 2;
     }
 
-    public void doSpecialAction(Player p)
+    public void doSpecialAction(Player p, int shoreX, int shoreY)
     {
         //Can shore up 2 tiles
+        p.shoreUpTile(shoreX, shoreY);
     }
 }
