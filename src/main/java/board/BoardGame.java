@@ -1,7 +1,9 @@
 package board;
 
 import app.ForbiddenIsland;
+import card.Card;
 import card.FloodDeck;
+import card.TreasureCard;
 import card.TreasureDeck;
 import player.Player;
 import player.Role;
@@ -100,7 +102,47 @@ public class BoardGame {
     }
 
     private void initializeCards(){
-        treasureDeck = new TreasureDeck();
+        Deque<Card> treasureDeck = new ArrayDeque<>();
+        File treasureCardImagePath = null;
+        Card treasureCard;
+        try {
+            treasureCardImagePath = new File(ForbiddenIsland.class.getResource("/images/cards").toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        File[] images = treasureCardImagePath.listFiles();
+        for(int i = 0; i < images.length; i++){
+            File currentImage = images[i];
+            String name = images[i].getName().substring(images[i].getName().indexOf("_") + 1, images[i].getName().indexOf("."));
+            name = name.replaceAll("_", "");
+            try {
+                if (!images[i].getName().equals("Card_Helicopter.png") && !images[i].getName().equals("Card_Helicopter.png") && !images[i].getName().equals("Card_Waters_Rise.png")) {
+                    for (int f = 0; f < 5; f++) {
+                        treasureCard = new TreasureCard(name, ImageIO.read(currentImage));
+                        treasureDeck.add(treasureCard);
+                    }
+                } else if(images[i].getName().equals("Card_Helicopter.png")){
+                    for(int a = 0 ; a < 3; a++){
+                        treasureCard = new TreasureCard(name, ImageIO.read(currentImage));
+                        treasureDeck.add(treasureCard);
+                    }
+                } else if(images[i].getName().equals("Card_Sand_Bag.png")){
+                    for(int a = 0 ; a < 2; a++){
+                        treasureCard = new TreasureCard(name, ImageIO.read(currentImage));
+                        treasureDeck.add(treasureCard);
+                    }
+                } else if(images[i].getName().equals("Card_Waters_Rise.png")){
+                    for(int a = 0 ; a < 3; a++){
+                        treasureCard = new TreasureCard(name, ImageIO.read(currentImage));
+                        treasureDeck.add(treasureCard);
+                    }
+                }
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+
     }
 
     private void initializePlayers(int numPlayers){
