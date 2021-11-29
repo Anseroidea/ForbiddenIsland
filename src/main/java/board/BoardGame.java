@@ -102,6 +102,10 @@ public class BoardGame {
         return tiles;
     }
 
+    private void dealCards(){
+
+    }
+
     private void initializeCards(){
         List<TreasureCard> treasureList = new ArrayList<>();
         File treasureCardImagePath = null;
@@ -115,7 +119,7 @@ public class BoardGame {
         for(int i = 0; i < images.length; i++){
             File currentImage = images[i];
             String name = images[i].getName().substring(images[i].getName().indexOf("_") + 1, images[i].getName().indexOf("."));
-            name = name.replaceAll("_", "");
+            name = name.replaceAll("_", " ");
             try {
                 if (!images[i].getName().equals("Card_Helicopter.png") && !images[i].getName().equals("Card_Sand_Bag.png") && !images[i].getName().equals("Card_Waters_Rise.png")) {
                     for (int f = 0; f < 5; f++) {
