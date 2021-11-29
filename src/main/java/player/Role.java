@@ -58,9 +58,18 @@ public abstract class Role
     public List<Tile> getNavigatableTiles(Player p){
         List<Tile> navigatableTiles = new ArrayList<>();
         for (List<Tile> tl : ForbiddenIsland.getBoard().getBoard()){
-            for (Tile t : tl){
-                if (t != null && Math.abs(t.getPositionX() - p.getPositionX()) + Math.abs(t.getPositionY() - p.getPositionY()) <= 2.5 && t.isMovable() && (t.getPositionX() != p.getPositionX() || t.getPositionY() != p.getPositionY())){
-                    navigatableTiles.add(t);
+            if(p.getRole().getId() == 3) {
+                for (Tile t : tl) {
+                    if (t != null && Math.abs(t.getPositionX() - p.getPositionX()) + Math.abs(t.getPositionY() - p.getPositionY()) <= 2.5 && t.isMovable() && (t.getPositionX() != p.getPositionX() || t.getPositionY() != p.getPositionY())) {
+                        navigatableTiles.add(t);
+                    }
+                }
+            }
+            else{
+                for (Tile t : tl) {
+                    if (t != null && Math.abs(t.getPositionX() - p.getPositionX()) + Math.abs(t.getPositionY() - p.getPositionY()) <= 1.5 && t.isMovable() && (t.getPositionX() != p.getPositionX() || t.getPositionY() != p.getPositionY())) {
+                        navigatableTiles.add(t);
+                    }
                 }
             }
         }
