@@ -148,9 +148,9 @@ public class BoardGame {
         }
         treasureDeck = new TreasureDeck(treasureList);
 
-        Deque<Card> floodDeck = new ArrayDeque<>();
+
         File floodCardImagePath = null;
-        Card floodCard;
+        FloodCard floodCard;
         try {
             floodCardImagePath = new File(ForbiddenIsland.class.getResource("/images/cards/floodCards").toURI());
         } catch (URISyntaxException e) {
@@ -158,10 +158,12 @@ public class BoardGame {
         }
         File[] floodCards = floodCardImagePath.listFiles();
         List<FloodCard> floodCardList = new ArrayList<>();
-        for (File f : floodCards){
-            try {
-                FloodCard fc = new FloodCard(f.getName(), ImageIO.read(f));
 
+        for (File f : floodCards){
+            String name = f.getName().substring(0, f.getName().indexOf("."));
+            try {
+                floodCard = new FloodCard(name, ImageIO.read(f));
+                floodCardList.add(floodCard);
             } catch (IOException e) {
                 e.printStackTrace();
             }
