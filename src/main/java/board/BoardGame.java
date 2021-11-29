@@ -153,7 +153,14 @@ public class BoardGame {
             e.printStackTrace();
         }
         File[] floodCards = floodCardImagePath.listFiles();
+        List<FloodCard> floodCardList = new ArrayList<>();
         for (File f : floodCards){
+            try {
+                FloodCard fc = new FloodCard(f.getName(), ImageIO.read(f));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
