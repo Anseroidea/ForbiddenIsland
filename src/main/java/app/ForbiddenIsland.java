@@ -1,9 +1,12 @@
 package app;
 
+import board.BoardGame;
+import graphics.BoardStateGraphicsInitializer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -12,14 +15,26 @@ import java.util.Objects;
 public class
 ForbiddenIsland extends Application {
 
-    private static final Stage primaryStage = new Stage();
+    private static Stage primaryStage = new Stage();
+
+    private static BoardGame board;
 
     public static void main(String[] args) {
         Application.launch(args);
     }
 
+    public static void setBoardGame(int difficulty, int numPlayers) {
+        board = new BoardGame(difficulty, numPlayers);
+    }
+
+    public static void refreshDisplay() {
+        System.out.println(ProgramStateManager.getCurrentState().name());
+        primaryStage.setScene(ProgramStateManager.getCurrentState().getScene());
+    }
+
     @Override
     public void start(Stage primaryStage) throws IOException {
+        ForbiddenIsland.primaryStage = primaryStage;
         primaryStage.setTitle("Forbidden Island");
         /*
         GridPane gp = new GridPane();
@@ -56,11 +71,33 @@ ForbiddenIsland extends Application {
         gp.setGridLinesVisible(true);
         Scene s = new Scene(gp, 600, 400);
         */
-        AnchorPane ap = FXMLLoader.load(ForbiddenIsland.class.getResource("/fxml/board.fxml"));
-        Scene s = new Scene(ap, 1920, 1080);
+        for (ProgramState ps : ProgramState.values()){
+            try {
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ForbiddenIsland.class.getResource("/fxml/" + ps.name().toLowerCase() + ".fxml")));
+                AnchorPane ap = loader.load();
+                ps.setPane(ap);
+                if (ps.name().equalsIgnoreCase("BOARD")){
+                    BoardStateGraphicsInitializer.setBg(loader.getController());
+                    FXMLLoader loader1 = new FXMLLoader(Objects.requireNonNull(ForbiddenIsland.class.getResource("/fxml/player.fxml")));
+                    AnchorPane ap1 = loader1.load();
+                    System.out.println("3247897329432");
+                    BoardStateGraphicsInitializer.setPg(loader1.getController());
+                    StackPane s = new StackPane(ap, ap1);
+                    ps.setPane(s);
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        ProgramStateManager.goToState(ProgramState.INPUT);
+        Scene s = new Scene(ProgramStateManager.getCurrentState().getPane(), 1920, 1080);
         primaryStage.setScene(s);
         primaryStage.setFullScreen(true);
         primaryStage.show();
+    }
+
+    public static BoardGame getBoard(){
+        return board;
     }
 }
 

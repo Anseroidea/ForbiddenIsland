@@ -1,10 +1,27 @@
 package player;
 
+import javafx.scene.paint.Color;
+
 public class Engineer extends Role
 {
-    public void doSpecialAction(Player p, int x, int y, Player other)
+
+    public Engineer(){
+        super(Color.RED);
+    }
+
+    @Override
+    public int getId() {
+        return 2;
+    }
+
+    public void doSpecialAction(Player p, int shoreX, int shoreY)
     {
         //Can shore up 2 tiles
-        p.getBoard().get(x).get(y).shoreUp();
+        p.shoreUpTile(shoreX, shoreY);
     }
+
+    public String toNotation(){
+        return "E";
+    }
+
 }

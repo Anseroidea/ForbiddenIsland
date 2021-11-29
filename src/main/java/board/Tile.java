@@ -1,5 +1,9 @@
 package board;
 
+import java.awt.image.BufferedImage;
+import java.util.Arrays;
+import java.util.List;
+
 public class Tile
 {
     //tile ID explenation- Gates-1-6 |treasureTile 7-14 (fire 7,8)(water 9,10)(wind 11,12)(SPACE 13,14)|Misalanous 15-24
@@ -9,18 +13,21 @@ public class Tile
     private TileFloodState floodState;
     private String tileName;
     private int tileID;
-    private static String[] nameList= {"Fools' Landing","Bronze board.Gate","Copper board.Gate","Gold board.Gate","Iron board.Gate","Silver board.Gate","Cave of Embers","Cave of Shadows","Coral Palace","Tidal Palace","Howling Garden","Whispering Garden","Temple of the Moon","Temple of the Sun","Breakers Bridge","Cliffs of Abandon","Crimson Forest","Dunes of Deceptions","Lost Lagoon","Misty Marsh","Observatory","Phantom Rock","Twilight Hollow","Watchtower"};
+    private BufferedImage graphic;
+    private BufferedImage floodedGraphic;
+    private static List<String> nameList= Arrays.asList("Iron Gate","Bronze Gate","Copper Gate","Silver Gate","Gold Gate", "Fools Landing", "Cave of Embers","Cave of Shadows","Coral Palace","Tidal Palace","Howling Garden","Whispering Garden","Temple of the Moon","Temple of the Sun","Breakers Bridge","Cliffs of Abandon","Crimson Forest","Dunes of Deceptions","Lost Lagoon","Misty Marsh","Observatory","Phantom Rock","Twilight Hollow","Watchtower");
+    private int positionX;
+    private int positionY;
 
-    public Tile(int instaNum)
+
+    public Tile(String name, BufferedImage landed, BufferedImage flooded)
     {
         floodState= TileFloodState.LAND;
-        tileName=nameList[instaNum-1];
-        tileID=instaNum;
+        tileName=name;
+        tileID= getTileID(name);
+        graphic = landed;
+        floodedGraphic = flooded;
     }
-    public Tile()
-    {
-    }
-
 
 
     public String getName()
@@ -30,6 +37,13 @@ public class Tile
     public int getID()
     {
         return tileID;
+    }
+    public BufferedImage getGraphic(){
+        if (floodState.equals(TileFloodState.LAND)){
+            return graphic;
+        } else {
+            return floodedGraphic;
+        }
     }
 
 
@@ -63,8 +77,7 @@ public class Tile
     }
     public boolean isMovable()// will return false if FLOOD;
     {
-        System.out.print("isMovable(0 in tile class Is a work inprogress,need player class/location, return false");
-        return false;
+        return !floodState.equals(TileFloodState.SUNK);
     }
     public void floodTile()
     {
@@ -96,6 +109,34 @@ public class Tile
             System.out.print("You can not shore up a SUNK TILE");
         }
     }
+
+    public int getPositionX() {
+        return positionX;
+    }
+
+    public int getPositionY() {
+        return positionY;
+    }
+
+    public void setPos(int x, int y){
+        positionX = x;
+        positionY = y;
+    }
+
+    public static int getTileID(String s){
+        return nameList.indexOf(s) + 1;
+    }
+
+    public boolean equals(Object o){
+        if (!(o instanceof Tile)){
+            return false;
+        } else {
+            Tile t = (Tile) o;
+            return getTileID(getName()) == getTileID(t.getName());
+        }
+
+    }
+
 }
 
 

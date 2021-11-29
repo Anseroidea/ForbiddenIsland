@@ -1,10 +1,25 @@
 package player;
 
+import javafx.scene.paint.Color;
+
 public class Messenger extends Role
 {
-    public void doSpecialAction(Player p, int x, int y, Player other)
+
+    public Messenger(){
+        super(Color.GHOSTWHITE);
+    }
+
+    @Override
+    public int getId() {
+        return 4;
+    }
+
+    public void doSpecialAction(Player p)
     {
-        //Can send a card  to any player
-        //Use the giveCard method in Player
+        //Can sned a card  to any player
+    }
+
+    public String toNotation(){
+        return "G";
     }
 }

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: f7dcbe;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.InputScreen">
+   <children>
+      <VBox alignment="CENTER" layoutX="227.0" layoutY="88.0" prefHeight="892.0" prefWidth="1500.0" spacing="70.0">
+         <children>
+            <Label text="Number of Players">
+               <font>
+                  <Font name="Century Schoolbook" size="40.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="1500.0" spacing="200.0">
+               <children>
+                  <RadioButton fx:id="twoButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" text="2">
+                     <font>
+                        <Font size="40.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="threeButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" text="3">
+                     <font>
+                        <Font size="40.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="fourButton" layoutX="310.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" text="4">
+                     <font>
+                        <Font size="40.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <Label layoutX="586.0" layoutY="10.0" text="Difficulty">
+               <font>
+                  <Font name="Century Schoolbook" size="40.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="100.0" prefWidth="1500.0" spacing="100.0">
+               <children>
+                  <RadioButton fx:id="noviceButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="300.0" text="Novice">
+                     <font>
+                        <Font size="40.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="normalButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="300.0" text="Normal">
+                     <font>
+                        <Font size="40.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="eliteButton" layoutX="310.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="300.0" text="Elite">
+                     <font>
+                        <Font size="40.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="legendaryButton" layoutX="310.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="300.0" text="Legendary">
+                     <font>
+                        <Font size="40.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <Button mnemonicParsing="false" onMouseClicked="#submit" text="Submit">
+               <font>
+                  <Font size="46.0" />
+               </font>
+            </Button>
+            <Label fx:id="errorText" text="Filler" textFill="RED" visible="false">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -18,15 +18,8 @@ public class BoardGame {
     private String cardGraphicsURL;
     private String playerGraphicsURL;
 
-    public BoardGame()
-    {
-        initializeTiles();
-        initializeCards();
-        initializePlayers();
-        generateIsland();
-    }
-
     public void generateIsland(){
+
     }
 
     private void initializeTiles(){
@@ -50,7 +43,6 @@ public class BoardGame {
 
         return listOfMovableTiles;
     }
-
 
     private WaterLevel getWaterLevel(){
         return waterLevel;
