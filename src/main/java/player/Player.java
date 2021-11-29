@@ -62,9 +62,15 @@ public class Player
     public void addCard(TreasureCard t)
     {
         deck.add(t);
-        while(deck.size() > 5)
+        if (deck.size() > 5)
             System.out.println("More than 5 cards! Choose 1 card to discard");
 
+    }
+
+    public void addCards(List<TreasureCard> t){
+        deck.addAll(t);
+        if (deck.size() > 5)
+            System.out.println("More than 5 cards! Choose 1 card to discard");
     }
 
     public void removeCard(TreasureCard t)

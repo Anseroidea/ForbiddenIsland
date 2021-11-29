@@ -59,7 +59,7 @@ public abstract class Role
         List<Tile> navigatableTiles = new ArrayList<>();
         for (List<Tile> tl : ForbiddenIsland.getBoard().getBoard()){
             for (Tile t : tl){
-                if (t != null && Math.abs(t.getPositionX() - p.getPositionX()) + Math.abs(t.getPositionY() - p.getPositionY()) <= 2.5 && t.isMovable() && (t.getPositionX() != p.getPositionX() || t.getPositionY() != p.getPositionY())){
+                if (t != null && ((Math.abs(t.getPositionX() - p.getPositionX()) <= 2.5 && t.getPositionY() == p.getPositionY()) || (Math.abs(t.getPositionY() - p.getPositionY()) <= 2.5 && t.getPositionX() == p.getPositionX())) && t.isMovable() && (t.getPositionX() != p.getPositionX() || t.getPositionY() != p.getPositionY())){
                     navigatableTiles.add(t);
                 }
             }
