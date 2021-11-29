@@ -117,7 +117,7 @@ public class BoardGame {
             String name = images[i].getName().substring(images[i].getName().indexOf("_") + 1, images[i].getName().indexOf("."));
             name = name.replaceAll("_", "");
             try {
-                if (!images[i].getName().equals("Card_Helicopter.png") && !images[i].getName().equals("Card_Helicopter.png") && !images[i].getName().equals("Card_Waters_Rise.png")) {
+                if (!images[i].getName().equals("Card_Helicopter.png") && !images[i].getName().equals("Card_Sand_Bag.png") && !images[i].getName().equals("Card_Waters_Rise.png")) {
                     for (int f = 0; f < 5; f++) {
                         treasureCard = new TreasureCard(name, ImageIO.read(currentImage));
                         treasureList.add(treasureCard);
@@ -162,6 +162,7 @@ public class BoardGame {
                 e.printStackTrace();
             }
         }
+
     }
 
     private void initializePlayers(int numPlayers){

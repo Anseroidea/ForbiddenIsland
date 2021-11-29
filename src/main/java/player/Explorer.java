@@ -30,7 +30,7 @@ public class Explorer extends Role
         if (x < 5 && y > 0 && board.get(y - 1).get(x + 1) != null && board.get(y - 1).get(x + 1).isMovable()) {
             getMovableTiles.add(board.get(y - 1).get(x + 1));
         }
-        if (y < 5 && x > 0 && board.get(y - 1).get(x - 1) != null && board.get(y - 1).get(x - 1).isMovable()) {
+        if (y < 5 && x > 0 && board.get(y + 1).get(x - 1) != null && board.get(y + 1).get(x - 1).isMovable()) {
             getMovableTiles.add(board.get(y + 1).get(x - 1));
         }
         if (y < 5 && x < 5 && board.get(y + 1).get(x + 1) != null && board.get(y + 1).get(x + 1).isMovable()) {
