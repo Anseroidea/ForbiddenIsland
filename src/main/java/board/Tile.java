@@ -119,7 +119,7 @@ public class Tile
     }
 
     public boolean equals(Object o){
-        if (o instanceof Tile){
+        if (!(o instanceof Tile)){
             return false;
         } else {
             Tile t = (Tile) o;

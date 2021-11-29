@@ -1,21 +1,68 @@
 package player;
 
+import app.ForbiddenIsland;
+import board.Tile;
 import javafx.scene.paint.Color;
 
-public class Diver extends Role
-{
+import java.util.ArrayList;
+import java.util.List;
 
-    public Diver() {
-        super(Color.BLACK);
-    }
+public class Diver extends Role {
 
-    @Override
-    public int getId() {
-        return 1;
-    }
+	public Diver() {
+		super(Color.BLACK);
+	}
 
-    public void doSpecialAction(Player p, int goToX, int goToY)
-    {
+	@Override
+	public int getId() {
+		return 1;
+	}
+
+	public List<Tile> getMovableTiles(Player p){
+		return diverMovement(p.getPositionX(), p.getPositionY());
+	}
+
+	public List<Tile> diverMovement(int x, int y){
+		List<Tile> tiles = new ArrayList<>();
+		diverMovement(x, y, tiles);
+		return tiles;
+	}
+
+	//precondition, x, y not in tiles already
+	public void diverMovement(int x, int y, List<Tile> tiles){
+		List<List<Tile>> board = ForbiddenIsland.getBoard().getBoard();
+		if (x > 0 && board.get(y).get(x - 1) != null && !board.get(y).get(x - 1).isMovable() && !tiles.contains(board.get(y).get(x - 1))) {
+			diverMovement(x - 1, y, tiles);
+		} else if (x > 0 && board.get(y).get(x - 1) != null){
+			if (!tiles.contains(board.get(y).get(x - 1)))
+				tiles.add(board.get(y).get(x - 1));
+		}
+		if (x < 5 && board.get(y).get(x + 1) != null && !board.get(y).get(x + 1).isMovable() && !tiles.contains(board.get(y).get(x + 1))) {
+			diverMovement(x + 1, y, tiles);
+		} else if (x < 5 && board.get(y).get(x + 1) != null){
+			if (!tiles.contains(board.get(y).get(x + 1)))
+				tiles.add(board.get(y).get(x + 1));
+		}
+		if (y > 0 && board.get(y - 1).get(x) != null && !board.get(y - 1).get(x).isMovable() && !tiles.contains(board.get(y - 1).get(x))) {
+			diverMovement(x, y - 1, tiles);
+		} else if (y > 0 && board.get(y - 1).get(x) != null){
+			if (!tiles.contains(board.get(y - 1).get(x)))
+				tiles.add(board.get(y - 1).get(x));
+		}
+		if (y < 5 && board.get(y + 1).get(x) != null && !board.get(y + 1).get(x).isMovable() && !tiles.contains(board.get(y + 1).get(x))) {
+			diverMovement(x, y + 1, tiles);
+		} else if (y < 5 && board.get(y + 1).get(x) != null){
+			if (!tiles.contains(board.get(y + 1).get(x)))
+				tiles.add(board.get(y + 1).get(x));
+		}
+	}
+
+	public String toNotation(){
+		return "D";
+	}
+
+	public void doSpecialAction(Player p, int goToX, int goToY) {
+		/*
         //Can move through adjacent/missing tiles
         int x = p.getPositionX();
 	int y = p.getPositionY();
@@ -63,4 +110,8 @@ public class Diver extends Role
 	if(paths[paths.length-1][paths[0].length-1] > 0)
 	    p.move(goalX, goalY);
     }
+}
+
+		 */
+	}
 }

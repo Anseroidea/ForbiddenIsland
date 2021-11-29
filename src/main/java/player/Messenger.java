@@ -18,4 +18,8 @@ public class Messenger extends Role
     {
         //Can sned a card  to any player
     }
+
+    public String toNotation(){
+        return "G";
+    }
 }

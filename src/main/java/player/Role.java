@@ -1,5 +1,7 @@
 package player;
 
+import app.ForbiddenIsland;
+import board.Tile;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public abstract class Role
     }
 
     public abstract int getId();
+    public abstract String toNotation();
 
     public void doSpecialAction(Player p, int aimX, int aimY){}
 
@@ -30,6 +33,58 @@ public abstract class Role
 
     public Color getColor(){
         return color;
+    }
+
+    public List<Tile> getMovableTiles(Player p){
+        List<List<Tile>> board = ForbiddenIsland.getBoard().getBoard();
+        List<Tile> getMovableTiles = new ArrayList<>();
+        int x = p.getPositionX();
+        int y = p.getPositionY();
+        if (x > 0 && board.get(y).get(x - 1) != null && board.get(y).get(x - 1).isMovable()) {
+            getMovableTiles.add(board.get(y).get(x - 1));
+        }
+        if (x < 5 && board.get(y).get(x + 1) != null && board.get(y).get(x + 1).isMovable()) {
+            getMovableTiles.add(board.get(y).get(x + 1));
+        }
+        if (y > 0 && board.get(y - 1).get(x) != null && board.get(y - 1).get(x).isMovable()) {
+            getMovableTiles.add(board.get(y - 1).get(x));
+        }
+        if (y < 5 && board.get(y + 1).get(x) != null && board.get(y + 1).get(x).isMovable()) {
+            getMovableTiles.add(board.get(y + 1).get(x));
+        }
+        return getMovableTiles;
+    }
+
+    public List<Tile> getNavigatableTiles(Player p){
+        List<Tile> navigatableTiles = new ArrayList<>();
+        for (List<Tile> tl : ForbiddenIsland.getBoard().getBoard()){
+            for (Tile t : tl){
+                if (t != null && Math.abs(t.getPositionX() - p.getPositionX()) + Math.abs(t.getPositionY() - p.getPositionY()) <= 2.5 && t.isMovable() && (t.getPositionX() != p.getPositionX() || t.getPositionY() != p.getPositionY())){
+                    navigatableTiles.add(t);
+                }
+            }
+        }
+        return navigatableTiles;
+    }
+
+    public List<Tile> getShorableTiles(Player p){
+        List<List<Tile>> board = ForbiddenIsland.getBoard().getBoard();
+        int x = p.getPositionX();
+        int y = p.getPositionY();
+        List<Tile> getShorableTiles = new ArrayList<>();
+        if (x > 0 && board.get(y).get(x - 1) != null && board.get(y).get(x - 1).isFlooded()) {
+            getShorableTiles.add(board.get(y).get(x - 1));
+        }
+        if (x < 5 && board.get(y).get(x + 1) != null && board.get(y).get(x + 1).isFlooded()) {
+            getShorableTiles.add(board.get(y).get(x + 1));
+        }
+        if (y > 0 && board.get(y - 1).get(x) != null && board.get(y - 1).get(x).isFlooded()) {
+            getShorableTiles.add(board.get(y - 1).get(x));
+        }
+        if (y < 5 && board.get(y + 1).get(x) != null && board.get(y + 1).get(x).isFlooded()) {
+            getShorableTiles.add(board.get(y + 1).get(x));
+        }
+        return getShorableTiles;
     }
 
     public static Role fromNotation(String s){

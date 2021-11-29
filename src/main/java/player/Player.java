@@ -1,5 +1,7 @@
 package player;
 
+import app.ForbiddenIsland;
+import board.Tile;
 import card.TreasureCard;
 
 import java.util.ArrayList;
@@ -53,7 +55,7 @@ public class Player
 
     public void shoreUpTile(int x, int y)
     {
-        Tile check = BoardGame.getBoard().get(x).get(y);
+        Tile check = ForbiddenIsland.getBoard().getBoard().get(x).get(y);
         check.shoreUp();
     }
             

@@ -11,18 +11,18 @@ public class TreasureTile extends Tile {
         super(name, flooded, landed);// IN boardgame Class , must instiate and check for gate
     }
 
-    public String getTreasureHELD() {
+    public Integer getTreasureHELD() {
         if (getID() == 7 || getID() == 8) {
-            return "FIRE";
+            return 0;
         }
         else if (getID() == 9 || getID() == 10) {
-            return "WATER";
+            return 1;
         }
         else if (getID() == 11 || getID() == 12) {
-            return "WIND";
+            return 2;
         }
         else  {
-            return "SPACE";
+            return 3;
         }
 
     }

@@ -14,6 +14,10 @@ public class Navigator extends Role
         return 5;
     }
 
+    public String toNotation(){
+        return "N";
+    }
+
     public void doSpecialAction(Player p)
     {
         //Can move another player for up to 2 adjacent tiles

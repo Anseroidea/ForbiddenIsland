@@ -50,23 +50,7 @@ public class TurnManager {
             return true;
         } else if (actions <= 3){
             String lastAction = actionStrings.peek();
-            if (lastAction.startsWith("N") && currentPlayer.getRole().getName().equals("Navigator")){
-                String player = lastAction.substring(1, 2);
-                String coord1 = lastAction.substring(lastAction.indexOf("("), lastAction.indexOf("(") + 6);
-                String s2 = s.substring(s.lastIndexOf("("), s.lastIndexOf("(") + 6);
-                if (isTwoSpaces(coord1, s2)){
-                    actionStrings.pop();
-                    String finalAction = "N" + player + " " + coord1 + ", " + s2;
-                    actionStrings.push(finalAction);
-                    return true;
-                } else if (actions == 3) {
-                    return false;
-                } else {
-                    actionStrings.push(s);
-                    actions++;
-                    return true;
-                }
-            } else if (lastAction.startsWith("S") && currentPlayer.getRole().getName().equals("Engineer")) {
+            if (lastAction.startsWith("S") && currentPlayer.getRole().getName().equals("Engineer")) {
                 String shoreCoord = lastAction.substring(lastAction.indexOf("("), lastAction.indexOf("(") + 6);
                 String sShoreCoord = s.substring(s.indexOf("("), s.indexOf("(") + 6);
                 actionStrings.pop();

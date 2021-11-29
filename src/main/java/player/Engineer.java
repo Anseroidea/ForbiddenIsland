@@ -19,4 +19,9 @@ public class Engineer extends Role
         //Can shore up 2 tiles
         p.shoreUpTile(shoreX, shoreY);
     }
+
+    public String toNotation(){
+        return "E";
+    }
+
 }

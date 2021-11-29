@@ -1,10 +1,7 @@
 package board;
 
 import app.ForbiddenIsland;
-import card.Card;
-import card.FloodDeck;
-import card.TreasureCard;
-import card.TreasureDeck;
+import card.*;
 import player.Player;
 import player.Role;
 import player.TurnManager;
@@ -43,10 +40,14 @@ public class BoardGame {
     private FloodDeck floodDeck;
     private List<Player> players;
     private WaterLevel waterLevel;
-
-    private String tileGraphicsURL;
-    private String cardGraphicsURL;
-    private String playerGraphicsURL;
+    private Map<Integer, Boolean> treasuresHeld = new HashMap<>(){
+        {
+            put(0, false);
+            put(1, false);
+            put(2, false);
+            put(3, false);
+        }
+    };
 
     private void generateIsland(){
         List<Tile> tiles = Arrays.asList(initializeTiles());
@@ -102,11 +103,11 @@ public class BoardGame {
     }
 
     private void initializeCards(){
-        Deque<Card> treasureDeck = new ArrayDeque<>();
+        List<TreasureCard> treasureList = new ArrayList<>();
         File treasureCardImagePath = null;
-        Card treasureCard;
+        TreasureCard treasureCard;
         try {
-            treasureCardImagePath = new File(ForbiddenIsland.class.getResource("/images/cards").toURI());
+            treasureCardImagePath = new File(ForbiddenIsland.class.getResource("/images/cards/treasureCards").toURI());
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -119,36 +120,40 @@ public class BoardGame {
                 if (!images[i].getName().equals("Card_Helicopter.png") && !images[i].getName().equals("Card_Helicopter.png") && !images[i].getName().equals("Card_Waters_Rise.png")) {
                     for (int f = 0; f < 5; f++) {
                         treasureCard = new TreasureCard(name, ImageIO.read(currentImage));
-                        treasureDeck.add(treasureCard);
+                        treasureList.add(treasureCard);
                     }
                 } else if(images[i].getName().equals("Card_Helicopter.png")){
                     for(int a = 0 ; a < 3; a++){
                         treasureCard = new TreasureCard(name, ImageIO.read(currentImage));
-                        treasureDeck.add(treasureCard);
+                        treasureList.add(treasureCard);
                     }
                 } else if(images[i].getName().equals("Card_Sand_Bag.png")){
                     for(int a = 0 ; a < 2; a++){
                         treasureCard = new TreasureCard(name, ImageIO.read(currentImage));
-                        treasureDeck.add(treasureCard);
+                        treasureList.add(treasureCard);
                     }
                 } else if(images[i].getName().equals("Card_Waters_Rise.png")){
                     for(int a = 0 ; a < 3; a++){
                         treasureCard = new TreasureCard(name, ImageIO.read(currentImage));
-                        treasureDeck.add(treasureCard);
+                        treasureList.add(treasureCard);
                     }
                 }
             } catch (IOException e){
                 e.printStackTrace();
             }
         }
+        treasureDeck = new TreasureDeck(treasureList);
 
         Deque<Card> floodDeck = new ArrayDeque<>();
         File floodCardImagePath = null;
         Card floodCard;
         try {
-            floodCardImagePath = new File(ForbiddenIsland.class.getResource("/images/cards").toURI());
+            floodCardImagePath = new File(ForbiddenIsland.class.getResource("/images/cards/floodCards").toURI());
         } catch (URISyntaxException e) {
             e.printStackTrace();
+        }
+        File[] floodCards = floodCardImagePath.listFiles();
+        for (File f : floodCards){
         }
     }
 
@@ -187,51 +192,6 @@ public class BoardGame {
 
     }
 
-    public List<Tile> getMovableTilePos(Player player){
-        List<Tile> getMovableTiles = new ArrayList<>();
-        int x = player.getPositionX();
-        int y = player.getPositionY();
-        if (TurnManager.getCurrentPlayer().getRole().getName().equals("Pilot")) {
-            for (int r = 0; r < 6; r++) {
-                for (int c = 0; c < 6; c++) {
-                    if (!(r == y && c == x) && board.get(r).get(c) != null && board.get(r).get(c).isMovable()) {
-                        getMovableTiles.add(board.get(r).get(c));
-                    }
-                }
-            }
-        } else if (TurnManager.getCurrentPlayer().getRole().getName().equals("Diver")){
-            getMovableTiles.addAll(diverMovement(x, y));
-        }else {
-            if (x > 0 && board.get(y).get(x - 1) != null && board.get(y).get(x - 1).isMovable()) {
-                getMovableTiles.add(board.get(y).get(x - 1));
-            }
-            if (x < 5 && board.get(y).get(x + 1) != null && board.get(y).get(x + 1).isMovable()) {
-                getMovableTiles.add(board.get(y).get(x + 1));
-            }
-            if (y > 0 && board.get(y - 1).get(x) != null && board.get(y - 1).get(x).isMovable()) {
-                getMovableTiles.add(board.get(y - 1).get(x));
-            }
-            if (y < 5 && board.get(y + 1).get(x) != null && board.get(y + 1).get(x).isMovable()) {
-                getMovableTiles.add(board.get(y + 1).get(x));
-            }
-            if (TurnManager.getCurrentPlayer().getRole().getName().equals("Explorer")){
-                if (x > 0 && y > 0 && board.get(y - 1).get(x - 1) != null && board.get(y - 1).get(x - 1).isMovable()) {
-                    getMovableTiles.add(board.get(y - 1).get(x - 1));
-                }
-                if (x < 5 && y > 0 && board.get(y - 1).get(x + 1) != null && board.get(y - 1).get(x + 1).isMovable()) {
-                    getMovableTiles.add(board.get(y - 1).get(x + 1));
-                }
-                if (y < 5 && x > 0 && board.get(y - 1).get(x - 1) != null && board.get(y - 1).get(x - 1).isMovable()) {
-                    getMovableTiles.add(board.get(y + 1).get(x - 1));
-                }
-                if (y < 5 && x < 5 && board.get(y + 1).get(x + 1) != null && board.get(y + 1).get(x + 1).isMovable()) {
-                    getMovableTiles.add(board.get(y + 1).get(x + 1));
-                }
-            }
-        }
-        return getMovableTiles;
-    }
-
     public TreasureDeck getTreasureDeck(){
         return treasureDeck;
     }
@@ -260,38 +220,7 @@ public class BoardGame {
         return players;
     }
 
-    public List<Tile> diverMovement(int x, int y){
-        List<Tile> tiles = new ArrayList<>();
-        diverMovement(x, y, tiles);
-        return tiles;
+    public Map<Integer, Boolean> getTreasuresClaimed() {
+        return treasuresHeld;
     }
-
-    //precondition, x, y not in tiles already
-    public void diverMovement(int x, int y, List<Tile> tiles){
-        if (x > 0 && board.get(y).get(x - 1) != null && !board.get(y).get(x - 1).isMovable() && !tiles.contains(board.get(y).get(x - 1))) {
-            diverMovement(x - 1, y, tiles);
-        } else if (x > 0){
-            if (!tiles.contains(board.get(y).get(x - 1)))
-                tiles.add(board.get(y).get(x - 1));
-        }
-        if (x < 5 && board.get(y).get(x + 1) != null && !board.get(y).get(x + 1).isMovable() && !tiles.contains(board.get(y).get(x + 1))) {
-            diverMovement(x + 1, y, tiles);
-        } else if (x < 5){
-            if (!tiles.contains(board.get(y).get(x + 1)))
-                tiles.add(board.get(y).get(x + 1));
-        }
-        if (y > 0 && board.get(y - 1).get(x) != null && !board.get(y - 1).get(x).isMovable() && !tiles.contains(board.get(y - 1).get(x))) {
-            diverMovement(x, y - 1, tiles);
-        } else if (y > 0){
-            if (!tiles.contains(board.get(y - 1).get(x)))
-                tiles.add(board.get(y - 1).get(x));
-        }
-        if (y < 5 && board.get(y + 1).get(x) != null && !board.get(y + 1).get(x).isMovable() && !tiles.contains(board.get(y + 1).get(x))) {
-            diverMovement(x, y + 1, tiles);
-        } else if (y < 5){
-            if (!tiles.contains(board.get(y + 1).get(x)))
-                tiles.add(board.get(y + 1).get(x));
-        }
-    }
-
 }

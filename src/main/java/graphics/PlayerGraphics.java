@@ -2,6 +2,7 @@ package graphics;
 
 import app.ForbiddenIsland;
 import board.Tile;
+import board.TreasureTile;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -9,7 +10,6 @@ import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -77,42 +77,79 @@ public class PlayerGraphics implements Initializable {
             ImageView img = new ImageView(SwingFXUtils.toFXImage(p.getGraphics(), null));
             if (p.equals(currentPlayer)) {
                 img.setOnMouseClicked((event) -> {
-                    playerClicked = p;
-                    for (Tile t : ForbiddenIsland.getBoard().getMovableTilePos(p)) {
-                        int x1 = t.getPositionX();
-                        int y1 = t.getPositionY();
-                        StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x1, y1));
-                        Circle c = new Circle();
-                        c.setRadius(20);
-                        c.setFill(Color.GRAY);
-                        c.setOnMouseClicked((event1) -> {
-                            ContextMenu menu = new ContextMenu();
-                            if (currentPlayer.getRole().getName().equalsIgnoreCase("Pilot")){
-                                MenuItem moveMenu = new MenuItem("Fly");
-                                moveMenu.setOnAction(event2 -> {
+                    playerClicked = null;
+                    ContextMenu menu = new ContextMenu();
+                    if (currentPlayer.getRole().getName().equalsIgnoreCase("Pilot")){
+                        MenuItem moveMenu = new MenuItem("Fly");
+                        moveMenu.setOnAction(event2 -> {
+                            playerClicked = p;
+                            for (Tile t : p.getRole().getMovableTiles(p)) {
+                                int x1 = t.getPositionX();
+                                int y1 = t.getPositionY();
+                                StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x1, y1));
+                                Circle c = new Circle();
+                                c.setRadius(20);
+                                c.setFill(Color.GRAY);
+                                c.setOnMouseClicked((event1) -> {
                                     if (TurnManager.addAction("P (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
                                         p.setPos(x1, y1);
                                         refreshDisplay();
                                     }
                                 });
-                                menu.getItems().add(moveMenu);
-                            } else {
-                                MenuItem moveMenu = new MenuItem("Move");
-                                moveMenu.setOnAction(event2 -> {
+                                sp.getChildren().add(c);
+                            }
+                        });
+                        menu.getItems().add(moveMenu);
+                        menu.show(img, Side.BOTTOM, 0, 0);
+                    } else {
+                        MenuItem moveMenu = new MenuItem("Move");
+                        moveMenu.setOnAction(event2 -> {
+                            playerClicked = p;
+                            for (Tile t : p.getRole().getMovableTiles(p)) {
+                                int x1 = t.getPositionX();
+                                int y1 = t.getPositionY();
+                                StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x1, y1));
+                                Circle c = new Circle();
+                                c.setRadius(20);
+                                c.setFill(Color.GRAY);
+                                c.setOnMouseClicked((event1) -> {
                                     if (TurnManager.addAction("M (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
                                         p.setPos(x1, y1);
                                         refreshDisplay();
                                     }
                                 });
-                                menu.getItems().add(moveMenu);
+                                sp.getChildren().add(c);
                             }
-                            if (ForbiddenIsland.getBoard().getBoard().get(y1).get(x1).isFlooded()) {
-                                menu.getItems().add(new MenuItem("Shore Up"));
-                            }
-                            menu.show(c, Side.BOTTOM, 0, 0);
-                            playerClicked = p;
                         });
-                        sp.getChildren().add(c);
+                        menu.getItems().add(moveMenu);
+                        menu.show(img, Side.BOTTOM, 0, 0);
+                    }
+                    if (p.getRole().getShorableTiles(p).size() > 0) {
+                        MenuItem shoreMenu = new MenuItem("Shore Up");
+                        shoreMenu.setOnAction(event1 -> {
+                            for (Tile t : p.getRole().getShorableTiles(p)) {
+                                int x1 = t.getPositionX();
+                                int y1 = t.getPositionY();
+                                StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x1, y1));
+                                Circle c = new Circle();
+                                c.setRadius(20);
+                                c.setFill(Color.GRAY);
+                                c.setOnMouseClicked((event2) -> {
+                                    if (TurnManager.addAction("S (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
+                                        p.setPos(x1, y1);
+                                        refreshDisplay();
+                                    }
+                                });
+                                sp.getChildren().add(c);
+                            }
+                        });
+                        menu.getItems().add(shoreMenu);
+                    }
+                    if (ForbiddenIsland.getBoard().getBoard().get(p.getPositionY()).get(p.getPositionX()) instanceof TreasureTile treasureTile){
+                        if (!ForbiddenIsland.getBoard().getTreasuresClaimed().get(treasureTile.getTreasureHELD())) {
+                            MenuItem claimMenu = new MenuItem("Claim Treasure");
+                            menu.getItems().add(claimMenu);
+                        }
                     }
                 });
             } else {
@@ -122,7 +159,25 @@ public class PlayerGraphics implements Initializable {
                         menu.getItems().add(new MenuItem("Give Cards"));
                     }
                     if (currentPlayer.getRole().getName().equals("Navigator")){
-                        menu.getItems().add(new MenuItem("Navigate"));
+                        MenuItem navigateMenu = new MenuItem("Navigate");
+                        navigateMenu.setOnAction(event1 -> {
+                            for (Tile t : p.getRole().getNavigatableTiles(p)) {
+                                int x1 = t.getPositionX();
+                                int y1 = t.getPositionY();
+                                StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x1, y1));
+                                Circle c = new Circle();
+                                c.setRadius(20);
+                                c.setFill(Color.GRAY);
+                                c.setOnMouseClicked((event2) -> {
+                                    if (TurnManager.addAction("N" + p.getRole().toNotation() + " (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
+                                        p.setPos(x1, y1);
+                                        refreshDisplay();
+                                    }
+                                });
+                                sp.getChildren().add(c);
+                            }
+                        });
+                        menu.getItems().add(navigateMenu);
                     }
                     menu.show(img, Side.BOTTOM, 0, 0);
                 });

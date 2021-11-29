@@ -6,6 +6,11 @@ public class TreasureDeck{
     private Stack<TreasureCard> activeCards;
     private Stack<TreasureCard> discardedCards;
 
+    public TreasureDeck(List<TreasureCard> treasureCards){
+        activeCards.addAll(treasureCards);
+        reset();
+    }
+
     /* will shuffle activeCards when the
      initial treasure cards are being initialized */
     /*public void shuffle(){
