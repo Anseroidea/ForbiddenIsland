@@ -207,6 +207,9 @@ public class PlayerGraphics implements Initializable {
         if (players.size() >= 2){
             Polygon p1 = (Polygon) hand1.getChildren().get(0);
             p1.setFill(players.get(0).getRole().getColor());
+            for (int i = 0; i < 5 && i < players.get(0).getDeck().size(); i++){
+
+            }
         }
         if (players.size() >= 3){
             hand2.setVisible(true);
