@@ -25,11 +25,11 @@
                <padding>
                   <Insets bottom="16.0" left="80.0" top="16.0" />
                </padding>
-               <ImageView fitHeight="188.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true" />
-               <ImageView fitHeight="188.0" fitWidth="128.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-               <ImageView fitHeight="188.0" fitWidth="128.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-               <ImageView fitHeight="188.0" fitWidth="128.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-               <ImageView fitHeight="188.0" fitWidth="128.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="180.0" fitWidth="121.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
             </HBox>
          </StackPane>
          <Label layoutX="14.0" layoutY="151.0" text="Hands:">
@@ -44,11 +44,11 @@
                   <padding>
                      <Insets bottom="16.0" left="140.0" top="16.0" />
                   </padding>
-                  <ImageView fitHeight="120.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="120.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                </HBox>
             </StackPane>
             <StackPane fx:id="hand2">
@@ -57,11 +57,11 @@
                   <padding>
                      <Insets bottom="16.0" left="140.0" top="16.0" />
                   </padding>
-                  <ImageView fitHeight="120.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="120.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                </HBox>
             </StackPane>
             <StackPane fx:id="hand3">
@@ -70,11 +70,11 @@
                   <padding>
                      <Insets bottom="16.0" left="140.0" top="16.0" />
                   </padding>
-                  <ImageView fitHeight="120.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="82.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="120.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                </HBox>
             </StackPane>
          </VBox>

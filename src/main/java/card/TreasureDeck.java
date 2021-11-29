@@ -33,10 +33,17 @@ public class TreasureDeck{
         for(int i = 0 ; i < treasureCardsToBeDrawn; i++){
             TreasureCard c = activeCards.peek();
             drawn.add(c);
-            discardedCards.push(c);
             activeCards.pop();
         }
         return drawn;
+    }
+
+    public void addCards(List<TreasureCard> tc){
+        activeCards.addAll(tc);
+    }
+
+    public void discardCard(TreasureCard treasureCard){
+        discardedCards.add(treasureCard);
     }
 
 }

@@ -102,8 +102,10 @@ public class BoardGame {
         return tiles;
     }
 
-    private void dealCards(){
-
+    private void dealTreasureCards(){
+        for (Player p : players){
+            p.addCards(treasureDeck.draw(2));
+        }
     }
 
     private void initializeCards(){
@@ -137,9 +139,11 @@ public class BoardGame {
                         treasureList.add(treasureCard);
                     }
                 } else if(images[i].getName().equals("Card_Waters_Rise.png")){
+                    treasureDeck = new TreasureDeck(treasureList);
+                    dealTreasureCards();
                     for(int a = 0 ; a < 3; a++){
                         treasureCard = new TreasureCard(name, ImageIO.read(currentImage));
-                        treasureList.add(treasureCard);
+                        treasureDeck.addCards(Arrays.asList(treasureCard));
                     }
                 }
             } catch (IOException e){
@@ -147,8 +151,6 @@ public class BoardGame {
             }
         }
         treasureDeck = new TreasureDeck(treasureList);
-
-
         File floodCardImagePath = null;
         FloodCard floodCard;
         try {
