@@ -11,6 +11,13 @@ public class FloodDeck{
     private Stack<FloodCard> activeCards;
     private Stack<FloodCard> discardedCards;
 
+    public FloodDeck(List<FloodCard> floodCards){
+        activeCards = new Stack<>();
+        discardedCards = new Stack<>();
+        activeCards.addAll(floodCards);
+        shuffle();
+    }
+
     /* will shuffle activeCards when the
      initial treasure cards are being initialized */
     public void shuffle(){

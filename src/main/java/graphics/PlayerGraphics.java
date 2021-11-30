@@ -3,6 +3,7 @@ package graphics;
 import app.ForbiddenIsland;
 import board.Tile;
 import board.TreasureTile;
+import card.TreasureCard;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -13,9 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
@@ -25,6 +24,7 @@ import player.TurnManager;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -197,10 +197,19 @@ public class PlayerGraphics implements Initializable {
                 s.getChildren().add(img);
             }
         }
+        //hands
+        players = new ArrayList<>(TurnManager.getPlayers());
         hand2.setVisible(false);
         hand3.setVisible(false);
         Polygon p = (Polygon) mainHand.getChildren().get(0);
-        players = new ArrayList<>(TurnManager.getPlayers());
+        HBox h = (HBox) mainHand.getChildren().get(1);
+        for (int i = 0; i < 5 && i < players.get(players.size() - 1).getDeck().size(); i++){
+            ImageView img = (ImageView) h.getChildren().get(i);
+            List<TreasureCard> mainHandDeck= players.get(players.size() - 1).getDeck();
+            Collections.sort(mainHandDeck);
+            TreasureCard tc = mainHandDeck.get(i);
+            img.setImage(SwingFXUtils.toFXImage(tc.getGraphic(), null));
+        }
         p.setFill(players.get(players.size() - 1).getRole().getColor());
         topLabelBox.setFill(players.get(players.size() - 1).getRole().getColor());
         topLabel.setText(players.get(players.size() - 1).getRole().getClass().getSimpleName());
