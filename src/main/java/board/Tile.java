@@ -69,6 +69,15 @@ public class Tile
             return true;
     }
 
+    public boolean isLand()
+    {
+        if(floodState.equals(TileFloodState.SUNK)||floodState.equals(TileFloodState.FLOOD))
+        {
+            return false;
+        }
+        else
+            return true;
+    }
     public boolean isMovable()// will return false if FLOOD;
     {
         return !floodState.equals(TileFloodState.SUNK);
