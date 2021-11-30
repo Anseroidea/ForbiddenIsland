@@ -47,14 +47,14 @@ public class BoardGraphics implements Initializable {
             waterLevelGauge.setMaxValue(waterLevel.getTotalSteps());
         }
         waterLevelGauge.setValue(waterLevel.getSteps());
-        System.out.println(waterLevelGauge);
     }
 
     public void refreshTiles(){
         List<List<Tile>> board = ForbiddenIsland.getBoard().getBoard();
+        this.board.getChildren().clear();
         for (int r = 0; r < 6; r++){
             for (int c = 0; c < 6; c++){
-                if (board.get(r).get(c) != null){
+                if (board.get(r).get(c) != null && board.get(r).get(c).isMovable()){
                     StackPane s = new StackPane();
                     s.getChildren().add(new ImageView(SwingFXUtils.toFXImage(board.get(r).get(c).getGraphic(), null)));
                     Label l = new Label(board.get(r).get(c).getName());

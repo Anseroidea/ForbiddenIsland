@@ -33,6 +33,7 @@ public class BoardGame {
         initializePlayers(numPlayers);
         TurnManager.setPlayers(players.toArray(new Player[numPlayers]));
         initializeCards();
+        initialFlood();
     }
 
 
@@ -105,8 +106,7 @@ public class BoardGame {
 
     private void dealTreasureCards(){
         for (Player p : players){
-            p.addCards(treasureDeck.draw(5));
-            System.out.println("hii");
+            p.addCards(treasureDeck.draw(2));
         }
     }
 
@@ -166,12 +166,14 @@ public class BoardGame {
         for (File f : floodCards){
             String name = f.getName().substring(0, f.getName().indexOf("."));
             try {
-                floodCard = new FloodCard(name, ImageIO.read(f));
+                System.out.println(Tile.getTile(name).getName());
+                floodCard = new FloodCard(Tile.getTile(name), ImageIO.read(f));
                 floodCardList.add(floodCard);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        floodDeck = new FloodDeck(floodCardList);
 
     }
 
@@ -184,7 +186,7 @@ public class BoardGame {
             BufferedImage im = null;
             try {
                 System.out.println("/images/players/"+r.getClass().getSimpleName() + "_Adventurer_Icon.png");
-                im = ImageIO.read(ForbiddenIsland.class.getResource("/images/players/"+r.getClass().getSimpleName() + "_Adventurer_Icon.png").toURI().toURL());
+                im = ImageIO.read(ForbiddenIsland.class.getResource("/images/players/icons/"+r.getClass().getSimpleName() + "_Adventurer_Icon.png").toURI().toURL());
             } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
             }
@@ -200,6 +202,29 @@ public class BoardGame {
                 }
             }
         }
+    }
+
+    public void initialFlood(){
+        List<FloodCard> fc = floodDeck.draw(6);
+        for (int i = 0; i < 6; i++){
+            FloodCard card = fc.get(i);
+            Tile t = card.getTile();
+            t.floodTile();
+            floodDeck.killCard(card);
+        }
+    }
+
+    public void nextTurn(){
+        Player currentPlayer = TurnManager.getCurrentPlayer();
+        currentPlayer.addCards(treasureDeck.draw(2));
+        List<FloodCard> floodCards = floodDeck.draw(waterLevel.getLevel());
+        for (FloodCard fc : floodCards){
+            fc.getTile().floodTile();
+            if (fc.getTile().isSunk()){
+                floodDeck.killCard(fc);
+            }
+        }
+        TurnManager.endTurn();
     }
 
     public WaterLevel getWaterLevel() {

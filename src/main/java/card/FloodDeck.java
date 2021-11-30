@@ -10,10 +10,12 @@ import java.util.Stack;
 public class FloodDeck{
     private Stack<FloodCard> activeCards;
     private Stack<FloodCard> discardedCards;
+    private Stack<FloodCard> deadCards;
 
     public FloodDeck(List<FloodCard> floodCards){
         activeCards = new Stack<>();
         discardedCards = new Stack<>();
+        deadCards = new Stack<>();
         activeCards.addAll(floodCards);
         shuffle();
     }
@@ -38,12 +40,20 @@ public class FloodDeck{
     public List<FloodCard> draw(int floodCardsToBeDrawn) {
         List<FloodCard> drawn = new ArrayList<FloodCard>();
         for(int i = 0 ; i < floodCardsToBeDrawn; i++){
+            if (activeCards.isEmpty()){
+                reset();
+            }
             FloodCard c = activeCards.peek();
             drawn.add(c);
             discardedCards.push(c);
             activeCards.pop();
         }
         return drawn;
+    }
+
+    public void killCard(FloodCard fc){
+        discardedCards.remove(fc);
+        deadCards.add(fc);
     }
 
 }

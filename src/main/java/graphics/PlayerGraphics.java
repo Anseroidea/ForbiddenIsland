@@ -22,11 +22,12 @@ import javafx.scene.shape.Rectangle;
 import player.Player;
 import player.TurnManager;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PlayerGraphics implements Initializable {
     public Rectangle topLabelBox;
@@ -40,16 +41,15 @@ public class PlayerGraphics implements Initializable {
     public Label actionStrings;
     private Player playerClicked;
     private Player currentPlayer;
+    private BufferedImage selectIcon;
 
     public void playSpecialCards(MouseEvent mouseEvent) {
         System.out.println("The player wants to play special cards!");
     }
 
     public void endTurn(MouseEvent mouseEvent) {
-        TurnManager.endTurn();
-        refreshDisplay();
-        System.out.println(currentPlayer.getRole().getName());
-        System.out.println("hi");
+        ForbiddenIsland.getBoard().nextTurn();
+        BoardStateGraphicsInitializer.refreshDisplay();
     }
 
     public void undo(MouseEvent mouseEvent) {
@@ -216,19 +216,40 @@ public class PlayerGraphics implements Initializable {
         if (players.size() >= 2){
             Polygon p1 = (Polygon) hand1.getChildren().get(0);
             p1.setFill(players.get(0).getRole().getColor());
+            HBox h1 = (HBox) hand1.getChildren().get(1);
             for (int i = 0; i < 5 && i < players.get(0).getDeck().size(); i++){
-
+                ImageView img = (ImageView) h1.getChildren().get(i);
+                List<TreasureCard> deck = players.get(0).getDeck();
+                Collections.sort(deck);
+                TreasureCard tc = deck.get(i);
+                img.setImage(SwingFXUtils.toFXImage(tc.getSmallGraphic(), null));
             }
         }
         if (players.size() >= 3){
             hand2.setVisible(true);
             Polygon p1 = (Polygon) hand2.getChildren().get(0);
             p1.setFill(players.get(1).getRole().getColor());
+            HBox h1 = (HBox) hand2.getChildren().get(1);
+            for (int i = 0; i < 5 && i < players.get(1).getDeck().size(); i++){
+                ImageView img = (ImageView) h1.getChildren().get(i);
+                List<TreasureCard> deck = players.get(1).getDeck();
+                Collections.sort(deck);
+                TreasureCard tc = deck.get(i);
+                img.setImage(SwingFXUtils.toFXImage(tc.getSmallGraphic(), null));
+            }
         }
         if (players.size() == 4){
             hand3.setVisible(true);
             Polygon p1 = (Polygon) hand3.getChildren().get(0);
             p1.setFill(players.get(2).getRole().getColor());
+            HBox h1 = (HBox) hand3.getChildren().get(1);
+            for (int i = 0; i < 5 && i < players.get(2).getDeck().size(); i++){
+                ImageView img = (ImageView) h1.getChildren().get(i);
+                List<TreasureCard> deck = players.get(2).getDeck();
+                Collections.sort(deck);
+                TreasureCard tc = deck.get(i);
+                img.setImage(SwingFXUtils.toFXImage(tc.getSmallGraphic(), null));
+            }
         }
     }
 
@@ -262,6 +283,11 @@ public class PlayerGraphics implements Initializable {
                 playerClicked = null;
             }
         });
+        try {
+            selectIcon = ImageIO.read(ForbiddenIsland.class.getResource("/images/players/extra/Tile_Movement_Icon.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void refreshDisplay(){

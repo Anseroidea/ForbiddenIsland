@@ -1,6 +1,7 @@
 package board;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class Tile
     private BufferedImage graphic;
     private BufferedImage floodedGraphic;
     private static List<String> nameList= Arrays.asList("Iron Gate","Bronze Gate","Copper Gate","Silver Gate","Gold Gate", "Fools Landing", "Cave of Embers","Cave of Shadows","Coral Palace","Tidal Palace","Howling Garden","Whispering Garden","Temple of the Moon","Temple of the Sun","Breakers Bridge","Cliffs of Abandon","Crimson Forest","Dunes of Deceptions","Lost Lagoon","Misty Marsh","Observatory","Phantom Rock","Twilight Hollow","Watchtower");
+    private static List<Tile> tileList = new ArrayList<>();
     private int positionX;
     private int positionY;
 
@@ -27,7 +29,9 @@ public class Tile
         tileID= getTileID(name);
         graphic = landed;
         floodedGraphic = flooded;
+        tileList.add(this);
     }
+
 
 
     public String getName()
@@ -45,7 +49,6 @@ public class Tile
             return floodedGraphic;
         }
     }
-
 
     public boolean isFlooded()// will return false if sunk;
     {
@@ -126,6 +129,15 @@ public class Tile
             return getTileID(getName()) == getTileID(t.getName());
         }
 
+    }
+
+    public static Tile getTile(String n){
+        for (Tile t : tileList){
+            if (t.getName().equals(n)){
+                return t;
+            }
+        }
+        return null;
     }
 
 }
