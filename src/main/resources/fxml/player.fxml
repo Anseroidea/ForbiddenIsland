@@ -21,7 +21,7 @@
       <AnchorPane fx:id="screenPane" prefHeight="1080" prefWidth="1920.0">
          <StackPane fx:id="mainHand" layoutX="-72.0" layoutY="832.0">
             <Polygon fill="#0084ff" points="916.0, 828.0, 855.0, 608.0, 94.0, 608.0, 94.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
-            <HBox layoutX="10.0" layoutY="10.0" prefHeight="60.0" prefWidth="822.0" spacing="10.0">
+            <HBox layoutX="10.0" layoutY="10.0" spacing="10.0">
                <padding>
                   <Insets bottom="16.0" left="80.0" top="16.0" />
                </padding>
@@ -30,6 +30,9 @@
                <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <StackPane.margin>
+                  <Insets left="20.0" />
+               </StackPane.margin>
             </HBox>
          </StackPane>
          <Label layoutX="14.0" layoutY="151.0" text="Hands:">
@@ -40,7 +43,7 @@
          <VBox layoutX="-120.0" layoutY="209.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0">
             <StackPane fx:id="hand1" prefHeight="150.0" prefWidth="724.0">
                <Polygon fill="#0084ff" points="901.0, 828.0, 843.0, 981.0, 95.0, 981.0, 95.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
-               <HBox prefWidth="725.0" spacing="10.0">
+               <HBox spacing="10.0">
                   <padding>
                      <Insets bottom="16.0" left="140.0" top="16.0" />
                   </padding>
@@ -49,11 +52,14 @@
                   <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <StackPane.margin>
+                     <Insets left="20.0" />
+                  </StackPane.margin>
                </HBox>
             </StackPane>
             <StackPane fx:id="hand2">
                <Polygon fill="#0084ff" points="874.0, 828.0, 816.0, 977.0, 68.0, 979.0, 68.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
-               <HBox prefWidth="726.0" spacing="10.0">
+               <HBox spacing="10.0">
                   <padding>
                      <Insets bottom="16.0" left="140.0" top="16.0" />
                   </padding>
@@ -62,11 +68,14 @@
                   <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <StackPane.margin>
+                     <Insets left="20.0" />
+                  </StackPane.margin>
                </HBox>
             </StackPane>
             <StackPane fx:id="hand3">
                <Polygon fill="#0084ff" points="941.0, 828.0, 885.0, 980.0, 144.0, 980.0, 144.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
-               <HBox prefWidth="726.0" spacing="10.0">
+               <HBox spacing="10.0">
                   <padding>
                      <Insets bottom="16.0" left="140.0" top="16.0" />
                   </padding>
@@ -75,6 +84,9 @@
                   <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <StackPane.margin>
+                     <Insets left="20.0" />
+                  </StackPane.margin>
                </HBox>
             </StackPane>
          </VBox>

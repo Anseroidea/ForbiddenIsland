@@ -32,6 +32,7 @@ public class BoardGame {
         generateIsland();
         initializePlayers(numPlayers);
         TurnManager.setPlayers(players.toArray(new Player[numPlayers]));
+        initializeCards();
     }
 
 
@@ -104,7 +105,8 @@ public class BoardGame {
 
     private void dealTreasureCards(){
         for (Player p : players){
-            p.addCards(treasureDeck.draw(2));
+            p.addCards(treasureDeck.draw(5));
+            System.out.println("hii");
         }
     }
 
