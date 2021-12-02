@@ -9,6 +9,7 @@ public class WaterLevel {
     public static final int DEATH = 60;
     private int level = 2;
     private int steps = 0;
+    private int totalSteps = 0;
 
     public WaterLevel() throws InvalidDifficultyException {
         this(NORMAL);
@@ -32,6 +33,7 @@ public class WaterLevel {
     }
 
     public void raiseLevel(){
+        totalSteps++;
         steps++;
         if (level == 2 && steps > 1){
             level++;
@@ -55,7 +57,7 @@ public class WaterLevel {
         return level;
     }
 
-    public int getTotalSteps(){
+    public int getTotalStepsOfLevel(){
         return switch (level){
             case 2, 4, 5 -> 2;
             case 3 -> 3;
@@ -63,6 +65,11 @@ public class WaterLevel {
             default -> throw new IllegalStateException("Unexpected value: " + level);
         };
     }
+
+    public int getTotalSteps(){
+        return totalSteps;
+    }
+
 
     public int getSteps(){
         return steps;

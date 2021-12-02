@@ -34,20 +34,8 @@ public class BoardGraphics implements Initializable {
     public Label waterLevelLabel;
     public Gauge waterLevelGauge;
     public static Font castellar = Font.loadFont(ForbiddenIsland.class.getResource("/fonts/castellar.ttf").toExternalForm(), 10);
-
-
-    public void increaseWaterLevel(MouseEvent mouseEvent) {
-        WaterLevel waterLevel = ForbiddenIsland.getBoard().getWaterLevel();
-        waterLevel.raiseLevel();
-        waterLevelLabel.setText(waterLevel.getLevel() + "" + waterLevel.getSteps());
-
-        if (waterLevelGauge.getMaxValue() != waterLevel.getTotalSteps()){
-            System.out.println("q");
-            waterLevelGauge.setValue(0);
-            waterLevelGauge.setMaxValue(waterLevel.getTotalSteps());
-        }
-        waterLevelGauge.setValue(waterLevel.getSteps());
-    }
+    public ImageView stick;
+    public final int initialStickY = 303;
 
     public void refreshTiles(){
         List<List<Tile>> board = ForbiddenIsland.getBoard().getBoard();
@@ -67,6 +55,9 @@ public class BoardGraphics implements Initializable {
         }
     }
 
+    public void refreshWaterLevel(){
+        stick.setY(initialStickY - ForbiddenIsland.getBoard().getWaterLevel().getTotalSteps() * 52);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -80,6 +71,7 @@ public class BoardGraphics implements Initializable {
 
     public void refreshDisplay() {
         refreshTiles();
+        refreshWaterLevel();
     }
 }
 

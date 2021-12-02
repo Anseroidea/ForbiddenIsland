@@ -216,7 +216,11 @@ public class BoardGame {
 
     public void nextTurn(){
         Player currentPlayer = TurnManager.getCurrentPlayer();
-        currentPlayer.addCards(treasureDeck.draw(2));
+        List<TreasureCard> cardsDrawn = treasureDeck.draw(2);
+        while (cardsDrawn.contains("1")){
+
+        }
+        currentPlayer.addCards(cardsDrawn);
         List<FloodCard> floodCards = floodDeck.draw(waterLevel.getLevel());
         for (FloodCard fc : floodCards){
             fc.getTile().floodTile();

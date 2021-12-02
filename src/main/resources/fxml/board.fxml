@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.BoardGraphics">
-    <GridPane fx:id="board" hgap="16.0" layoutX="628.0" layoutY="12.0" prefHeight="1008.0" prefWidth="1008.0" vgap="16.0">
+    <GridPane fx:id="board" hgap="16.0" layoutX="628.0" layoutY="12.0" prefHeight="1010.0" prefWidth="1010.0" vgap="16.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="NEVER" minWidth="159.0" prefWidth="159.0" />
-            <ColumnConstraints hgrow="NEVER" minWidth="159.0" prefWidth="159.0" />
-            <ColumnConstraints hgrow="NEVER" minWidth="159.0" prefWidth="159.0" />
-            <ColumnConstraints hgrow="NEVER" minWidth="159.0" prefWidth="159.0" />
-            <ColumnConstraints hgrow="NEVER" minWidth="159.0" prefWidth="159.0" />
-            <ColumnConstraints hgrow="NEVER" minWidth="159.0" prefWidth="159.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints minHeight="159.0" prefHeight="159.0" vgrow="NEVER" />
-            <RowConstraints minHeight="159.0" prefHeight="159.0" vgrow="NEVER" />
-            <RowConstraints minHeight="159.0" prefHeight="159.0" vgrow="NEVER" />
-            <RowConstraints minHeight="159.0" prefHeight="159.0" vgrow="NEVER" />
-            <RowConstraints minHeight="159.0" prefHeight="159.0" vgrow="NEVER" />
-            <RowConstraints minHeight="159.0" prefHeight="159.0" vgrow="NEVER" />
+            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
         </rowConstraints>
     </GridPane>
+    <ImageView fitHeight="349.0" fitWidth="128.0" layoutX="1762.0" layoutY="32.0" pickOnBounds="true"
+               preserveRatio="true">
+        <Image url="@../images/waterLevel/Water_Meter.png"/>
+    </ImageView>
+    <ImageView fitHeight="67.0" fitWidth="78.0" layoutX="1677.0" layoutY="303.0" pickOnBounds="true"
+               preserveRatio="true" fx:id = "stick">
+        <Image url="@../images/waterLevel/Water_Stick.png"/>
+    </ImageView>
 
 </AnchorPane>

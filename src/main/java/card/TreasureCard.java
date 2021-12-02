@@ -39,6 +39,14 @@ public class TreasureCard extends Card implements Comparable<TreasureCard> {
         return treasureId.compareTo(o.treasureId);
     }
 
+    public boolean equals(Object o){
+        if (o instanceof TreasureCard){
+            return treasureId.equals(((TreasureCard) o).treasureId);
+        } else {
+            return false;
+        }
+    }
+
     public static BufferedImage resize(BufferedImage img, int newW, int newH) {
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
