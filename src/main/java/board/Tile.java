@@ -135,7 +135,7 @@ public class Tile
             return false;
         } else {
             Tile t = (Tile) o;
-            return getTileID(getName()) == getTileID(t.getName());
+            return getPositionY() == t.getPositionY() && getPositionX() == t.getPositionX();
         }
 
     }

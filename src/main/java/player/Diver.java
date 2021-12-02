@@ -25,31 +25,36 @@ public class Diver extends Role {
 	public List<Tile> diverMovement(int x, int y){
 		List<Tile> tiles = new ArrayList<>();
 		diverMovement(x, y, tiles);
+		tiles.remove(ForbiddenIsland.getBoard().getBoard().get(y).get(x));
 		return tiles;
 	}
 
 	//precondition, x, y not in tiles already
 	public void diverMovement(int x, int y, List<Tile> tiles){
 		List<List<Tile>> board = ForbiddenIsland.getBoard().getBoard();
-		if (x > 0 && board.get(y).get(x - 1) != null && !board.get(y).get(x - 1).isMovable() && !tiles.contains(board.get(y).get(x - 1))) {
+		if (!board.get(y).get(x).isSunk()){
+			tiles.add(board.get(y).get(x));
+		}
+		System.out.println(board.get(y).get(x).getName());
+		if (x > 0 && board.get(y).get(x - 1) != null && !board.get(y).get(x - 1).isLand() && !tiles.contains(board.get(y).get(x - 1))) {
 			diverMovement(x - 1, y, tiles);
 		} else if (x > 0 && board.get(y).get(x - 1) != null){
 			if (!tiles.contains(board.get(y).get(x - 1)))
 				tiles.add(board.get(y).get(x - 1));
 		}
-		if (x < 5 && board.get(y).get(x + 1) != null && !board.get(y).get(x + 1).isMovable() && !tiles.contains(board.get(y).get(x + 1))) {
+		if (x < 5 && board.get(y).get(x + 1) != null && !board.get(y).get(x + 1).isLand() && !tiles.contains(board.get(y).get(x + 1))) {
 			diverMovement(x + 1, y, tiles);
 		} else if (x < 5 && board.get(y).get(x + 1) != null){
 			if (!tiles.contains(board.get(y).get(x + 1)))
 				tiles.add(board.get(y).get(x + 1));
 		}
-		if (y > 0 && board.get(y - 1).get(x) != null && !board.get(y - 1).get(x).isMovable() && !tiles.contains(board.get(y - 1).get(x))) {
+		if (y > 0 && board.get(y - 1).get(x) != null && !board.get(y - 1).get(x).isLand() && !tiles.contains(board.get(y - 1).get(x))) {
 			diverMovement(x, y - 1, tiles);
 		} else if (y > 0 && board.get(y - 1).get(x) != null){
 			if (!tiles.contains(board.get(y - 1).get(x)))
 				tiles.add(board.get(y - 1).get(x));
 		}
-		if (y < 5 && board.get(y + 1).get(x) != null && !board.get(y + 1).get(x).isMovable() && !tiles.contains(board.get(y + 1).get(x))) {
+		if (y < 5 && board.get(y + 1).get(x) != null && !board.get(y + 1).get(x).isLand() && !tiles.contains(board.get(y + 1).get(x))) {
 			diverMovement(x, y + 1, tiles);
 		} else if (y < 5 && board.get(y + 1).get(x) != null){
 			if (!tiles.contains(board.get(y + 1).get(x)))

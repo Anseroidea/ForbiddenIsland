@@ -77,6 +77,7 @@ public class PlayerGraphics implements Initializable {
             ImageView img = new ImageView(SwingFXUtils.toFXImage(p.getGraphics(), null));
             if (p.equals(currentPlayer)) {
                 img.setOnMouseClicked((event) -> {
+                    System.out.println(currentPlayer.getRole().getName() + " clicked");
                     playerClicked = null;
                     ContextMenu menu = new ContextMenu();
                     if (currentPlayer.getRole().getName().equalsIgnoreCase("Pilot")){
@@ -87,16 +88,15 @@ public class PlayerGraphics implements Initializable {
                                 int x1 = t.getPositionX();
                                 int y1 = t.getPositionY();
                                 StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x1, y1));
-                                Circle c = new Circle();
-                                c.setRadius(20);
-                                c.setFill(Color.GRAY);
-                                c.setOnMouseClicked((event1) -> {
+                                ImageView c = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
+                                Pane pa = new Pane(c);
+                                pa.setOnMouseClicked((event1) -> {
                                     if (TurnManager.addAction("P (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
                                         p.setPos(x1, y1);
                                         refreshDisplay();
                                     }
                                 });
-                                sp.getChildren().add(c);
+                                sp.getChildren().add(pa);
                             }
                         });
                         menu.getItems().add(moveMenu);
@@ -105,24 +105,27 @@ public class PlayerGraphics implements Initializable {
                         MenuItem moveMenu = new MenuItem("Move");
                         moveMenu.setOnAction(event2 -> {
                             playerClicked = p;
+                            System.out.println(currentPlayer.getRole().getName() + " move clicked");
+                            System.out.println(playerClicked);
                             for (Tile t : p.getRole().getMovableTiles(p)) {
                                 int x1 = t.getPositionX();
                                 int y1 = t.getPositionY();
                                 StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x1, y1));
-                                Circle c = new Circle();
-                                c.setRadius(20);
-                                c.setFill(Color.GRAY);
-                                c.setOnMouseClicked((event1) -> {
+                                ImageView c = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
+                                Pane pa = new Pane(c);
+                                pa.setOnMouseClicked((event1) -> {
                                     if (TurnManager.addAction("M (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
                                         p.setPos(x1, y1);
                                         refreshDisplay();
                                     }
                                 });
-                                sp.getChildren().add(c);
+                                sp.getChildren().add(pa);
                             }
+                            playerClicked = null;
                         });
                         menu.getItems().add(moveMenu);
                         menu.show(img, Side.BOTTOM, 0, 0);
+                        System.out.println(playerClicked + " q ");
                     }
                     if (p.getRole().getShorableTiles(p).size() > 0) {
                         MenuItem shoreMenu = new MenuItem("Shore Up");
@@ -131,16 +134,15 @@ public class PlayerGraphics implements Initializable {
                                 int x1 = t.getPositionX();
                                 int y1 = t.getPositionY();
                                 StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x1, y1));
-                                Circle c = new Circle();
-                                c.setRadius(20);
-                                c.setFill(Color.GRAY);
-                                c.setOnMouseClicked((event2) -> {
+                                ImageView c = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
+                                Pane pa = new Pane(c);
+                                pa.setOnMouseClicked((event2) -> {
                                     if (TurnManager.addAction("S (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
                                         p.setPos(x1, y1);
                                         refreshDisplay();
                                     }
                                 });
-                                sp.getChildren().add(c);
+                                sp.getChildren().add(pa);
                             }
                         });
                         menu.getItems().add(shoreMenu);
@@ -165,16 +167,15 @@ public class PlayerGraphics implements Initializable {
                                 int x1 = t.getPositionX();
                                 int y1 = t.getPositionY();
                                 StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x1, y1));
-                                Circle c = new Circle();
-                                c.setRadius(20);
-                                c.setFill(Color.GRAY);
-                                c.setOnMouseClicked((event2) -> {
+                                ImageView c = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
+                                Pane pa = new Pane(c);
+                                pa.setOnMouseClicked((event2) -> {
                                     if (TurnManager.addAction("N" + p.getRole().toNotation() + " (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
                                         p.setPos(x1, y1);
                                         refreshDisplay();
                                     }
                                 });
-                                sp.getChildren().add(c);
+                                sp.getChildren().add(pa);
                             }
                         });
                         menu.getItems().add(navigateMenu);
@@ -267,26 +268,29 @@ public class PlayerGraphics implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        board.setGridLinesVisible(true);
         screenPane.setOnMouseClicked((event) -> {
-            System.out.println("Player Clicked" + playerClicked);
-            if (playerClicked == null){
-                for (Node n : board.getChildren()){
-                    StackPane s = (StackPane) n;
-                    for (int i = 0; i < s.getChildren().size(); i++){
-                        if (s.getChildren().get(i) instanceof Circle){
-                            s.getChildren().remove(i--);
-                        }
-                    }
-                }
-            } else {
-                playerClicked = null;
-            }
+            refreshSelections();
         });
         try {
             selectIcon = ImageIO.read(ForbiddenIsland.class.getResource("/images/players/extra/Tile_Movement_Icon.png"));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void refreshSelections(){
+        System.out.println("Current state: " + playerClicked);
+        if (playerClicked == null){
+            for (Node n : board.getChildren()){
+                StackPane s = (StackPane) n;
+                for (int i = 0; i < s.getChildren().size(); i++){
+                    if (s.getChildren().get(i) instanceof StackPane){
+                        s.getChildren().remove(i--);
+                    }
+                }
+            }
+        } else {
+            playerClicked = null;
         }
     }
 

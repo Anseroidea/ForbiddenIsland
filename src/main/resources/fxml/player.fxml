@@ -42,8 +42,8 @@
          </Label>
          <VBox layoutX="-120.0" layoutY="209.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0">
             <StackPane fx:id="hand1" prefHeight="150.0" prefWidth="724.0">
-               <Polygon fill="#0084ff" points="901.0, 828.0, 843.0, 981.0, 95.0, 981.0, 95.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
-               <HBox spacing="10.0">
+               <Polygon fill="#0084ff" points="807.0, 828.0, 772.0, 981.0, 95.0, 981.0, 95.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+               <HBox prefWidth="744.0" spacing="10.0">
                   <padding>
                      <Insets bottom="16.0" left="140.0" top="16.0" />
                   </padding>
@@ -57,25 +57,25 @@
                   </StackPane.margin>
                </HBox>
             </StackPane>
-            <StackPane fx:id="hand2">
-               <Polygon fill="#0084ff" points="874.0, 828.0, 816.0, 977.0, 68.0, 979.0, 68.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
-               <HBox spacing="10.0">
-                  <padding>
-                     <Insets bottom="16.0" left="140.0" top="16.0" />
-                  </padding>
-                  <ImageView fitHeight="120.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <StackPane.margin>
-                     <Insets left="20.0" />
-                  </StackPane.margin>
-               </HBox>
+            <StackPane fx:id="hand2" prefHeight="150.0" prefWidth="724.0">
+               <Polygon fill="#0084ff" points="807.0, 828.0, 772.0, 981.0, 95.0, 981.0, 95.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+                  <HBox prefWidth="744.0" spacing="10.0">
+                        <padding>
+                           <Insets bottom="16.0" left="140.0" top="16.0" />
+                        </padding>
+                        <ImageView fitHeight="120.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                     <StackPane.margin>
+                        <Insets left="20.0" />
+                     </StackPane.margin>
+                  </HBox>
             </StackPane>
-            <StackPane fx:id="hand3">
-               <Polygon fill="#0084ff" points="941.0, 828.0, 885.0, 980.0, 144.0, 980.0, 144.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
-               <HBox spacing="10.0">
+            <StackPane fx:id="hand3" prefHeight="150.0" prefWidth="724.0">
+               <Polygon fill="#0084ff" points="807.0, 828.0, 772.0, 981.0, 95.0, 981.0, 95.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+               <HBox prefWidth="744.0" spacing="10.0">
                   <padding>
                      <Insets bottom="16.0" left="140.0" top="16.0" />
                   </padding>
@@ -90,15 +90,15 @@
                </HBox>
             </StackPane>
          </VBox>
-         <Rectangle fx:id="topLabelBox" arcHeight="100.0" arcWidth="100.0" fill="DODGERBLUE" height="190.0" layoutX="-107.0" layoutY="-97.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="2.0" width="762.0" />
+         <Rectangle fx:id="topLabelBox" arcHeight="100.0" arcWidth="100.0" fill="DODGERBLUE" height="190.0" layoutX="-107.0" layoutY="-97.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="2.0" width="698.0" />
          <Label fx:id="topLabel" layoutX="301.0" layoutY="14.0">
             <font>
                <Font size="43.0" />
             </font>
          </Label>
-         <StackPane layoutX="1716.0" layoutY="377.0">
+         <StackPane layoutX="1710.0" layoutY="379.0" prefHeight="340.0" prefWidth="210.0">
             <children>
-               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="332.0" stroke="BLACK" strokeType="INSIDE" width="228.0" />
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="332.0" stroke="BLACK" strokeType="INSIDE" width="203.0" />
                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Action Log" StackPane.alignment="TOP_CENTER">
                   <font>
                      <Font size="28.0" />
@@ -107,7 +107,7 @@
                      <Insets top="10.0" />
                   </StackPane.margin>
                </Text>
-               <Label fx:id="actionStrings" prefHeight="259.0" prefWidth="189.0" textAlignment="CENTER" wrapText="true" StackPane.alignment="TOP_CENTER">
+               <Label fx:id="actionStrings" prefHeight="260.0" prefWidth="150.0" textAlignment="CENTER" wrapText="true" StackPane.alignment="TOP_CENTER">
                   <font>
                      <Font size="18.0" />
                   </font>
@@ -117,25 +117,25 @@
                </Label>
             </children>
          </StackPane>
-         <GridPane fx:id="board" hgap="14.0" layoutX="704.0" layoutY="36.0" prefHeight="1008.0" prefWidth="1008.0" vgap="14.0">
+         <GridPane fx:id="board" gridLinesVisible="true" hgap="12" layoutX="626.0" layoutY="10.0" vgap="12">
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <VBox layoutX="704.0" layoutY="36.0">
+         <VBox layoutX="621.0" layoutY="10.0">
             <children>
                <Button mnemonicParsing="false" onMouseClicked="#undo" prefHeight="77.0" prefWidth="172.0" text="Undo">
                   <font>
@@ -149,7 +149,7 @@
                </Button>
             </children>
          </VBox>
-         <Button layoutX="1556.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#playSpecialCards" prefHeight="172.0" prefWidth="171.0" text="Play Special Cards" textAlignment="CENTER" wrapText="true">
+         <Button layoutX="1500.0" layoutY="4.0" mnemonicParsing="false" onMouseClicked="#playSpecialCards" prefHeight="172.0" prefWidth="171.0" text="Play Special Cards" textAlignment="CENTER" wrapText="true">
             <font>
                <Font size="25.0" />
             </font>
