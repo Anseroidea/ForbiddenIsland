@@ -35,7 +35,6 @@ public class Diver extends Role {
 		if (!board.get(y).get(x).isSunk()){
 			tiles.add(board.get(y).get(x));
 		}
-		System.out.println(board.get(y).get(x).getName());
 		if (x > 0 && board.get(y).get(x - 1) != null && !board.get(y).get(x - 1).isLand() && !tiles.contains(board.get(y).get(x - 1))) {
 			diverMovement(x - 1, y, tiles);
 		} else if (x > 0 && board.get(y).get(x - 1) != null){

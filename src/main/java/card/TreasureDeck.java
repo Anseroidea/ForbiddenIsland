@@ -1,6 +1,7 @@
 package card;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TreasureDeck{
     private Stack<TreasureCard> activeCards;
@@ -33,16 +34,16 @@ public class TreasureDeck{
     public List<TreasureCard> draw(int treasureCardsToBeDrawn) {
         List<TreasureCard> drawn = new ArrayList<>();
         for(int i = 0 ; i < treasureCardsToBeDrawn; i++){
-            TreasureCard c = activeCards.peek();
+            TreasureCard c = activeCards.pop();
             System.out.println(c.getName());
             drawn.add(c);
-            activeCards.pop();
         }
         return drawn;
     }
 
     public void addCards(List<TreasureCard> tc){
         activeCards.addAll(tc);
+        shuffle();
     }
 
     public void discardCard(TreasureCard treasureCard){

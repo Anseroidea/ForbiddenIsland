@@ -145,14 +145,14 @@ public class BoardGame {
                     dealTreasureCards();
                     for(int a = 0 ; a < 3; a++){
                         treasureCard = new TreasureCard(name, ImageIO.read(currentImage));
-                        treasureDeck.addCards(Arrays.asList(treasureCard));
+                        System.out.println("hi");
+                        treasureDeck.addCards(List.of(treasureCard));
                     }
                 }
             } catch (IOException e){
                 e.printStackTrace();
             }
         }
-        treasureDeck = new TreasureDeck(treasureList);
         File floodCardImagePath = null;
         FloodCard floodCard;
         try {
