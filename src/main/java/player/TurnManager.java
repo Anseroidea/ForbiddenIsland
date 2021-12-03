@@ -15,7 +15,8 @@ public class TurnManager {
     private static Map<String, String> moveMap = new HashMap<>(){
         {
             put("M", "Moved to ");
-            put("S", "Shore up ");
+            put("S", "Shored up ");
+            put("E", "Shored up ");
             put("G", "Give Cards ");
             put("N", "Navigated ");
             put("P", "Flew to ");
@@ -54,7 +55,7 @@ public class TurnManager {
                 String shoreCoord = lastAction.substring(lastAction.indexOf("("), lastAction.indexOf("(") + 6);
                 String sShoreCoord = s.substring(s.indexOf("("), s.indexOf("(") + 6);
                 actionStrings.pop();
-                String finalAction = "X " + shoreCoord + ", " + sShoreCoord;
+                String finalAction = "E " + shoreCoord + ", " + sShoreCoord;
                 actionStrings.push(finalAction);
                 return true;
             } else if (actions == 3){
@@ -97,23 +98,36 @@ public class TurnManager {
             System.out.println(s);
             StringBuilder sb = new StringBuilder();
             String move = s.substring(0, 1);
+            sb.append(moveMap.get(move));
             switch(move){
                 case "M":
                 case "P": {
-                    sb.append(moveMap.get(move));
-                    String coord1 = s.substring(s.indexOf("("), s.indexOf("(") + 6);
                     String coord2 = s.substring(s.lastIndexOf("("), s.lastIndexOf("(") + 6);
+                    String[] coords2 = coord2.replace("(", "").replace(")", "").split(", ");
+                    sb.append(ForbiddenIsland.getBoard().getBoard().get(Integer.parseInt(coords2[1])).get(Integer.parseInt(coords2[0])).getName());
+                    formattedStrings.add(sb.toString());
+                    break;
+                }
+                case "E": {
+                    String coord1 = s.substring(s.indexOf("("), s.indexOf("(") + 6);
                     String[] coords1 = coord1.replace("(", "").replace(")", "").split(", ");
+                    sb.append(ForbiddenIsland.getBoard().getBoard().get(Integer.parseInt(coords1[1])).get(Integer.parseInt(coords1[0])).getName());
+                    sb.append(" and ");
+                    String coord2 = s.substring(s.lastIndexOf("("), s.lastIndexOf("(") + 6);
                     String[] coords2 = coord2.replace("(", "").replace(")", "").split(", ");
                     sb.append(ForbiddenIsland.getBoard().getBoard().get(Integer.parseInt(coords2[1])).get(Integer.parseInt(coords2[0])).getName());
                     formattedStrings.add(sb.toString());
                     break;
                 }
                 case "S": {
+                    String coord1 = s.substring(s.indexOf("("), s.indexOf("(") + 6);
+                    String[] coords1 = coord1.replace("(", "").replace(")", "").split(", ");
+                    sb.append(ForbiddenIsland.getBoard().getBoard().get(Integer.parseInt(coords1[1])).get(Integer.parseInt(coords1[0])).getName());
+                    formattedStrings.add(sb.toString());
                     break;
                 }
                 case "N": {
-                    sb.append(moveMap.get(move)).append(Role.fromNotation(s.substring(1, 2)).getName()).append(" to ");
+                    sb.append(Role.fromNotation(s.substring(1, 2)).getName()).append(" to ");
                     System.out.println(Role.fromNotation("N"));
                     String coord1 = s.substring(s.lastIndexOf("("), s.lastIndexOf("(") + 6);
                     String[] coords1 = coord1.replace("(", "").replace(")", "").split(", ");

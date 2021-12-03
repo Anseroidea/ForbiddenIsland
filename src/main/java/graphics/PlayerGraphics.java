@@ -89,7 +89,7 @@ public class PlayerGraphics implements Initializable {
                                 int y1 = t.getPositionY();
                                 StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x1, y1));
                                 ImageView c = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
-                                Pane pa = new Pane(c);
+                                StackPane pa = new StackPane(c);
                                 pa.setOnMouseClicked((event1) -> {
                                     if (TurnManager.addAction("P (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
                                         p.setPos(x1, y1);
@@ -112,7 +112,7 @@ public class PlayerGraphics implements Initializable {
                                 int y1 = t.getPositionY();
                                 StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x1, y1));
                                 ImageView c = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
-                                Pane pa = new Pane(c);
+                                StackPane pa = new StackPane(c);
                                 pa.setOnMouseClicked((event1) -> {
                                     if (TurnManager.addAction("M (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
                                         p.setPos(x1, y1);
@@ -135,11 +135,12 @@ public class PlayerGraphics implements Initializable {
                                 int y1 = t.getPositionY();
                                 StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x1, y1));
                                 ImageView c = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
-                                Pane pa = new Pane(c);
+                                StackPane pa = new StackPane(c);
                                 pa.setOnMouseClicked((event2) -> {
-                                    if (TurnManager.addAction("S (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
-                                        p.setPos(x1, y1);
-                                        refreshDisplay();
+                                    if (TurnManager.addAction("S (" + x1 + ", " + y1 + ")")) {
+                                        t.shoreUp();
+                                        BoardStateGraphicsInitializer.refreshTiles();
+                                        refreshActions();
                                     }
                                 });
                                 sp.getChildren().add(pa);
@@ -148,8 +149,12 @@ public class PlayerGraphics implements Initializable {
                         menu.getItems().add(shoreMenu);
                     }
                     if (ForbiddenIsland.getBoard().getBoard().get(p.getPositionY()).get(p.getPositionX()) instanceof TreasureTile treasureTile){
-                        if (!ForbiddenIsland.getBoard().getTreasuresClaimed().get(treasureTile.getTreasureHELD())) {
+                        if (!treasureTile.getTreasureHELD().isClaimed() && currentPlayer.canClaim(treasureTile.getTreasureHELD())) {
                             MenuItem claimMenu = new MenuItem("Claim Treasure");
+                            claimMenu.setOnAction(event1 -> {
+                                currentPlayer.claimTreasure(treasureTile.getTreasureHELD());
+                                BoardStateGraphicsInitializer.refreshDisplay();
+                            });
                             menu.getItems().add(claimMenu);
                         }
                     }
@@ -168,7 +173,7 @@ public class PlayerGraphics implements Initializable {
                                 int y1 = t.getPositionY();
                                 StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x1, y1));
                                 ImageView c = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
-                                Pane pa = new Pane(c);
+                                StackPane pa = new StackPane(c);
                                 pa.setOnMouseClicked((event2) -> {
                                     if (TurnManager.addAction("N" + p.getRole().toNotation() + " (" + x + ", " + y + "), (" + x1 + ", " + y1 + ")")) {
                                         p.setPos(x1, y1);
@@ -284,6 +289,7 @@ public class PlayerGraphics implements Initializable {
             for (Node n : board.getChildren()){
                 StackPane s = (StackPane) n;
                 for (int i = 0; i < s.getChildren().size(); i++){
+                    System.out.println(s.getChildren().get(i).getClass().getSimpleName());
                     if (s.getChildren().get(i) instanceof StackPane){
                         s.getChildren().remove(i--);
                     }

@@ -2,6 +2,7 @@ package player;
 
 import app.ForbiddenIsland;
 import board.Tile;
+import board.Treasure;
 import card.TreasureCard;
 
 import java.util.ArrayList;
@@ -79,6 +80,10 @@ public class Player
             System.out.println("No such card exists!");
     }
 
+    public boolean canClaim(Treasure t){
+        return deck.stream().filter(c -> c.getTreasure().equals(t)).count() >= 4;
+    }
+
     public void giveCard(Player p, TreasureCard t)
     {
         if(this.positionX == p.positionX || this.positionY == p.positionY)
@@ -108,5 +113,18 @@ public class Player
             return getRole().getId() == p.getRole().getId();
         }
         return false;
+    }
+
+    public void claimTreasure(Treasure treasureHELD) {
+        if (canClaim(treasureHELD)) {
+            int cardsRemoved = 0;
+            for (int i = deck.size() - 1; i >= 0 && cardsRemoved <= 3; i--){
+                if (deck.get(i).equals(treasureHELD.getCard())){
+                    removeCard(deck.get(i));
+                    cardsRemoved++;
+                }
+            }
+            treasureHELD.claim();
+        }
     }
 }

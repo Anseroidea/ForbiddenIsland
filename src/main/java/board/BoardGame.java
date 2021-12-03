@@ -29,6 +29,8 @@ public class BoardGame {
         }
         board = new ArrayList<>();
         players = new ArrayList<>();
+        treasures = new ArrayList<>();
+        initializeTreasures();
         generateIsland();
         initializePlayers(numPlayers);
         TurnManager.setPlayers(players.toArray(new Player[numPlayers]));
@@ -42,14 +44,7 @@ public class BoardGame {
     private FloodDeck floodDeck;
     private List<Player> players;
     private WaterLevel waterLevel;
-    private Map<Integer, Boolean> treasuresHeld = new HashMap<>(){
-        {
-            put(0, false);
-            put(1, false);
-            put(2, false);
-            put(3, false);
-        }
-    };
+    private List<Treasure> treasures;
 
     private void generateIsland(){
         List<Tile> tiles = Arrays.asList(initializeTiles());
@@ -92,7 +87,17 @@ public class BoardGame {
                 if (id <= 6){
                     regTile = new Gate(name, ImageIO.read(reg), ImageIO.read(flooded));
                 } else if (id <= 14){
-                    regTile = new TreasureTile(name, ImageIO.read(reg), ImageIO.read(flooded));
+                    Treasure t;
+                    if (id < 8){
+                        t = treasures.get(0);
+                    } else if (id < 10){
+                        t = treasures.get(1);
+                    } else if (id < 12){
+                        t = treasures.get(2);
+                    } else {
+                        t = treasures.get(3);
+                    }
+                    regTile = new TreasureTile(name, ImageIO.read(reg), ImageIO.read(flooded), t);
                 } else {
                     regTile = new Tile(name, ImageIO.read(reg), ImageIO.read(flooded));
                 }
@@ -113,7 +118,7 @@ public class BoardGame {
     private void initializeCards(){
         List<TreasureCard> treasureList = new ArrayList<>();
         File treasureCardImagePath = null;
-        TreasureCard treasureCard;
+        TreasureCard treasureCard = null;
         try {
             treasureCardImagePath = new File(ForbiddenIsland.class.getResource("/images/cards/treasureCards").toURI());
         } catch (URISyntaxException e) {
@@ -127,25 +132,25 @@ public class BoardGame {
             try {
                 if (!images[i].getName().equals("Card_Helicopter.png") && !images[i].getName().equals("Card_Sand_Bag.png") && !images[i].getName().equals("Card_Waters_Rise.png")) {
                     for (int f = 0; f < 5; f++) {
-                        treasureCard = new TreasureCard(name, ImageIO.read(currentImage));
+                        treasureCard = new HeldTreasureCard(treasures.get(Treasure.nameToID(name)), ImageIO.read(currentImage));
                         treasureList.add(treasureCard);
                     }
+                    treasureCard.getTreasure().setCard((HeldTreasureCard) treasureCard);
                 } else if(images[i].getName().equals("Card_Helicopter.png")){
                     for(int a = 0 ; a < 3; a++){
-                        treasureCard = new TreasureCard(name, ImageIO.read(currentImage));
+                        treasureCard = new SpecialActionCard(name, ImageIO.read(currentImage));
                         treasureList.add(treasureCard);
                     }
                 } else if(images[i].getName().equals("Card_Sand_Bag.png")){
                     for(int a = 0 ; a < 2; a++){
-                        treasureCard = new TreasureCard(name, ImageIO.read(currentImage));
+                        treasureCard = new SpecialActionCard(name, ImageIO.read(currentImage));
                         treasureList.add(treasureCard);
                     }
                 } else if(images[i].getName().equals("Card_Waters_Rise.png")){
                     treasureDeck = new TreasureDeck(treasureList);
                     dealTreasureCards();
                     for(int a = 0 ; a < 3; a++){
-                        treasureCard = new TreasureCard(name, ImageIO.read(currentImage));
-                        System.out.println("hi");
+                        treasureCard = new WatersRiseCard(name, ImageIO.read(currentImage));
                         treasureDeck.addCards(List.of(treasureCard));
                     }
                 }
@@ -185,7 +190,6 @@ public class BoardGame {
             Role r = roleQueue.remove();
             BufferedImage im = null;
             try {
-                System.out.println("/images/players/"+r.getClass().getSimpleName() + "_Adventurer_Icon.png");
                 im = ImageIO.read(ForbiddenIsland.class.getResource("/images/players/icons/"+r.getClass().getSimpleName() + "_Adventurer_Icon.png").toURI().toURL());
             } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
@@ -204,6 +208,30 @@ public class BoardGame {
         }
     }
 
+    public void initializeTreasures(){
+        File treasurePath = null;
+        Treasure t;
+        try {
+            treasurePath = new File(ForbiddenIsland.class.getResource("/images/treasures").toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        File[] images = treasurePath.listFiles();
+        for (int i = 0; i < images.length; i++){
+            File reg = images[i];
+            i++;
+            File gray = images[i];
+            String name = reg.getName().substring(0, reg.getName().length() - 4).replace("_", " ");
+            try {
+                t = new Treasure(name, ImageIO.read(reg), ImageIO.read(gray));
+                treasures.add(t);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Collections.sort(treasures);
+    }
+
     public void initialFlood(){
         List<FloodCard> fc = floodDeck.draw(6);
         for (int i = 0; i < 6; i++){
@@ -217,8 +245,17 @@ public class BoardGame {
     public void nextTurn(){
         Player currentPlayer = TurnManager.getCurrentPlayer();
         List<TreasureCard> cardsDrawn = treasureDeck.draw(2);
-        while (cardsDrawn.contains("1")){
-
+        boolean isWaterRisen = false;
+        for (int i = 1; i >= 0; i--){
+            if (cardsDrawn.get(i) instanceof WatersRiseCard){
+                isWaterRisen = true;
+                waterLevel.raiseLevel();
+                cardsDrawn.remove(i);
+                System.out.println("Waters Rise drawn!");
+            }
+        }
+        if (isWaterRisen){
+            floodDeck.reset();
         }
         currentPlayer.addCards(cardsDrawn);
         List<FloodCard> floodCards = floodDeck.draw(waterLevel.getLevel());
@@ -233,10 +270,6 @@ public class BoardGame {
 
     public WaterLevel getWaterLevel() {
         return waterLevel;
-    }
-
-    public void watersRise(){
-
     }
 
     public TreasureDeck getTreasureDeck(){
@@ -259,15 +292,11 @@ public class BoardGame {
         return board;
     }
 
-    public void revert(BoardGame boardGame){
-
-    }
-
     public List<Player> getPlayers() {
         return players;
     }
 
-    public Map<Integer, Boolean> getTreasuresClaimed() {
-        return treasuresHeld;
+    public List<Treasure> getTreasures() {
+        return treasures;
     }
 }

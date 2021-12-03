@@ -106,6 +106,7 @@ public class Tile
         else if(floodState.equals(TileFloodState.FLOOD))
         {
             floodState= TileFloodState.LAND;
+            System.out.println("help me");
         }
         else if(floodState.equals(TileFloodState.SUNK))
         {

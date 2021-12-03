@@ -30,4 +30,8 @@ public class BoardStateGraphicsInitializer {
         pg.refreshDisplay();
         bg.refreshDisplay();
     }
+
+    public static void refreshTiles(){
+        bg.refreshTiles();
+    }
 }

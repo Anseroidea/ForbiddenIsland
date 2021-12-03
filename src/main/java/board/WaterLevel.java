@@ -15,8 +15,8 @@ public class WaterLevel {
         this(NORMAL);
     }
     public WaterLevel(int d) throws InvalidDifficultyException {
-        level = d/10;
-        steps = d % 10;
+        int wantedLevel = d/10;
+        int wantedSteps = d % 10;
         if (level == 2 && steps > 1){
             throw new InvalidDifficultyException(d);
         } else if (level == 3 && steps > 2){
@@ -29,6 +29,9 @@ public class WaterLevel {
             throw new InvalidDifficultyException(d);
         } else if (level < 2 || level > 6){
             throw new InvalidDifficultyException(d);
+        }
+        while (wantedLevel != level || wantedSteps != steps){
+            raiseLevel();
         }
     }
 

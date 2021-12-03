@@ -1,21 +1,21 @@
 package card;
 
-import card.Card;
+import app.ForbiddenIsland;
+import board.Treasure;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
 
 public class TreasureCard extends Card implements Comparable<TreasureCard> {
     private Integer treasureId;
-    private static List<String> cardNames = Arrays.asList("Earth Stone", "Ocean's Chalice", "Crystal of Fire", "Statue of the Wind", "Helicopter", "Sand Bag", "Waters Rise");
+    private static List<String> cardNames = Arrays.asList("Crystal of Fire", "Ocean's Chalice", "Statue of the Wind", "Earth Stone", "Helicopter", "Sand Bag", "Waters Rise");
     private BufferedImage smallGraphic;
 
     public TreasureCard(String n, BufferedImage b){
         super(n, b);
-        treasureId = cardNames.indexOf(n) + 1;
-        smallGraphic = resize(b, 81, 120);
+        treasureId = cardNames.indexOf(n);
+        smallGraphic = ForbiddenIsland.resize(b, 81, 120);
     }
 
     public Integer getTreasureId(){
@@ -47,14 +47,7 @@ public class TreasureCard extends Card implements Comparable<TreasureCard> {
         }
     }
 
-    public static BufferedImage resize(BufferedImage img, int newW, int newH) {
-        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
-        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
-
-        Graphics2D g2d = dimg.createGraphics();
-        g2d.drawImage(tmp, 0, 0, null);
-        g2d.dispose();
-
-        return dimg;
+    public Treasure getTreasure(){
+        return null;
     }
 }
