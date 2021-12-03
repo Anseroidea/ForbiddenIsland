@@ -39,6 +39,7 @@ public class PlayerGraphics implements Initializable {
     public GridPane board;
     public AnchorPane screenPane;
     public Label actionStrings;
+    public Label actionsLeftLabel;
     private Player playerClicked;
     private Player currentPlayer;
     private BufferedImage selectIcon;
@@ -311,6 +312,7 @@ public class PlayerGraphics implements Initializable {
             sb.append((i + 1)).append(". ").append(TurnManager.toFormattedStrings().get(i)).append("\n");
         }
         actionStrings.setText(sb.toString());
+        actionsLeftLabel.setText(3 - TurnManager.getActions() + "");
     }
 
 

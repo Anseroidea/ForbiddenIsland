@@ -126,28 +126,33 @@
                <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
             </rowConstraints>
          </GridPane>
-         <VBox layoutX="621.0" layoutY="10.0">
+         <VBox layoutX="628.0" layoutY="35.0">
             <children>
-               <Button mnemonicParsing="false" onMouseClicked="#undo" prefHeight="77.0" prefWidth="172.0" text="Undo">
+               <Button mnemonicParsing="false" onMouseClicked="#undo" prefHeight="77.0" prefWidth="155.0" text="Undo">
                   <font>
                      <Font size="27.0" />
                   </font>
                </Button>
-               <Button mnemonicParsing="false" onMouseClicked="#endTurn" prefHeight="83.0" prefWidth="170.0" text="End Turn">
+               <Button mnemonicParsing="false" onMouseClicked="#endTurn" prefHeight="77.0" prefWidth="155.0" text="End Turn">
                   <font>
                      <Font size="27.0" />
                   </font>
                </Button>
             </children>
          </VBox>
-         <Button layoutX="1500.0" layoutY="4.0" mnemonicParsing="false" onMouseClicked="#playSpecialCards" prefHeight="172.0" prefWidth="171.0" text="Play Special Cards" textAlignment="CENTER" wrapText="true">
+         <Button layoutX="1483.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#playSpecialCards" prefHeight="155.0" prefWidth="155.0" text="Play Special Cards" textAlignment="CENTER" wrapText="true">
             <font>
                <Font size="25.0" />
             </font>
          </Button>
-         <StackPane layoutX="1469.0" layoutY="166.0" prefHeight="190.0" prefWidth="184.0">
+         <StackPane layoutX="1483.0" layoutY="206.0" prefHeight="155.0" prefWidth="155.0">
             <children>
                <Circle fill="DODGERBLUE" radius="77.0" stroke="BLACK" strokeType="INSIDE" />
+               <Label fx:id="actionsLeftLabel">
+                  <font>
+                     <Font name="Baskerville Old Face" size="96.0" />
+                  </font>
+               </Label>
             </children>
          </StackPane>
       </AnchorPane>

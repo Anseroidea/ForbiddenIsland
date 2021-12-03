@@ -179,7 +179,6 @@ public class BoardGame {
             }
         }
         floodDeck = new FloodDeck(floodCardList);
-
     }
 
     private void initializePlayers(int numPlayers){
