@@ -34,6 +34,10 @@ ForbiddenIsland extends Application {
         primaryStage.setScene(ProgramStateManager.getCurrentState().getScene());
     }
 
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
     @Override
     public void start(Stage primaryStage) throws IOException {
         ForbiddenIsland.primaryStage = primaryStage;
@@ -91,10 +95,19 @@ ForbiddenIsland extends Application {
                 e.printStackTrace();
             }
         }
+        for (PopUp p : PopUp.values()){
+            try {
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ForbiddenIsland.class.getResource("/fxml/" + p.name().toLowerCase() + ".fxml")));
+                AnchorPane ap = loader.load();
+                p.setPane(ap);
+                p.setController(loader.getController());
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         ProgramStateManager.goToState(ProgramState.INPUT);
         Scene s = new Scene(ProgramStateManager.getCurrentState().getPane(), 1920, 1080);
         primaryStage.setScene(s);
-        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TreasureCard extends Card implements Comparable<TreasureCard> {
     private Integer treasureId;
-    private static List<String> cardNames = Arrays.asList("Crystal of Fire", "Ocean's Chalice", "Statue of the Wind", "Earth Stone", "Helicopter", "Sand Bag", "Waters Rise");
+    public static List<String> cardNames = Arrays.asList("Crystal of Fire", "Ocean's Chalice", "Statue of the Wind", "Earth Stone", "Helicopter", "Sand Bag", "Waters Rise");
     private BufferedImage smallGraphic;
 
     public TreasureCard(String n, BufferedImage b){

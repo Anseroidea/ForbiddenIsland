@@ -17,7 +17,7 @@ public class TurnManager {
             put("M", "Moved to ");
             put("S", "Shored up ");
             put("E", "Shored up ");
-            put("G", "Give Cards ");
+            put("G", "Gave ");
             put("N", "Navigated ");
             put("P", "Flew to ");
         }
@@ -51,7 +51,7 @@ public class TurnManager {
             return true;
         } else if (actions <= 3){
             String lastAction = actionStrings.peek();
-            if (lastAction.startsWith("S") && currentPlayer.getRole().getName().equals("Engineer")) {
+            if (lastAction.startsWith("S") && currentPlayer.getRole().getName().equals("Engineer") && s.startsWith("S")) {
                 String shoreCoord = lastAction.substring(lastAction.indexOf("("), lastAction.indexOf("(") + 6);
                 String sShoreCoord = s.substring(s.indexOf("("), s.indexOf("(") + 6);
                 actionStrings.pop();
@@ -116,6 +116,12 @@ public class TurnManager {
                     String coord2 = s.substring(s.lastIndexOf("("), s.lastIndexOf("(") + 6);
                     String[] coords2 = coord2.replace("(", "").replace(")", "").split(", ");
                     sb.append(ForbiddenIsland.getBoard().getBoard().get(Integer.parseInt(coords2[1])).get(Integer.parseInt(coords2[0])).getName());
+                    formattedStrings.add(sb.toString());
+                    break;
+                }
+                case "G": {
+                    sb.append(s.substring(s.indexOf(" ") + 1)).append(" card to ");
+                    sb.append(Role.fromNotation(s.substring(1, 2)).getName());
                     formattedStrings.add(sb.toString());
                     break;
                 }

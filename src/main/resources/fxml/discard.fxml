@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.DiscardPopUp">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="450.0" prefWidth="1000.0" spacing="50.0">
+         <children>
+            <Label fx:id="topLabel" text="[Role] has n cards! Discard or use cards immediately until you have 5 left.">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <HBox fx:id="cardBox" alignment="CENTER" prefHeight="180.0" prefWidth="900.0" spacing="17.0" />
+            <HBox alignment="BOTTOM_CENTER" prefHeight="58.0" prefWidth="1000.0" spacing="600.0">
+               <children>
+                  <Button fx:id="discardButton" disable="true" mnemonicParsing="false" onAction="#discard" onMouseClicked="#discard" text="Discard">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="useButton" disable="true" mnemonicParsing="false" text="Use">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets top="50.0" />
+         </padding>
+      </VBox>
+      <ImageView fx:id="selection" fitHeight="186.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/cards/treasureCards/Card_Selection_Icon.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

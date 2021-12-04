@@ -1,26 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.PlayerGraphics">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.PlayerGraphics">
    <children>
       <AnchorPane fx:id="screenPane" prefHeight="1080" prefWidth="1920.0">
          <StackPane fx:id="mainHand" layoutX="-72.0" layoutY="832.0">
             <Polygon fill="#0084ff" points="916.0, 828.0, 855.0, 608.0, 94.0, 608.0, 94.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
             <HBox layoutX="10.0" layoutY="10.0" spacing="10.0">
                <padding>
-                  <Insets bottom="16.0" left="80.0" top="16.0" />
+                  <Insets bottom="20.0" left="80.0" top="20.0" />
                </padding>
                <ImageView fitHeight="180.0" fitWidth="121.0" pickOnBounds="true" preserveRatio="true" />
                <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <StackPane.margin>
+                  <Insets left="20.0" />
+               </StackPane.margin>
+            </HBox>
+            <HBox layoutX="30.0" layoutY="10.0" spacing="4.0">
+               <padding>
+                  <Insets bottom="17.0" left="77.0" top="17.0" />
+               </padding>
+               <children>
+                  <ImageView fitHeight="186.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="90.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="90.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="227.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="227.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
                <StackPane.margin>
                   <Insets left="20.0" />
                </StackPane.margin>

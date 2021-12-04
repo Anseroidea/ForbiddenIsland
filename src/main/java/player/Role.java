@@ -72,6 +72,9 @@ public abstract class Role
         int x = p.getPositionX();
         int y = p.getPositionY();
         List<Tile> getShorableTiles = new ArrayList<>();
+        if (board.get(y).get(x) != null && board.get(y).get(x).isFlooded()){
+            getShorableTiles.add(board.get(y).get(x));
+        }
         if (x > 0 && board.get(y).get(x - 1) != null && board.get(y).get(x - 1).isFlooded()) {
             getShorableTiles.add(board.get(y).get(x - 1));
         }
@@ -91,7 +94,7 @@ public abstract class Role
         if (s.length() != 1){
             return null;
         } else {
-            List<String> notationList = Arrays.asList("D", "E", "X", "G", "N", "P");
+            List<String> notationList = Arrays.asList("D", "E", "X", "R", "N", "P");
             System.out.println(notationList.indexOf(s));
             System.out.println(roleList);
             return roleList.get(notationList.indexOf(s));

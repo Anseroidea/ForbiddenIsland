@@ -20,6 +20,6 @@ public class Messenger extends Role
     }
 
     public String toNotation(){
-        return "G";
+        return "R";
     }
 }

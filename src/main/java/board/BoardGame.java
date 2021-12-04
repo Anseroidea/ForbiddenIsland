@@ -1,7 +1,9 @@
 package board;
 
 import app.ForbiddenIsland;
+import app.PopUp;
 import card.*;
+import org.apache.commons.io.FileUtils;
 import player.Player;
 import player.Role;
 import player.TurnManager;
@@ -69,39 +71,34 @@ public class BoardGame {
 
     private Tile[] initializeTiles() {
         Tile[] tiles = new Tile[24];
-        File tileImagePath = null;
-        try {
-            tileImagePath = new File(ForbiddenIsland.class.getResource("/images/tiles").toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        File[] images = tileImagePath.listFiles();
-        for (int i = 0; i < images.length; i++){
-            File reg = images[i];
-            i++;
-            File flooded = images[i];
+        List<String> tileNames = new ArrayList<>(Tile.nameList);
+        Collections.sort(tileNames);
+        for (int i = 0; i < tileNames.size(); i++){
+            String n = tileNames.get(i);
             try {
-                String name = reg.getName().substring(0, reg.getName().length() - 4);
-                int id = Tile.getTileID(name);
+                BufferedImage reg = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("images/tiles/" + n + ".png")));
+                BufferedImage flooded = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("images/tiles/" + n + "_flood.png")));
+                int id = Tile.getTileID(n);
                 Tile regTile;
                 if (id <= 6){
-                    regTile = new Gate(name, ImageIO.read(reg), ImageIO.read(flooded));
+                    regTile = new Gate(n, reg, flooded);
                 } else if (id <= 14){
                     Treasure t;
-                    if (id < 8){
+                    if (id <= 8){
                         t = treasures.get(0);
-                    } else if (id < 10){
+                    } else if (id <= 10){
                         t = treasures.get(1);
-                    } else if (id < 12){
+                    } else if (id <= 12){
                         t = treasures.get(2);
                     } else {
                         t = treasures.get(3);
                     }
-                    regTile = new TreasureTile(name, ImageIO.read(reg), ImageIO.read(flooded), t);
+                    System.out.println(id + " " + n + " " + t.getName());
+                    regTile = new TreasureTile(n, reg, flooded, t);
                 } else {
-                    regTile = new Tile(name, ImageIO.read(reg), ImageIO.read(flooded));
+                    regTile = new Tile(n, reg, flooded);
                 }
-                tiles[i/2] = regTile;
+                tiles[i] = regTile;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -117,40 +114,34 @@ public class BoardGame {
 
     private void initializeCards(){
         List<TreasureCard> treasureList = new ArrayList<>();
-        File treasureCardImagePath = null;
+        List<String> treasureListName = new ArrayList<>(TreasureCard.cardNames);
         TreasureCard treasureCard = null;
-        try {
-            treasureCardImagePath = new File(ForbiddenIsland.class.getResource("/images/cards/treasureCards").toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        File[] images = treasureCardImagePath.listFiles();
-        for(int i = 0; i < images.length; i++){
-            File currentImage = images[i];
-            String name = images[i].getName().substring(images[i].getName().indexOf("_") + 1, images[i].getName().indexOf("."));
-            name = name.replaceAll("_", " ");
+        Collections.sort(treasureListName);
+        for (int i = 0; i < treasureListName.size(); i++) {
+            String name = treasureListName.get(i);
+            String fileName = "Card_" + name.replace(" ", "_") + ".png";
             try {
-                if (!images[i].getName().equals("Card_Helicopter.png") && !images[i].getName().equals("Card_Sand_Bag.png") && !images[i].getName().equals("Card_Waters_Rise.png")) {
+                if (!fileName.equals("Card_Helicopter.png") && !fileName.equals("Card_Sand_Bag.png") && !fileName.equals("Card_Waters_Rise.png")) {
                     for (int f = 0; f < 5; f++) {
-                        treasureCard = new HeldTreasureCard(treasures.get(Treasure.nameToID(name)), ImageIO.read(currentImage));
+                        treasureCard = new HeldTreasureCard(treasures.get(Treasure.nameToID(name)), ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("images/cards/treasureCards/" + fileName))));
                         treasureList.add(treasureCard);
                     }
                     treasureCard.getTreasure().setCard((HeldTreasureCard) treasureCard);
-                } else if(images[i].getName().equals("Card_Helicopter.png")){
+                } else if(fileName.equals("Card_Helicopter.png")){
                     for(int a = 0 ; a < 3; a++){
-                        treasureCard = new SpecialActionCard(name, ImageIO.read(currentImage));
+                        treasureCard = new SpecialActionCard(name, ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("images/cards/treasureCards/" + fileName))));
                         treasureList.add(treasureCard);
                     }
-                } else if(images[i].getName().equals("Card_Sand_Bag.png")){
+                } else if(fileName.equals("Card_Sand_Bag.png")){
                     for(int a = 0 ; a < 2; a++){
-                        treasureCard = new SpecialActionCard(name, ImageIO.read(currentImage));
+                        treasureCard = new SpecialActionCard(name, ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("images/cards/treasureCards/" + fileName))));
                         treasureList.add(treasureCard);
                     }
-                } else if(images[i].getName().equals("Card_Waters_Rise.png")){
+                } else {
                     treasureDeck = new TreasureDeck(treasureList);
                     dealTreasureCards();
                     for(int a = 0 ; a < 3; a++){
-                        treasureCard = new WatersRiseCard(name, ImageIO.read(currentImage));
+                        treasureCard = new WatersRiseCard(name, ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("images/cards/treasureCards/" + fileName))));
                         treasureDeck.addCards(List.of(treasureCard));
                     }
                 }
@@ -158,21 +149,15 @@ public class BoardGame {
                 e.printStackTrace();
             }
         }
-        File floodCardImagePath = null;
-        FloodCard floodCard;
-        try {
-            floodCardImagePath = new File(ForbiddenIsland.class.getResource("/images/cards/floodCards").toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        File[] floodCards = floodCardImagePath.listFiles();
-        List<FloodCard> floodCardList = new ArrayList<>();
 
-        for (File f : floodCards){
-            String name = f.getName().substring(0, f.getName().indexOf("."));
+        List<FloodCard> floodCardList = new ArrayList<>();
+        List<String> floodCardNames = new ArrayList<>(Tile.nameList);
+        Collections.sort(floodCardNames);
+        for (int i = 0; i < floodCardNames.size(); i++) {
+            String name = floodCardNames.get(i);
+            String fileName = "images/cards/floodCards/" + name + ".png";
             try {
-                System.out.println(Tile.getTile(name).getName());
-                floodCard = new FloodCard(Tile.getTile(name), ImageIO.read(f));
+                FloodCard floodCard = new FloodCard(Objects.requireNonNull(Tile.getTile(name)), ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(fileName)));
                 floodCardList.add(floodCard);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -189,9 +174,9 @@ public class BoardGame {
             Role r = roleQueue.remove();
             BufferedImage im = null;
             try {
-                im = ImageIO.read(ForbiddenIsland.class.getResource("/images/players/icons/"+r.getClass().getSimpleName() + "_Adventurer_Icon.png").toURI().toURL());
-            } catch (IOException | URISyntaxException e) {
-                e.printStackTrace();
+                im = ImageIO.read(Objects.requireNonNull(ForbiddenIsland.class.getResourceAsStream("/images/players/icons/" + r.getClass().getSimpleName() + "_Adventurer_Icon.png")));
+            } catch (IOException ie) {
+                ie.printStackTrace();
             }
             players.add(new Player(r, im));
         }
@@ -208,27 +193,23 @@ public class BoardGame {
     }
 
     public void initializeTreasures(){
-        File treasurePath = null;
         Treasure t;
-        try {
-            treasurePath = new File(ForbiddenIsland.class.getResource("/images/treasures").toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        File[] images = treasurePath.listFiles();
-        for (int i = 0; i < images.length; i++){
-            File reg = images[i];
-            i++;
-            File gray = images[i];
-            String name = reg.getName().substring(0, reg.getName().length() - 4).replace("_", " ");
+        List<String> treasures = new ArrayList<>(Treasure.names);
+        Collections.sort(treasures);
+        for (String treasure : treasures) {
+            String fileName = treasure.replace(" ", "_");
             try {
-                t = new Treasure(name, ImageIO.read(reg), ImageIO.read(gray));
-                treasures.add(t);
+                BufferedImage reg = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("images/treasures/" + fileName + ".png")));
+                BufferedImage gray = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("images/treasures/" + fileName + "_Grayed.png")));
+                BufferedImage icon = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("images/treasures/" + fileName + "_Icon.png")));
+
+                t = new Treasure(treasure, reg, gray, icon);
+                this.treasures.add(t);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        Collections.sort(treasures);
+        Collections.sort(this.treasures);
     }
 
     public void initialFlood(){
@@ -237,7 +218,6 @@ public class BoardGame {
             FloodCard card = fc.get(i);
             Tile t = card.getTile();
             t.floodTile();
-            floodDeck.killCard(card);
         }
     }
 
@@ -263,6 +243,9 @@ public class BoardGame {
             if (fc.getTile().isSunk()){
                 floodDeck.killCard(fc);
             }
+        }
+        if (currentPlayer.getDeck().size() > 5){
+            PopUp.DISCARD.load();
         }
         TurnManager.endTurn();
     }

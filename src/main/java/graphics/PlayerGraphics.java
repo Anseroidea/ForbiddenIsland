@@ -1,6 +1,7 @@
 package graphics;
 
 import app.ForbiddenIsland;
+import app.PopUp;
 import board.Tile;
 import board.TreasureTile;
 import card.TreasureCard;
@@ -23,11 +24,13 @@ import player.Player;
 import player.TurnManager;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 public class PlayerGraphics implements Initializable {
     public Rectangle topLabelBox;
@@ -43,6 +46,8 @@ public class PlayerGraphics implements Initializable {
     private Player playerClicked;
     private Player currentPlayer;
     private BufferedImage selectIcon;
+    private BufferedImage cardSelectIcon;
+    private boolean isGivingCard;
 
     public void playSpecialCards(MouseEvent mouseEvent) {
         System.out.println("The player wants to play special cards!");
@@ -79,12 +84,10 @@ public class PlayerGraphics implements Initializable {
             if (p.equals(currentPlayer)) {
                 img.setOnMouseClicked((event) -> {
                     System.out.println(currentPlayer.getRole().getName() + " clicked");
-                    playerClicked = null;
                     ContextMenu menu = new ContextMenu();
                     if (currentPlayer.getRole().getName().equalsIgnoreCase("Pilot")){
                         MenuItem moveMenu = new MenuItem("Fly");
                         moveMenu.setOnAction(event2 -> {
-                            playerClicked = p;
                             for (Tile t : p.getRole().getMovableTiles(p)) {
                                 int x1 = t.getPositionX();
                                 int y1 = t.getPositionY();
@@ -105,7 +108,6 @@ public class PlayerGraphics implements Initializable {
                     } else {
                         MenuItem moveMenu = new MenuItem("Move");
                         moveMenu.setOnAction(event2 -> {
-                            playerClicked = p;
                             System.out.println(currentPlayer.getRole().getName() + " move clicked");
                             System.out.println(playerClicked);
                             for (Tile t : p.getRole().getMovableTiles(p)) {
@@ -122,7 +124,6 @@ public class PlayerGraphics implements Initializable {
                                 });
                                 sp.getChildren().add(pa);
                             }
-                            playerClicked = null;
                         });
                         menu.getItems().add(moveMenu);
                         menu.show(img, Side.BOTTOM, 0, 0);
@@ -164,7 +165,25 @@ public class PlayerGraphics implements Initializable {
                 img.setOnMouseClicked(event -> {
                     ContextMenu menu = new ContextMenu();
                     if (currentPlayer.getPositionX() == p.getPositionX() && currentPlayer.getPositionY() == p.getPositionY() || currentPlayer.getRole().getName().equals("Messenger")) {
-                        menu.getItems().add(new MenuItem("Give Cards"));
+                        MenuItem giveCards = new MenuItem("Give Cards");
+                        giveCards.setOnAction(event1 -> {
+                            HBox h2 = (HBox) mainHand.getChildren().get(2);
+                            currentPlayer.getDeck().forEach(card -> {
+                                ImageView im = new ImageView(SwingFXUtils.toFXImage(cardSelectIcon, null));
+                                StackPane sp = new StackPane(im);
+                                sp.setOnMouseClicked(event3 -> {
+                                    if (TurnManager.addAction("G" + p.getRole().toNotation() + " " + card.getName())){
+                                        currentPlayer.giveCard(p, card);
+                                        refreshDisplay();
+                                        if (p.getDeck().size() > 5){
+                                            PopUp.DISCARD.load();
+                                        }
+                                    }
+                                });
+                                h2.getChildren().add(sp);
+                            });;
+                        });
+                        menu.getItems().add(giveCards);
                     }
                     if (currentPlayer.getRole().getName().equals("Navigator")){
                         MenuItem navigateMenu = new MenuItem("Navigate");
@@ -210,12 +229,12 @@ public class PlayerGraphics implements Initializable {
         hand3.setVisible(false);
         Polygon p = (Polygon) mainHand.getChildren().get(0);
         HBox h = (HBox) mainHand.getChildren().get(1);
-        for (int i = 0; i < 5 && i < players.get(players.size() - 1).getDeck().size(); i++){
-            ImageView img = (ImageView) h.getChildren().get(i);
-            List<TreasureCard> mainHandDeck= players.get(players.size() - 1).getDeck();
-            Collections.sort(mainHandDeck);
-            TreasureCard tc = mainHandDeck.get(i);
-            img.setImage(SwingFXUtils.toFXImage(tc.getGraphic(), null));
+        h.getChildren().clear();
+        List<TreasureCard> deck1 = players.get(players.size() - 1).getDeck();
+        for (int i = 0; i < 5 && i < deck1.size(); i++){
+            Collections.sort(deck1);
+            TreasureCard tc = deck1.get(i);
+            h.getChildren().add(new ImageView(SwingFXUtils.toFXImage(tc.getGraphic(), null)));
         }
         p.setFill(players.get(players.size() - 1).getRole().getColor());
         topLabelBox.setFill(players.get(players.size() - 1).getRole().getColor());
@@ -224,12 +243,15 @@ public class PlayerGraphics implements Initializable {
             Polygon p1 = (Polygon) hand1.getChildren().get(0);
             p1.setFill(players.get(0).getRole().getColor());
             HBox h1 = (HBox) hand1.getChildren().get(1);
-            for (int i = 0; i < 5 && i < players.get(0).getDeck().size(); i++){
-                ImageView img = (ImageView) h1.getChildren().get(i);
-                List<TreasureCard> deck = players.get(0).getDeck();
+            h1.getChildren().clear();
+            List<TreasureCard> deck = players.get(0).getDeck();
+            for (int i = 0; i < 5 && i < deck.size(); i++){
                 Collections.sort(deck);
                 TreasureCard tc = deck.get(i);
-                img.setImage(SwingFXUtils.toFXImage(tc.getSmallGraphic(), null));
+                ImageView e = new ImageView(SwingFXUtils.toFXImage(tc.getGraphic(), null));
+                e.setFitHeight(120);
+                e.setFitWidth(81);
+                h1.getChildren().add(e);
             }
         }
         if (players.size() >= 3){
@@ -237,12 +259,15 @@ public class PlayerGraphics implements Initializable {
             Polygon p1 = (Polygon) hand2.getChildren().get(0);
             p1.setFill(players.get(1).getRole().getColor());
             HBox h1 = (HBox) hand2.getChildren().get(1);
-            for (int i = 0; i < 5 && i < players.get(1).getDeck().size(); i++){
-                ImageView img = (ImageView) h1.getChildren().get(i);
-                List<TreasureCard> deck = players.get(1).getDeck();
+            h1.getChildren().clear();
+            List<TreasureCard> deck = players.get(1).getDeck();
+            for (int i = 0; i < 5 && i < deck.size(); i++){
                 Collections.sort(deck);
                 TreasureCard tc = deck.get(i);
-                img.setImage(SwingFXUtils.toFXImage(tc.getSmallGraphic(), null));
+                ImageView e = new ImageView(SwingFXUtils.toFXImage(tc.getGraphic(), null));
+                e.setFitHeight(120);
+                e.setFitWidth(81);
+                h1.getChildren().add(e);
             }
         }
         if (players.size() == 4){
@@ -250,12 +275,15 @@ public class PlayerGraphics implements Initializable {
             Polygon p1 = (Polygon) hand3.getChildren().get(0);
             p1.setFill(players.get(2).getRole().getColor());
             HBox h1 = (HBox) hand3.getChildren().get(1);
-            for (int i = 0; i < 5 && i < players.get(2).getDeck().size(); i++){
-                ImageView img = (ImageView) h1.getChildren().get(i);
-                List<TreasureCard> deck = players.get(2).getDeck();
+            h1.getChildren().clear();
+            List<TreasureCard> deck = players.get(2).getDeck();
+            for (int i = 0; i < 5 && i < deck.size(); i++){
                 Collections.sort(deck);
                 TreasureCard tc = deck.get(i);
-                img.setImage(SwingFXUtils.toFXImage(tc.getSmallGraphic(), null));
+                ImageView e = new ImageView(SwingFXUtils.toFXImage(tc.getGraphic(), null));
+                e.setFitHeight(120);
+                e.setFitWidth(81);
+                h1.getChildren().add(e);
             }
         }
     }
@@ -278,7 +306,8 @@ public class PlayerGraphics implements Initializable {
             refreshSelections();
         });
         try {
-            selectIcon = ImageIO.read(ForbiddenIsland.class.getResource("/images/players/extra/Tile_Movement_Icon.png"));
+            selectIcon = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResource("images/players/extra/Tile_Movement_Icon.png")));
+            cardSelectIcon = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResource("images/cards/treasureCards/Card_Selection_Icon.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -286,19 +315,16 @@ public class PlayerGraphics implements Initializable {
 
     public void refreshSelections(){
         System.out.println("Current state: " + playerClicked);
-        if (playerClicked == null){
-            for (Node n : board.getChildren()){
-                StackPane s = (StackPane) n;
-                for (int i = 0; i < s.getChildren().size(); i++){
-                    System.out.println(s.getChildren().get(i).getClass().getSimpleName());
-                    if (s.getChildren().get(i) instanceof StackPane){
-                        s.getChildren().remove(i--);
-                    }
+        for (Node n : board.getChildren()){
+            StackPane s = (StackPane) n;
+            for (int i = 0; i < s.getChildren().size(); i++){
+                if (s.getChildren().get(i) instanceof StackPane){
+                    s.getChildren().remove(i--);
                 }
             }
-        } else {
-            playerClicked = null;
         }
+        HBox h1 = (HBox) mainHand.getChildren().get(2);
+        h1.getChildren().clear();
     }
 
     public void refreshDisplay(){

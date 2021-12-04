@@ -3,35 +3,21 @@ package graphics;
 import app.ForbiddenIsland;
 import board.Tile;
 import board.Treasure;
-import board.WaterLevel;
-import eu.hansolo.medusa.Gauge;
-import eu.hansolo.medusa.GaugeBuilder;
+import board.TreasureTile;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import player.Player;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.net.URL;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-import java.util.ResourceBundle;
 
-public class BoardGraphics implements Initializable {
+public class BoardGraphics{
     public GridPane board;
     public static Font castellar = Font.loadFont(ForbiddenIsland.class.getResource("/fonts/castellar.ttf").toExternalForm(), 10);
     public ImageView stick;
@@ -51,6 +37,14 @@ public class BoardGraphics implements Initializable {
                     l.setPadding(new Insets(0, 0, -130, 0));
                     l.setFont(castellar);
                     s.getChildren().add(l);
+                    if (board.get(r).get(c) instanceof TreasureTile tile && !tile.getTreasureHELD().isClaimed()){
+                        ImageView img = new ImageView(SwingFXUtils.toFXImage(tile.getTreasureHELD().getIcon(), null));
+                        img.setFitWidth(49);
+                        img.setFitHeight(53);
+                        StackPane.setAlignment(img, Pos.BOTTOM_RIGHT);
+                        StackPane.setMargin(img, new Insets(0, 0, 20, 0));
+                        s.getChildren().add(img);
+                    }
                     this.board.add(s, c, r); //this is not a mistake, gridpane works like this ik its weird
                 } else if ("(0, 1)(0, 4)(5, 1)(5, 4)".contains("(" + r + ", " + c + ")")){
                     Treasure t = ForbiddenIsland.getBoard().getTreasures().get(treasures++);
@@ -84,15 +78,6 @@ public class BoardGraphics implements Initializable {
 
     public void refreshWaterLevel(){
         stick.setLayoutY(initialStickY - ForbiddenIsland.getBoard().getWaterLevel().getTotalSteps() * 31);
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        /*
-        waterLevelGauge = GaugeBuilder.create().minValue(0).maxValue(2).build();
-        waterPane.getChildren().add(waterLevelGauge);
-
-         */
     }
 
 

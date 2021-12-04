@@ -86,13 +86,8 @@ public class Player
 
     public void giveCard(Player p, TreasureCard t)
     {
-        if(this.positionX == p.positionX || this.positionY == p.positionY)
-        {
-            this.removeCard(t);
-            p.addCard(t);
-        }
-        else
-            System.out.println("Not on same tile -- Cannot give card to another player");
+        this.removeCard(t);
+        p.addCard(t);
     }
 
     public int getPositionX(){
@@ -113,6 +108,11 @@ public class Player
             return getRole().getId() == p.getRole().getId();
         }
         return false;
+    }
+
+    public void discardCard(TreasureCard tc){
+        removeCard(tc);
+        ForbiddenIsland.getBoard().getTreasureDeck().discardCard(tc);
     }
 
     public void claimTreasure(Treasure treasureHELD) {

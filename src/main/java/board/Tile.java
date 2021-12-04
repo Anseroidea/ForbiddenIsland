@@ -16,11 +16,10 @@ public class Tile
     private int tileID;
     private BufferedImage graphic;
     private BufferedImage floodedGraphic;
-    private static List<String> nameList= Arrays.asList("Iron Gate","Bronze Gate","Copper Gate","Silver Gate","Gold Gate", "Fools Landing", "Cave of Embers","Cave of Shadows","Coral Palace","Tidal Palace","Howling Garden","Whispering Garden","Temple of the Moon","Temple of the Sun","Breakers Bridge","Cliffs of Abandon","Crimson Forest","Dunes of Deceptions","Lost Lagoon","Misty Marsh","Observatory","Phantom Rock","Twilight Hollow","Watchtower");
+    public static List<String> nameList= Arrays.asList("Iron Gate","Bronze Gate","Copper Gate","Silver Gate","Gold Gate", "Fools Landing", "Cave of Embers","Cave of Shadows","Coral Palace","Tidal Palace","Howling Garden","Whispering Garden","Temple of the Moon","Temple of the Sun","Breakers Bridge","Cliffs of Abandon","Crimson Forest","Dunes of Deception","Lost Lagoon","Misty Marsh","Observatory","Phantom Rock","Twilight Hollow","Watchtower");
     private static List<Tile> tileList = new ArrayList<>();
     private int positionX;
     private int positionY;
-
 
     public Tile(String name, BufferedImage landed, BufferedImage flooded)
     {

@@ -34,8 +34,10 @@ public class TreasureDeck{
     public List<TreasureCard> draw(int treasureCardsToBeDrawn) {
         List<TreasureCard> drawn = new ArrayList<>();
         for(int i = 0 ; i < treasureCardsToBeDrawn; i++){
+            if (activeCards.isEmpty()){
+                reset();
+            }
             TreasureCard c = activeCards.pop();
-            System.out.println(c.getName());
             drawn.add(c);
         }
         return drawn;

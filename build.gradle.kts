@@ -16,8 +16,7 @@ javafx {
 }
 
 dependencies {
-    implementation("org.apache.pdfbox:pdfbox:3.0.0-alpha2")
-    implementation("eu.hansolo:Medusa:5.7")
+    implementation("commons-io:commons-io:2.11.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
