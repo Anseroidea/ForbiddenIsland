@@ -9,7 +9,7 @@ public class TurnManager {
 
     private static int actions;
     private static Stack<String> actionStrings = new Stack<>(); //notation [role first letter] [coords]
-    private static Stack<BoardGame> boardGameStates = new Stack<>();
+    private static Stack<String> totalActionStrings = new Stack<>();
     private static Player currentPlayer;
     private static Queue<Player> playerQueue = new LinkedList<>();
     private static Map<String, String> moveMap = new HashMap<>(){
@@ -39,14 +39,18 @@ public class TurnManager {
     public static void endTurn() {
         actions = 0;
         actionStrings.clear();
-        boardGameStates.clear();
         currentPlayer = playerQueue.remove();
         playerQueue.add(currentPlayer);
+    }
+
+    public static void addNonAction(String s){
+        totalActionStrings.push(s);
     }
 
     public static boolean addAction(String s){
         if (actions == 0){
             actionStrings.push(s);
+            totalActionStrings.push(s);
             actions++;
             return true;
         } else if (actions <= 3){
@@ -149,7 +153,6 @@ public class TurnManager {
     public static boolean undoAction(){
         if (actions > 0){
             actionStrings.pop();
-            boardGameStates.pop();
             actions--;
             return true;
         } else {

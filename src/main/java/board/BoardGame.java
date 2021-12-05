@@ -2,23 +2,22 @@ package board;
 
 import app.ForbiddenIsland;
 import app.PopUp;
+import app.ProgramState;
+import app.ProgramStateManager;
 import card.*;
-import org.apache.commons.io.FileUtils;
 import player.Player;
 import player.Role;
 import player.TurnManager;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class BoardGame {
 
-    public BoardGame(int diff, int numPlayers) {
+    public BoardGame(int diff, int numPlayers, boolean manualFlooding) {
         try {
             waterLevel = new WaterLevel(diff);
         } catch (InvalidDifficultyException e) {
@@ -38,6 +37,7 @@ public class BoardGame {
         TurnManager.setPlayers(players.toArray(new Player[numPlayers]));
         initializeCards();
         initialFlood();
+        this.manualFlooding = manualFlooding;
     }
 
 
@@ -47,6 +47,9 @@ public class BoardGame {
     private List<Player> players;
     private WaterLevel waterLevel;
     private List<Treasure> treasures;
+    private Tile foolsLanding;
+    private boolean manualFlooding = true;
+    private List<TreasureCard> lastTwoCards;
 
     private void generateIsland(){
         List<Tile> tiles = Arrays.asList(initializeTiles());
@@ -66,7 +69,6 @@ public class BoardGame {
                 board.get(r).add(null);
             }
         }
-        System.out.println(board);
     }
 
     private Tile[] initializeTiles() {
@@ -82,6 +84,9 @@ public class BoardGame {
                 Tile regTile;
                 if (id <= 6){
                     regTile = new Gate(n, reg, flooded);
+                    if (id == 6){
+                        foolsLanding = regTile;
+                    }
                 } else if (id <= 14){
                     Treasure t;
                     if (id <= 8){
@@ -95,6 +100,7 @@ public class BoardGame {
                     }
                     System.out.println(id + " " + n + " " + t.getName());
                     regTile = new TreasureTile(n, reg, flooded, t);
+                    t.addTreasureTile((TreasureTile) regTile);
                 } else {
                     regTile = new Tile(n, reg, flooded);
                 }
@@ -224,28 +230,38 @@ public class BoardGame {
     public void nextTurn(){
         Player currentPlayer = TurnManager.getCurrentPlayer();
         List<TreasureCard> cardsDrawn = treasureDeck.draw(2);
+        lastTwoCards = cardsDrawn;
         boolean isWaterRisen = false;
         for (int i = 1; i >= 0; i--){
             if (cardsDrawn.get(i) instanceof WatersRiseCard){
                 isWaterRisen = true;
                 waterLevel.raiseLevel();
                 cardsDrawn.remove(i);
-                System.out.println("Waters Rise drawn!");
             }
         }
         if (isWaterRisen){
             floodDeck.reset();
         }
         currentPlayer.addCards(cardsDrawn);
-        List<FloodCard> floodCards = floodDeck.draw(waterLevel.getLevel());
-        for (FloodCard fc : floodCards){
-            fc.getTile().floodTile();
-            if (fc.getTile().isSunk()){
-                floodDeck.killCard(fc);
-            }
-        }
+        Collections.sort(currentPlayer.getDeck());
         if (currentPlayer.getDeck().size() > 5){
             PopUp.DISCARD.load();
+        }
+        if (manualFlooding){
+            PopUp.DRAW.load();
+        } else {
+            List<FloodCard> floodCardList = floodDeck.draw(6);
+            for (FloodCard fc : floodCardList){
+                fc.getTile().floodTile();
+                for (Player p : players){
+                    if (board.get(p.getPositionY()).get(p.getPositionX()).isSunk()){
+                        PopUp.RELOCATE.loadRelocate(p);
+                    }
+                }
+                if (isLost()){
+                    lose();
+                }
+            }
         }
         TurnManager.endTurn();
     }
@@ -262,12 +278,47 @@ public class BoardGame {
         return floodDeck;
     }
 
-    public boolean isWon(){
-        return false; //return true or false
+    public boolean isReadyToWin(){
+        if (!treasures.stream().allMatch(Treasure::isClaimed)){
+            return false;
+        }
+        for (Player p : players){
+            if (p.getPositionX() != foolsLanding.getPositionX() && p.getPositionY() != foolsLanding.getPositionY()){
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean isLost(){
-        return false; //return true or false
+        if (foolsLanding.isSunk()){
+            return true;
+        }
+        for (Treasure t : treasures){
+            for (TreasureTile ti : t.getTreasureTiles()){
+                System.out.println(ti.getName() + " " + ti.isSunk());
+            }
+            if (t.getTreasureTiles().stream().allMatch(TreasureTile::isSunk)){
+                return true;
+            }
+        }
+        for (Player p : players){
+            if (board.get(p.getPositionY()).get(p.getPositionX()).isSunk()){
+                if (p.getRole().getFloodRelocTiles(p).isEmpty()){
+                    return true;
+                }
+            }
+        }
+        return waterLevel.toFullNotation() == WaterLevel.DEATH;
+    }
+
+    public void lose(){
+        ProgramStateManager.goToState(ProgramState.LOSE);
+        ForbiddenIsland.refreshDisplay();
+    }
+
+    public void win(){
+
     }
 
     public List<List<Tile>> getBoard(){
@@ -280,5 +331,9 @@ public class BoardGame {
 
     public List<Treasure> getTreasures() {
         return treasures;
+    }
+
+    public List<TreasureCard> getLastTwoCards() {
+        return lastTwoCards;
     }
 }

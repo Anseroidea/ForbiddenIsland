@@ -39,7 +39,8 @@ public class FloodDeck{
     after depleting them from activeCards */
     public List<FloodCard> draw(int floodCardsToBeDrawn) {
         List<FloodCard> drawn = new ArrayList<FloodCard>();
-        for(int i = 0 ; i < floodCardsToBeDrawn; i++){
+        int maxSize = activeCards.size();
+        for(int i = 0 ; i < Math.min(floodCardsToBeDrawn, maxSize); i++){
             if (activeCards.isEmpty()){
                 reset();
             }
@@ -56,4 +57,7 @@ public class FloodDeck{
         deadCards.add(fc);
     }
 
+    public Stack<FloodCard> getDiscardedStack() {
+        return discardedCards;
+    }
 }

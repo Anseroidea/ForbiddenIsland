@@ -78,4 +78,8 @@ public class WaterLevel {
         return steps;
     }
 
+    public int toFullNotation(){
+        return level * 10 + steps;
+    }
+
 }

@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -25,8 +26,8 @@ ForbiddenIsland extends Application {
         Application.launch(args);
     }
 
-    public static void setBoardGame(int difficulty, int numPlayers) {
-        board = new BoardGame(difficulty, numPlayers);
+    public static void setBoardGame(int difficulty, int numPlayers, boolean manualFlooding) {
+        board = new BoardGame(difficulty, numPlayers, manualFlooding);
     }
 
     public static void refreshDisplay() {

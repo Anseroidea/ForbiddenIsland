@@ -4,9 +4,8 @@ import app.ForbiddenIsland;
 import app.ProgramState;
 import app.ProgramStateManager;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -24,6 +23,7 @@ public class InputScreen implements Initializable{
     public List<RadioButton> difficultyButtons;
     public List<RadioButton> numPlayersButtons;
     public Label errorText;
+    public CheckBox manualFlooding;
     private int difficulty;
     private int numPlayers;
 
@@ -45,7 +45,7 @@ public class InputScreen implements Initializable{
             } else {
                 numPlayers = 4;
             }
-            ForbiddenIsland.setBoardGame(difficulty, numPlayers);
+            ForbiddenIsland.setBoardGame(difficulty, numPlayers, manualFlooding.isSelected());
             BoardStateGraphicsInitializer.initialize();
             ProgramStateManager.goToState(ProgramState.BOARD);
             ForbiddenIsland.refreshDisplay();
@@ -69,5 +69,8 @@ public class InputScreen implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         numPlayersButtons = Arrays.asList(twoButton, threeButton, fourButton);
         difficultyButtons = Arrays.asList(noviceButton, normalButton, eliteButton, legendaryButton);
+        Tooltip t1 = new Tooltip("Enables card by card control of flooding. You can view the board after each flood card drawn and can use special action cards. (Default is yes)");
+        manualFlooding.setTooltip(t1);
+        t1.setShowDelay(Duration.millis(200));
     }
 }

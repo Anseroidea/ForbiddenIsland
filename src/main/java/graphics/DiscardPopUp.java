@@ -1,5 +1,6 @@
 package graphics;
 
+import app.PopUp;
 import card.SpecialActionCard;
 import card.TreasureCard;
 import javafx.embed.swing.SwingFXUtils;
@@ -42,9 +43,6 @@ public class DiscardPopUp implements Poppable {
                 cardSelected = false;
             }
         });
-        discardButton.setOnMouseClicked(event -> {
-            discard();
-        });
         curr = TurnManager.getCurrentPlayer();
         topLabel.setText(TurnManager.getCurrentPlayer().getRole().getName() + " has " + curr.getDeck().size() + " cards! Discard or use them until you have 5 left.");
         cardBox.getChildren().clear();
@@ -65,12 +63,27 @@ public class DiscardPopUp implements Poppable {
         }
     }
 
+    public void close(){
+        Stage thisStage = (Stage) discardButton.getScene().getWindow();
+        thisStage.getScene().setRoot(new AnchorPane());
+        thisStage.close();
+    }
+
     public void discard(){
         curr.discardCard(selectedCard);
         if (curr.getDeck().size() <= 5){
-            Stage thisStage = (Stage) discardButton.getScene().getWindow();
-            thisStage.getScene().setRoot(new AnchorPane());
-            thisStage.close();
+            close();
+        } else {
+            initializePopUp();
+        }
+    }
+
+    public void use(){
+        if (selectedCard != null){
+            PopUp.USE.loadUse(TurnManager.getCurrentPlayer(), selectedCard);
+        }
+        if (curr.getDeck().size() <= 5){
+            close();
         } else {
             initializePopUp();
         }

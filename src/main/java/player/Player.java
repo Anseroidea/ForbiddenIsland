@@ -46,12 +46,8 @@ public class Player
 
     public void move(int x, int y)
     {
-        if(Math.abs(positionX - x) + Math.abs(positionY - y) <= 1) {
-            positionX = x;
-            positionY = y;
-        }
-        else
-            System.out.println("Out of moving range!!!");
+        positionX = x;
+        positionY = y;
     }
 
     public void shoreUpTile(int x, int y)
@@ -81,7 +77,7 @@ public class Player
     }
 
     public boolean canClaim(Treasure t){
-        return deck.stream().filter(c -> c.getTreasure().equals(t)).count() >= 4;
+        return deck.stream().filter(c -> c.getTreasure() != null && c.getTreasure().equals(t)).count() >= 4;
     }
 
     public void giveCard(Player p, TreasureCard t)

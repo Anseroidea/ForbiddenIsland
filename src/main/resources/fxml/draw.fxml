@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="1080" maxWidth="1920" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.DrawPopUp">
+    <HBox>
+        <children>
+            <StackPane prefHeight="1080.0" prefWidth="400.0">
+                <ImageView fx:id="cardUsed" fitHeight="360.0" fitWidth="242.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                    <StackPane.margin>
+                        <Insets top="-250.0" />
+                    </StackPane.margin>
+                </ImageView>
+                <Label text="Card Drawn:" textAlignment="CENTER" wrapText="true">
+                    <font>
+                        <Font size="41.0" />
+                    </font>
+                    <StackPane.margin>
+                        <Insets left="20.0" right="20.0" top="-700.0" />
+                    </StackPane.margin>
+                </Label>
+            <VBox alignment="CENTER" fillWidth="false" spacing="40.0" StackPane.alignment="CENTER">
+               <StackPane.margin>
+                  <Insets top="700.0" />
+               </StackPane.margin>
+               <children>
+                  <Button fx:id="drawNext" mnemonicParsing="false" onAction="#drawNext" prefWidth="200.0" text="Draw Next" textAlignment="CENTER">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="skipAll" layoutX="145.0" layoutY="168.0" mnemonicParsing="false" onAction="#skipAll" prefWidth="200.0" text="Skip All" textAlignment="CENTER">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="specialActionCard" layoutX="145.0" layoutY="200.0" mnemonicParsing="false" onAction="#use" prefWidth="200.0" text="Use Special Action Card" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+            <Label fx:id="infoLabel" text="has been flooded!" wrapText="true">
+               <font>
+                  <Font size="22.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets top="200.0" />
+               </StackPane.margin>
+            </Label>
+            </StackPane>
+            <StackPane prefHeight="1080.0" prefWidth="1080.0">
+                <children>
+                    <GridPane fx:id="tileBoard" hgap="16.0" maxHeight="1010.0" maxWidth="1010.0" prefHeight="1010.0" prefWidth="1010.0" vgap="16.0">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+                            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+                            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+                            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+                            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+                            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+                            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+                            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+                            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+                            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+                            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+                        </rowConstraints>
+                    </GridPane>
+                    <GridPane fx:id="playerBoard" hgap="16.0" maxHeight="1010.0" maxWidth="1010.0" prefHeight="1010.0" prefWidth="1010.0" vgap="16.0">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+                            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+                            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+                            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+                            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+                            <ColumnConstraints hgrow="NEVER" minWidth="155.0" prefWidth="155.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+                            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+                            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+                            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+                            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+                            <RowConstraints minHeight="155.0" prefHeight="155.0" vgrow="NEVER" />
+                        </rowConstraints>
+                    </GridPane>
+                </children>
+            </StackPane>
+         <StackPane>
+            <children>
+               <AnchorPane prefHeight="376.0" prefWidth="257.0" StackPane.alignment="CENTER">
+                   <ImageView fitHeight="369.0" fitWidth="139.0" layoutX="121.0" pickOnBounds="true" preserveRatio="true">
+                       <Image url="@../images/waterlevel/Water_Meter.png" />
+                   </ImageView>
+                   <ImageView fx:id="stick" fitHeight="67.0" fitWidth="78.0" layoutX="33.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
+                       <Image url="@../images/waterlevel/Water_Stick.png" />
+                   </ImageView>
+               </AnchorPane>
+               <VBox alignment="CENTER" spacing="40.0">
+                  <children>
+                      <ImageView fx:id="treasureDiscard" fitHeight="200.0" fitWidth="134.0" onMouseClicked="#openTreasureDiscard" pickOnBounds="true" preserveRatio="true" />
+                      <ImageView fx:id="floodDiscard" fitHeight="200.0" fitWidth="144.0" onMouseClicked="#openFloodDiscard" pickOnBounds="true" preserveRatio="true" />
+                  </children>
+                  <StackPane.margin>
+                     <Insets top="200.0" />
+                  </StackPane.margin>
+               </VBox>
+            </children>
+         </StackPane>
+        </children>
+    </HBox>
+</AnchorPane>

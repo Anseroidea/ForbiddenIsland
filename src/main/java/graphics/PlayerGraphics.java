@@ -4,6 +4,8 @@ import app.ForbiddenIsland;
 import app.PopUp;
 import board.Tile;
 import board.TreasureTile;
+import card.FloodCard;
+import card.SpecialActionCard;
 import card.TreasureCard;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.Initializable;
@@ -16,18 +18,14 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import player.Player;
 import player.TurnManager;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -43,14 +41,15 @@ public class PlayerGraphics implements Initializable {
     public AnchorPane screenPane;
     public Label actionStrings;
     public Label actionsLeftLabel;
-    private Player playerClicked;
+    public ImageView treasureDiscard;
+    public ImageView floodDiscard;
     private Player currentPlayer;
-    private BufferedImage selectIcon;
+    public static BufferedImage selectIcon;
     private BufferedImage cardSelectIcon;
-    private boolean isGivingCard;
+    private boolean cardSelected;
 
     public void playSpecialCards(MouseEvent mouseEvent) {
-        System.out.println("The player wants to play special cards!");
+        PopUp.USEHAND.load();
     }
 
     public void endTurn(MouseEvent mouseEvent) {
@@ -109,7 +108,6 @@ public class PlayerGraphics implements Initializable {
                         MenuItem moveMenu = new MenuItem("Move");
                         moveMenu.setOnAction(event2 -> {
                             System.out.println(currentPlayer.getRole().getName() + " move clicked");
-                            System.out.println(playerClicked);
                             for (Tile t : p.getRole().getMovableTiles(p)) {
                                 int x1 = t.getPositionX();
                                 int y1 = t.getPositionY();
@@ -127,7 +125,6 @@ public class PlayerGraphics implements Initializable {
                         });
                         menu.getItems().add(moveMenu);
                         menu.show(img, Side.BOTTOM, 0, 0);
-                        System.out.println(playerClicked + " q ");
                     }
                     if (p.getRole().getShorableTiles(p).size() > 0) {
                         MenuItem shoreMenu = new MenuItem("Shore Up");
@@ -168,6 +165,7 @@ public class PlayerGraphics implements Initializable {
                         MenuItem giveCards = new MenuItem("Give Cards");
                         giveCards.setOnAction(event1 -> {
                             HBox h2 = (HBox) mainHand.getChildren().get(2);
+                            h2.setVisible(true);
                             currentPlayer.getDeck().forEach(card -> {
                                 ImageView im = new ImageView(SwingFXUtils.toFXImage(cardSelectIcon, null));
                                 StackPane sp = new StackPane(im);
@@ -231,10 +229,94 @@ public class PlayerGraphics implements Initializable {
         HBox h = (HBox) mainHand.getChildren().get(1);
         h.getChildren().clear();
         List<TreasureCard> deck1 = players.get(players.size() - 1).getDeck();
+        Collections.sort(deck1);
         for (int i = 0; i < 5 && i < deck1.size(); i++){
-            Collections.sort(deck1);
             TreasureCard tc = deck1.get(i);
-            h.getChildren().add(new ImageView(SwingFXUtils.toFXImage(tc.getGraphic(), null)));
+            ImageView e = new ImageView(SwingFXUtils.toFXImage(tc.getGraphic(), null));
+            e.setStyle("-fx-border-color: black;");
+            if (tc instanceof SpecialActionCard){
+                if (tc.getName().equals("Helicopter")){
+                    e.setOnMouseClicked(event -> {
+                        refreshSelections();
+                        cardSelected = true;
+                        for (Player pl : ForbiddenIsland.getBoard().getPlayers()){
+                            int x = pl.getPositionX();
+                            int y = pl.getPositionY();
+                            StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x, y));
+                            if (sp.getChildren().size() <= 1){
+                                ImageView c = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
+                                StackPane pa = new StackPane(c);
+                                pa.setOnMouseClicked((event2) -> {
+                                    List<Player> playersHere = new ArrayList<>();
+                                    for (Player pl1 : ForbiddenIsland.getBoard().getPlayers()){
+                                        if (pl1.getPositionX() == x && pl1.getPositionY() == y){
+                                            playersHere.add(pl1);
+                                        }
+                                    }
+                                    cardSelected = true;
+                                    for (List<Tile> ti :ForbiddenIsland.getBoard().getBoard()){
+                                        for (Tile t : ti){
+                                            if (t != null && t.isMovable()){
+                                                StackPane sp1 = (StackPane) board.getChildren().get(to1DArrayIndex(t.getPositionX(), t.getPositionY()));
+                                                if (t.getPositionX() == x && t.getPositionY() == y){
+                                                    for (int i1 = 0; i1 < sp1.getChildren().size(); i1++) {
+                                                        if (sp1.getChildren().get(i1) instanceof StackPane){
+                                                            sp1.getChildren().remove(i1--);
+                                                        }
+                                                    }
+                                                } else {
+                                                    ImageView c1 = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
+                                                    StackPane pa1 = new StackPane(c1);
+                                                    pa1.setOnMouseClicked(event3 -> {
+                                                        List<Player> playersSelected;
+                                                        if (playersHere.size() > 1){
+                                                            playersSelected = Objects.requireNonNull(PopUp.HELICOPTER.loadHelicopter(playersHere));
+                                                        } else {
+                                                            playersSelected = new ArrayList<>(playersHere);
+                                                        }
+                                                        if (playersSelected.size() >= 1){
+                                                            for (Player pla : playersSelected){
+                                                                pla.move(t.getPositionX(), t.getPositionY());
+                                                            }
+                                                            currentPlayer.removeCard(tc);
+                                                            refreshDisplay();
+                                                        }
+                                                    });
+                                                    sp1.getChildren().add(pa1);
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                                sp.getChildren().add(pa);
+                            }
+                        }
+                    });
+                } else {
+                    e.setOnMouseClicked(event -> {
+                        refreshSelections();
+                        cardSelected = true;
+                        for (List<Tile> ti : ForbiddenIsland.getBoard().getBoard()) {
+                            for (Tile t : ti){
+                                if (t != null && t.isFlooded()) {
+                                    int x1 = t.getPositionX();
+                                    int y1 = t.getPositionY();
+                                    StackPane sp = (StackPane) board.getChildren().get(to1DArrayIndex(x1, y1));
+                                    ImageView c = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
+                                    StackPane pa = new StackPane(c);
+                                    pa.setOnMouseClicked((event2) -> {
+                                        deck1.remove(tc);
+                                        t.shoreUp();
+                                        BoardStateGraphicsInitializer.refreshDisplay();
+                                    });
+                                    sp.getChildren().add(pa);
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+            h.getChildren().add(e);
         }
         p.setFill(players.get(players.size() - 1).getRole().getColor());
         topLabelBox.setFill(players.get(players.size() - 1).getRole().getColor());
@@ -314,22 +396,48 @@ public class PlayerGraphics implements Initializable {
     }
 
     public void refreshSelections(){
-        System.out.println("Current state: " + playerClicked);
-        for (Node n : board.getChildren()){
-            StackPane s = (StackPane) n;
-            for (int i = 0; i < s.getChildren().size(); i++){
-                if (s.getChildren().get(i) instanceof StackPane){
-                    s.getChildren().remove(i--);
+        if (!cardSelected) {
+            for (Node n : board.getChildren()) {
+                StackPane s = (StackPane) n;
+                for (int i = 0; i < s.getChildren().size(); i++) {
+                    if (s.getChildren().get(i) instanceof StackPane) {
+                        s.getChildren().remove(i--);
+                    }
                 }
             }
+        } else {
+            cardSelected = false;
         }
         HBox h1 = (HBox) mainHand.getChildren().get(2);
         h1.getChildren().clear();
+        h1.setVisible(false);
     }
 
     public void refreshDisplay(){
         refreshPlayers();
         refreshActions();
+        refreshDiscardPiles();
+    }
+
+    private void refreshDiscardPiles() {
+        treasureDiscard.setRotate(90);
+        floodDiscard.setRotate(90);
+        if (ForbiddenIsland.getBoard().getTreasureDeck().getDiscardedStack().size() > 0) {
+            treasureDiscard.setVisible(true);
+            treasureDiscard.setImage(SwingFXUtils.toFXImage(ForbiddenIsland.getBoard().getTreasureDeck().getDiscardedStack().peek().getGraphic(), null));
+        } else {
+            treasureDiscard.setVisible(false);
+        }
+        if (ForbiddenIsland.getBoard().getFloodDeck().getDiscardedStack().size() > 0) {
+            floodDiscard.setVisible(true);
+            floodDiscard.setImage(SwingFXUtils.toFXImage(ForbiddenIsland.getBoard().getFloodDeck().getDiscardedStack().peek().getGraphic(), null));
+        } else {
+            floodDiscard.setVisible(false);
+        }
+    }
+
+    public FloodCard nextFloodDraw(){
+
     }
 
     public void refreshActions() {
@@ -342,4 +450,11 @@ public class PlayerGraphics implements Initializable {
     }
 
 
+    public void openTreasureDiscard(MouseEvent mouseEvent) {
+        PopUp.DISCARDPILE.loadDiscardPile(ForbiddenIsland.getBoard().getTreasureDeck().getDiscardedStack());
+    }
+
+    public void openFloodDiscard(MouseEvent contextMenuEvent) {
+        PopUp.DISCARDPILE.loadDiscardPile(ForbiddenIsland.getBoard().getFloodDeck().getDiscardedStack());
+    }
 }

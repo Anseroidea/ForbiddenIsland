@@ -71,6 +71,11 @@ public class Explorer extends Role
         return getShorableTiles;
     }
 
+    @Override
+    public List<Tile> getFloodRelocTiles(Player p) {
+        return getMovableTiles(p);
+    }
+
     public void doSpecialAction(Player p, int moveX, int moveY)
     {
         //Can move diagonally

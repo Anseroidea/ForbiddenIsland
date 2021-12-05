@@ -35,6 +35,11 @@ public class Pilot extends Role
         return getMovableTiles;
     }
 
+    @Override
+    public List<Tile> getFloodRelocTiles(Player p) {
+        return getMovableTiles(p);
+    }
+
     public String toNotation(){
         return "P";
     }

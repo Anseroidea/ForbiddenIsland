@@ -90,6 +90,10 @@ public abstract class Role
         return getShorableTiles;
     }
 
+    public List<Tile> getFloodRelocTiles(Player p){
+        return this.getMovableTiles(p);
+    }
+
     public static Role fromNotation(String s){
         if (s.length() != 1){
             return null;

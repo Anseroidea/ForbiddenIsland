@@ -5,7 +5,9 @@ import board.Tile;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Diver extends Role {
 
@@ -64,6 +66,33 @@ public class Diver extends Role {
 			if (!tiles.contains(board.get(y + 1).get(x)))
 				tiles.add(board.get(y + 1).get(x));
 		}
+	}
+
+	@Override
+	public List<Tile> getFloodRelocTiles(Player p) {
+		List<Tile> floodRelocTiles = new ArrayList<>();
+		int steps = Integer.MAX_VALUE;
+		int x = p.getPositionX();
+		int y = p.getPositionY();
+		List<List<Tile>> board = ForbiddenIsland.getBoard().getBoard();
+		for (int i = 0; i < board.size(); i++) {
+			for (int i1 = 0; i1 < board.get(i).size(); i1++) {
+				Tile t = board.get(i).get(i1);
+				if (t != null && t.isMovable() && (y != i || x != i1)) {
+					int x1 = t.getPositionX();
+					int y1 = t.getPositionY();
+					int tSteps = Math.abs(x - x1) + Math.abs(y - y1);
+					if (tSteps < steps){
+						floodRelocTiles.clear();
+						floodRelocTiles.add(t);
+						steps = tSteps;
+					} else if (tSteps == steps){
+						floodRelocTiles.add(t);
+					}
+				}
+			}
+		}
+		return floodRelocTiles;
 	}
 
 	public String toNotation(){

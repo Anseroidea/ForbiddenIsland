@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.HelicopterPopUp">
+    <children>
+        <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" spacing="50.0">
+            <children>
+                <Label text="Select who to take on the helicopter!">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+                <HBox fx:id="playerBox" alignment="CENTER" prefHeight="146.0" prefWidth="400.0" spacing="17.0" />
+                <HBox alignment="CENTER" prefHeight="58.0" prefWidth="600.0" spacing="250.0">
+                    <children>
+                        <Button fx:id="selectButton" disable="true" mnemonicParsing="false" onAction="#select" text="Select">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#cancel" text="Cancel">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets top="50.0" />
+            </padding>
+        </VBox>
+    </children>
+</AnchorPane>

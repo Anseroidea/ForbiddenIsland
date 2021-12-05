@@ -22,12 +22,12 @@
             <HBox fx:id="cardBox" alignment="CENTER" prefHeight="180.0" prefWidth="900.0" spacing="17.0" />
             <HBox alignment="BOTTOM_CENTER" prefHeight="58.0" prefWidth="1000.0" spacing="600.0">
                <children>
-                  <Button fx:id="discardButton" disable="true" mnemonicParsing="false" onAction="#discard" onMouseClicked="#discard" text="Discard">
+                  <Button fx:id="discardButton" disable="true" mnemonicParsing="false" onAction="#discard" text="Discard">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button fx:id="useButton" disable="true" mnemonicParsing="false" text="Use">
+                  <Button fx:id="useButton" disable="true" mnemonicParsing="false" text="Use" onAction="#use">
                      <font>
                         <Font size="20.0" />
                      </font>

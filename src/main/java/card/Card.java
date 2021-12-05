@@ -1,8 +1,6 @@
 package card;
 
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
-import java.util.List;
 
 public abstract class Card{
     private String name;

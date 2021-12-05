@@ -19,7 +19,7 @@ public class Treasure implements Comparable<Treasure> {
     private BufferedImage icon;
     private boolean isClaimed = false;
     private HeldTreasureCard card;
-
+    private List<TreasureTile> tiles;
 
     public Treasure(int id, BufferedImage color, BufferedImage gray, BufferedImage icon){
         this.id = id;
@@ -27,6 +27,7 @@ public class Treasure implements Comparable<Treasure> {
         this.color = color;
         this.gray = gray;
         this.icon = icon;
+        tiles = new ArrayList<>();
     }
 
     public Treasure(String name, BufferedImage color, BufferedImage gray, BufferedImage icon){
@@ -35,6 +36,7 @@ public class Treasure implements Comparable<Treasure> {
         this.color = color;
         this.gray = gray;
         this.icon = icon;
+        tiles = new ArrayList<>();
     }
 
     public BufferedImage getGray() {
@@ -88,5 +90,13 @@ public class Treasure implements Comparable<Treasure> {
 
     public BufferedImage getIcon(){
         return icon;
+    }
+
+    public void addTreasureTile(TreasureTile ti){
+        tiles.add(ti);
+    }
+
+    public List<TreasureTile> getTreasureTiles(){
+        return tiles;
     }
 }

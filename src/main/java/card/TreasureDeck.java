@@ -52,4 +52,7 @@ public class TreasureDeck{
         discardedCards.add(treasureCard);
     }
 
+    public Stack<TreasureCard> getDiscardedStack() {
+        return discardedCards;
+    }
 }

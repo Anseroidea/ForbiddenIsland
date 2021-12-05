@@ -1,185 +1,173 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Polygon?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.PlayerGraphics">
-   <children>
-      <AnchorPane fx:id="screenPane" prefHeight="1080" prefWidth="1920.0">
-         <StackPane fx:id="mainHand" layoutX="-72.0" layoutY="832.0">
-            <Polygon fill="#0084ff" points="916.0, 828.0, 855.0, 608.0, 94.0, 608.0, 94.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
-            <HBox layoutX="10.0" layoutY="10.0" spacing="10.0">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.PlayerGraphics">
+   <AnchorPane fx:id="screenPane" prefHeight="1080" prefWidth="1920.0">
+      <Label layoutX="14.0" layoutY="151.0" text="Hands:">
+         <font>
+            <Font size="38.0" />
+         </font>
+      </Label>
+      <VBox layoutX="-120.0" layoutY="209.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0">
+         <StackPane fx:id="hand1" prefHeight="150.0" prefWidth="724.0">
+            <Polygon fill="#0084ff" points="807.0, 828.0, 772.0, 981.0, 95.0, 981.0, 95.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <HBox prefWidth="744.0" spacing="10.0">
                <padding>
-                  <Insets bottom="20.0" left="80.0" top="20.0" />
+                  <Insets bottom="16.0" left="140.0" top="16.0" />
                </padding>
-               <ImageView fitHeight="180.0" fitWidth="121.0" pickOnBounds="true" preserveRatio="true" />
-               <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-               <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-               <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-               <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-               <StackPane.margin>
-                  <Insets left="20.0" />
-               </StackPane.margin>
-            </HBox>
-            <HBox layoutX="30.0" layoutY="10.0" spacing="4.0">
-               <padding>
-                  <Insets bottom="17.0" left="77.0" top="17.0" />
-               </padding>
-               <children>
-                  <ImageView fitHeight="186.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="90.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="90.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="227.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="227.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
+               <ImageView fitHeight="120.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                <StackPane.margin>
                   <Insets left="20.0" />
                </StackPane.margin>
             </HBox>
          </StackPane>
-         <Label layoutX="14.0" layoutY="151.0" text="Hands:">
-            <font>
-               <Font size="38.0" />
-            </font>
-         </Label>
-         <VBox layoutX="-120.0" layoutY="209.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0">
-            <StackPane fx:id="hand1" prefHeight="150.0" prefWidth="724.0">
-               <Polygon fill="#0084ff" points="807.0, 828.0, 772.0, 981.0, 95.0, 981.0, 95.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
-               <HBox prefWidth="744.0" spacing="10.0">
-                  <padding>
-                     <Insets bottom="16.0" left="140.0" top="16.0" />
-                  </padding>
-                  <ImageView fitHeight="120.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <StackPane.margin>
-                     <Insets left="20.0" />
-                  </StackPane.margin>
-               </HBox>
-            </StackPane>
-            <StackPane fx:id="hand2" prefHeight="150.0" prefWidth="724.0">
-               <Polygon fill="#0084ff" points="807.0, 828.0, 772.0, 981.0, 95.0, 981.0, 95.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
-                  <HBox prefWidth="744.0" spacing="10.0">
-                        <padding>
-                           <Insets bottom="16.0" left="140.0" top="16.0" />
-                        </padding>
-                        <ImageView fitHeight="120.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                     <StackPane.margin>
-                        <Insets left="20.0" />
-                     </StackPane.margin>
-                  </HBox>
-            </StackPane>
-            <StackPane fx:id="hand3" prefHeight="150.0" prefWidth="724.0">
-               <Polygon fill="#0084ff" points="807.0, 828.0, 772.0, 981.0, 95.0, 981.0, 95.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
-               <HBox prefWidth="744.0" spacing="10.0">
-                  <padding>
-                     <Insets bottom="16.0" left="140.0" top="16.0" />
-                  </padding>
-                  <ImageView fitHeight="120.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                  <StackPane.margin>
-                     <Insets left="20.0" />
-                  </StackPane.margin>
-               </HBox>
-            </StackPane>
-         </VBox>
-         <Rectangle fx:id="topLabelBox" arcHeight="100.0" arcWidth="100.0" fill="DODGERBLUE" height="190.0" layoutX="-107.0" layoutY="-97.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="2.0" width="698.0" />
-         <Label fx:id="topLabel" layoutX="301.0" layoutY="14.0">
-            <font>
-               <Font size="43.0" />
-            </font>
-         </Label>
-         <StackPane layoutX="1700.0" layoutY="354.0" prefHeight="330.0" prefWidth="220.0">
-            <children>
-               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="326.0" stroke="BLACK" strokeType="INSIDE" width="211.0" />
-               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Action Log" StackPane.alignment="TOP_CENTER">
-                  <font>
-                     <Font size="28.0" />
-                  </font>
-                  <StackPane.margin>
-                     <Insets top="10.0" />
-                  </StackPane.margin>
-               </Text>
-               <Label fx:id="actionStrings" prefHeight="260.0" prefWidth="150.0" textAlignment="CENTER" wrapText="true" StackPane.alignment="TOP_CENTER">
-                  <font>
-                     <Font size="18.0" />
-                  </font>
-                  <StackPane.margin>
-                     <Insets left="10.0" right="10.0" top="60.0" />
-                  </StackPane.margin>
-               </Label>
-            </children>
+         <StackPane fx:id="hand2" prefHeight="150.0" prefWidth="724.0">
+            <Polygon fill="#0084ff" points="807.0, 828.0, 772.0, 981.0, 95.0, 981.0, 95.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <HBox prefWidth="744.0" spacing="10.0">
+               <padding>
+                  <Insets bottom="16.0" left="140.0" top="16.0" />
+               </padding>
+               <ImageView fitHeight="120.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <StackPane.margin>
+                  <Insets left="20.0" />
+               </StackPane.margin>
+            </HBox>
          </StackPane>
-         <GridPane fx:id="board" gridLinesVisible="true" hgap="8" layoutX="624.0" layoutY="31.0" vgap="8">
-            <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
-            </columnConstraints>
-            <rowConstraints>
-               <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-         </GridPane>
-         <VBox layoutX="628.0" layoutY="35.0">
-            <children>
-               <Button mnemonicParsing="false" onMouseClicked="#undo" prefHeight="77.0" prefWidth="155.0" text="Undo">
-                  <font>
-                     <Font size="27.0" />
-                  </font>
-               </Button>
-               <Button mnemonicParsing="false" onMouseClicked="#endTurn" prefHeight="77.0" prefWidth="155.0" text="End Turn">
-                  <font>
-                     <Font size="27.0" />
-                  </font>
-               </Button>
-            </children>
-         </VBox>
-         <Button layoutX="1483.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#playSpecialCards" prefHeight="155.0" prefWidth="155.0" text="Play Special Cards" textAlignment="CENTER" wrapText="true">
+         <StackPane fx:id="hand3" prefHeight="150.0" prefWidth="724.0">
+            <Polygon fill="#0084ff" points="807.0, 828.0, 772.0, 981.0, 95.0, 981.0, 95.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <HBox prefWidth="744.0" spacing="10.0">
+               <padding>
+                  <Insets bottom="16.0" left="140.0" top="16.0" />
+               </padding>
+               <ImageView fitHeight="120.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="120.0" fitWidth="81.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+               <StackPane.margin>
+                  <Insets left="20.0" />
+               </StackPane.margin>
+            </HBox>
+         </StackPane>
+      </VBox>
+      <Rectangle fx:id="topLabelBox" arcHeight="100.0" arcWidth="100.0" fill="DODGERBLUE" height="190.0" layoutX="-107.0" layoutY="-97.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="2.0" width="698.0" />
+      <StackPane prefHeight="93.0" prefWidth="591.0">
+         <children>
+            <Label fx:id="topLabel">
+               <font>
+                  <Font size="43.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+      <StackPane layoutX="1700.0" layoutY="354.0" prefHeight="330.0" prefWidth="220.0">
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="326.0" stroke="BLACK" strokeType="INSIDE" width="211.0" />
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Action Log" StackPane.alignment="TOP_CENTER">
             <font>
-               <Font size="25.0" />
+               <Font size="28.0" />
+            </font>
+            <StackPane.margin>
+               <Insets top="10.0" />
+            </StackPane.margin>
+         </Text>
+         <Label fx:id="actionStrings" prefHeight="260.0" prefWidth="150.0" textAlignment="CENTER" wrapText="true" StackPane.alignment="TOP_CENTER">
+            <font>
+               <Font size="18.0" />
+            </font>
+            <StackPane.margin>
+               <Insets left="10.0" right="10.0" top="60.0" />
+            </StackPane.margin>
+         </Label>
+      </StackPane>
+      <GridPane fx:id="board" gridLinesVisible="true" hgap="8" layoutX="624.0" layoutY="31.0" vgap="8">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="163.0" prefWidth="163.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="163.0" prefHeight="163.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <VBox layoutX="628.0" layoutY="35.0">
+         <Button mnemonicParsing="false" onMouseClicked="#undo" prefHeight="77.0" prefWidth="155.0" text="Undo">
+            <font>
+               <Font size="27.0" />
             </font>
          </Button>
-         <StackPane layoutX="1483.0" layoutY="206.0" prefHeight="155.0" prefWidth="155.0">
-            <children>
-               <Circle fill="DODGERBLUE" radius="77.0" stroke="BLACK" strokeType="INSIDE" />
-               <Label fx:id="actionsLeftLabel">
-                  <font>
-                     <Font name="Baskerville Old Face" size="96.0" />
-                  </font>
-               </Label>
-            </children>
-         </StackPane>
-      </AnchorPane>
-   </children>
+         <Button mnemonicParsing="false" onMouseClicked="#endTurn" prefHeight="77.0" prefWidth="155.0" text="End Turn">
+            <font>
+               <Font size="27.0" />
+            </font>
+         </Button>
+      </VBox>
+      <Button layoutX="1483.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#playSpecialCards" prefHeight="155.0" prefWidth="155.0" text="Play Special Cards" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Button>
+      <StackPane layoutX="1483.0" layoutY="206.0" prefHeight="155.0" prefWidth="155.0">
+         <Circle fill="DODGERBLUE" radius="77.0" stroke="BLACK" strokeType="INSIDE" />
+         <Label fx:id="actionsLeftLabel">
+            <font>
+               <Font name="Baskerville Old Face" size="96.0" />
+            </font>
+         </Label>
+      </StackPane>
+      <StackPane fx:id="mainHand" layoutX="-72.0" layoutY="832.0">
+         <Polygon fill="#0084ff" points="916.0, 828.0, 855.0, 608.0, 94.0, 608.0, 94.0, 828.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+         <HBox layoutX="10.0" layoutY="10.0" spacing="10.0">
+            <padding>
+               <Insets bottom="20.0" left="80.0" top="20.0" />
+            </padding>
+            <ImageView fitHeight="180.0" fitWidth="121.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="10.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="180.0" fitWidth="121.0" layoutX="143.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+            <StackPane.margin>
+               <Insets left="20.0" />
+            </StackPane.margin>
+         </HBox>
+         <HBox layoutX="30.0" layoutY="10.0" spacing="4.0" visible="false">
+            <padding>
+               <Insets bottom="17.0" left="77.0" top="17.0" />
+            </padding>
+            <StackPane.margin>
+               <Insets left="20.0" />
+            </StackPane.margin>
+            <ImageView fitHeight="186.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="90.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="90.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="227.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="227.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+         </HBox>
+      </StackPane>
+      <HBox alignment="CENTER" layoutX="1480.0" layoutY="716.0" prefHeight="210.0" prefWidth="450.0" spacing="80.0">
+         <ImageView fx:id="treasureDiscard" fitHeight="200.0" fitWidth="134.0" onMouseClicked="#openTreasureDiscard" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+         <ImageView fx:id="floodDiscard" fitHeight="200.0" fitWidth="144.0" onMouseClicked="#openFloodDiscard" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+      </HBox>
+   </AnchorPane>
 </AnchorPane>
