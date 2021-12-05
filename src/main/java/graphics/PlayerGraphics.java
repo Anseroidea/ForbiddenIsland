@@ -436,10 +436,6 @@ public class PlayerGraphics implements Initializable {
         }
     }
 
-    public FloodCard nextFloodDraw(){
-
-    }
-
     public void refreshActions() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < TurnManager.toFormattedStrings().size(); i++){
