@@ -34,7 +34,7 @@ ForbiddenIsland extends Application {
     }
 
     public static void refreshDisplay() {
-        System.out.println(ProgramStateManager.getCurrentState().name());
+        primaryStage.getScene().setRoot(new AnchorPane());
         primaryStage.setScene(ProgramStateManager.getCurrentState().getScene());
     }
 

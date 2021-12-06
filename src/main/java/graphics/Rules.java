@@ -1,6 +1,8 @@
 package graphics;
 
 import app.ForbiddenIsland;
+import app.ProgramState;
+import app.ProgramStateManager;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -27,6 +29,7 @@ public class Rules implements Initializable {
     public Button pdfButton;
     public Button backButton;
     public Button nextButton;
+    public Button exitButton;
     private int currentIndex;
     private BufferedImage[] pages;
 
@@ -36,11 +39,12 @@ public class Rules implements Initializable {
         pdfButton.setFont(ForbiddenIsland.getForbiddenIslandFont(30));
         backButton.setFont(ForbiddenIsland.getForbiddenIslandFont(30));
         nextButton.setFont(ForbiddenIsland.getForbiddenIslandFont(30));
+        exitButton.setFont(ForbiddenIsland.getForbiddenIslandFont(30));
         backButton.setDisable(true);
-        pages = new BufferedImage[8];
+        pages = new BufferedImage[9];
         for (int i = 1; i <= pages.length; i++){
             try {
-                pages[i] = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("images/screens/rules" + i)));
+                pages[i - 1] = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("images/screens/rules-" + i + ".png")));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -76,11 +80,13 @@ public class Rules implements Initializable {
     public void back(ActionEvent actionEvent) {
         currentIndex--;
         refreshButtons();
+        refreshView();
     }
 
     public void next(ActionEvent actionEvent) {
         currentIndex++;
         refreshButtons();
+        refreshView();
     }
 
     public void refreshButtons(){
@@ -96,5 +102,10 @@ public class Rules implements Initializable {
 
     public void refreshView(){
         rulesView.setImage(SwingFXUtils.toFXImage(pages[currentIndex], null));
+    }
+
+    public void exit(ActionEvent actionEvent) {
+        ProgramStateManager.goToState(ProgramState.MAINMENU);
+        ForbiddenIsland.refreshDisplay();
     }
 }
