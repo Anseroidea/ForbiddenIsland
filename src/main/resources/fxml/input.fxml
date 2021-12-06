@@ -71,7 +71,7 @@
                   <Font size="29.0" />
                </font>
             </CheckBox>
-            <Button mnemonicParsing="false" onMouseClicked="#submit" text="Submit">
+            <Button fx:id = "submitButton" mnemonicParsing="false" onMouseClicked="#submit" text="Submit">
                <font>
                   <Font size="46.0" />
                </font>

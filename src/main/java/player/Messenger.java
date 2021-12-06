@@ -6,7 +6,7 @@ public class Messenger extends Role
 {
 
     public Messenger(){
-        super(Color.GHOSTWHITE);
+        super(Color.web("#ffffe8"));
     }
 
     @Override

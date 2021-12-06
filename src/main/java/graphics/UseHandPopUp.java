@@ -1,5 +1,6 @@
 package graphics;
 
+import app.ForbiddenIsland;
 import app.PopUp;
 import card.SpecialActionCard;
 import card.TreasureCard;
@@ -8,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -30,6 +32,8 @@ public class UseHandPopUp implements Poppable, Initializable {
     public Button useButton;
     public AnchorPane pane;
     public VBox vBox;
+    public Label infoLabel;
+    public Button cancelButton;
     private ImageView selection;
     private boolean cardSelected;
     private TreasureCard selectedCard;
@@ -69,7 +73,7 @@ public class UseHandPopUp implements Poppable, Initializable {
             for(TreasureCard tc : p.getDeck()){
                 if (tc instanceof SpecialActionCard) {
                     ImageView im = new ImageView(SwingFXUtils.toFXImage(tc.getSmallGraphic(), null));
-                    int y = 84 + 155 * (i);
+                    int y = 74 + 155 * (i);
                     im.setOnMouseClicked(event -> {
                         useButton.setDisable(false);
                         selectedCard = tc;
@@ -115,5 +119,8 @@ public class UseHandPopUp implements Poppable, Initializable {
         }
         pane.getChildren().add(selection);
         selection.setVisible(false);
+        infoLabel.setFont(ForbiddenIsland.getForbiddenIslandFont(29));
+        cancelButton.setFont(ForbiddenIsland.getForbiddenIslandFont(27));
+        useButton.setFont(ForbiddenIsland.getForbiddenIslandFont(27));
     }
 }

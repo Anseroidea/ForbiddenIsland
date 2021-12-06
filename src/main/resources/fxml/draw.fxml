@@ -14,23 +14,48 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1080" maxWidth="1920" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.DrawPopUp">
+<AnchorPane maxHeight="1080" maxWidth="1920" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" style="-fx-background-color: #4f98ff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.DrawPopUp">
     <HBox>
         <children>
             <StackPane prefHeight="1080.0" prefWidth="400.0">
                 <ImageView fx:id="cardUsed" fitHeight="360.0" fitWidth="242.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
                     <StackPane.margin>
-                        <Insets top="-250.0" />
+                        <Insets top="-200.0" />
                     </StackPane.margin>
                 </ImageView>
-                <Label text="Card Drawn:" textAlignment="CENTER" wrapText="true">
+                <Label fx:id="floodCardInfoLabel" text="Flood Card Drawn:" textAlignment="CENTER" wrapText="true">
                     <font>
-                        <Font size="41.0" />
+                        <Font name="Black Rose" size="41.0" />
                     </font>
                     <StackPane.margin>
-                        <Insets left="20.0" right="20.0" top="-700.0" />
+                        <Insets left="20.0" right="20.0" top="-650.0" />
                     </StackPane.margin>
                 </Label>
+            <Label fx:id="infoLabel" text="has been flooded!" wrapText="true">
+               <font>
+                  <Font name="Black Rose" size="22.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets top="250.0" />
+               </StackPane.margin>
+            </Label>
+            <VBox alignment="TOP_CENTER" spacing="10.0" StackPane.alignment="TOP_CENTER">
+               <StackPane.margin>
+                  <Insets top="10.0" />
+               </StackPane.margin>
+               <children>
+                  <Label fx:id="cardInfoLabel1" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                     <font>
+                        <Font name="Black Rose" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="cardInfoLabel2" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                     <font>
+                        <Font name="Black Rose" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
             <VBox alignment="CENTER" fillWidth="false" spacing="40.0" StackPane.alignment="CENTER">
                <StackPane.margin>
                   <Insets top="700.0" />
@@ -53,14 +78,6 @@
                   </Button>
                </children>
             </VBox>
-            <Label fx:id="infoLabel" text="has been flooded!" wrapText="true">
-               <font>
-                  <Font size="22.0" />
-               </font>
-               <StackPane.margin>
-                  <Insets top="200.0" />
-               </StackPane.margin>
-            </Label>
             </StackPane>
             <StackPane prefHeight="1080.0" prefWidth="1080.0">
                 <children>

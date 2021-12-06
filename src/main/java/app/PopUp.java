@@ -9,6 +9,7 @@ import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -57,7 +58,11 @@ public enum PopUp {
         } else {
             controller.initializePopUp();
             Stage popup = new Stage();
-            popup.setScene(new Scene(p));
+            if (this != DRAW) {
+                popup.setScene(new Scene(p));
+            } else {
+                popup.setScene(new Scene(p, 1, 1));
+            }
             popup.initModality(Modality.APPLICATION_MODAL);
             popup.setResizable(false);
             if (this != USEHAND){
@@ -79,7 +84,18 @@ public enum PopUp {
                     controller.close();
                 });
             }
-            popup.showAndWait();
+            if (this == DRAW){
+                popup.show();
+                DrawPopUp drawPopUp = (DrawPopUp) controller;
+                drawPopUp.drawNext();
+                popup.close();
+                popup.getScene().setRoot(new AnchorPane());
+                popup.setScene(new Scene(p));
+                popup.showAndWait();
+            } else {
+                popup.showAndWait();
+            }
+
         }
     }
 

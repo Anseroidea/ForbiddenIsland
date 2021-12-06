@@ -12,7 +12,7 @@ import java.util.Queue;
 public class Diver extends Role {
 
 	public Diver() {
-		super(Color.BLACK);
+		super(Color.web("#3b3b3b"));
 	}
 
 	@Override

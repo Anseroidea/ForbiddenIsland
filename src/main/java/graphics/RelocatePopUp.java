@@ -5,6 +5,7 @@ import board.Tile;
 import board.Treasure;
 import board.TreasureTile;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -20,11 +21,13 @@ import player.Player;
 import player.TurnManager;
 
 import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import static graphics.PlayerGraphics.to1DArrayIndex;
 
-public class RelocatePopUp extends NonDefaultPoppable{
+public class RelocatePopUp extends NonDefaultPoppable implements Initializable {
 
     public Rectangle topLabelBox;
     public Label topLabel;
@@ -117,5 +120,11 @@ public class RelocatePopUp extends NonDefaultPoppable{
         Stage thisStage = (Stage) selectionBoard.getScene().getWindow();
         thisStage.getScene().setRoot(new AnchorPane());
         thisStage.close();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        infoLabel.setFont(ForbiddenIsland.getForbiddenIslandFont(41));
+        topLabel.setFont(ForbiddenIsland.getForbiddenIslandFont(55));
     }
 }

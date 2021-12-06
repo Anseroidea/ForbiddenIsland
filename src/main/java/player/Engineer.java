@@ -6,7 +6,7 @@ public class Engineer extends Role
 {
 
     public Engineer(){
-        super(Color.RED);
+        super(Color.web("#ff8282"));
     }
 
     @Override

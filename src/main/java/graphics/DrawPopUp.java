@@ -11,6 +11,7 @@ import card.FloodDeck;
 import card.TreasureCard;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -25,11 +26,13 @@ import player.Player;
 import player.TurnManager;
 
 import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import static graphics.PlayerGraphics.to1DArrayIndex;
 
-public class DrawPopUp implements Poppable{
+public class DrawPopUp implements Poppable, Initializable {
     public ImageView treasureDiscard;
     public ImageView floodDiscard;
     public ImageView stick;
@@ -40,6 +43,9 @@ public class DrawPopUp implements Poppable{
     public Button skipAll;
     public Button specialActionCard;
     public GridPane playerBoard;
+    public Label cardInfoLabel1;
+    public Label cardInfoLabel2;
+    public Label floodCardInfoLabel;
     private int cardsToDraw;
     private int cardsDrawn = 0;
     private FloodDeck floodDeck;
@@ -51,14 +57,10 @@ public class DrawPopUp implements Poppable{
         bg = ForbiddenIsland.getBoard();
         floodDeck = bg.getFloodDeck();
         cardsToDraw = bg.getWaterLevel().getLevel();
-        StringBuilder sb = new StringBuilder();
         Player currentPlayer = TurnManager.getCurrentPlayer();
-        for (TreasureCard c : bg.getLastTwoCards()) {
-            sb.append(currentPlayer.getRole().getName() + " drew " + c.getName() + "\n");
-        }
-        infoLabel.setText(sb.toString());
+        cardInfoLabel1.setText(currentPlayer.getRole().getName() + " drew " + bg.getLastTwoCards().get(0).getName());
+        cardInfoLabel2.setText(currentPlayer.getRole().getName() + " drew " + bg.getLastTwoCards().get(1).getName());
         refreshWaterLevel();
-        drawNext();
     }
 
     public void refreshTiles(){
@@ -144,7 +146,8 @@ public class DrawPopUp implements Poppable{
 
     @Override
     public void close() {
-        Stage thisStage = (Stage) tileBoard.getScene().getWindow();
+        System.out.println(cardInfoLabel2.isVisible());
+        Stage thisStage = (Stage) cardInfoLabel2.getScene().getWindow();
         thisStage.getScene().setRoot(new AnchorPane());
         thisStage.close();
     }
@@ -170,16 +173,9 @@ public class DrawPopUp implements Poppable{
     }
 
     public void drawNext() {
-        if (bg.isLost()){
-            bg.lose();
-        }
-        for (Player p : bg.getPlayers()){
-            if (bg.getBoard().get(p.getPositionY()).get(p.getPositionX()).isSunk()){
-                PopUp.RELOCATE.loadRelocate(p);
-            }
-        }
         if (cardsDrawn == cardsToDraw){
             close();
+            return;
         }
         cardsDrawn++;
         FloodCard fc = floodDeck.draw(1).get(0);
@@ -191,12 +187,25 @@ public class DrawPopUp implements Poppable{
         } else {
             infoLabel.setText(fc.getName() + " has flooded!");
         }
+        if (bg.isLost()){
+            close();
+            return;
+        }
+        for (Player p : bg.getPlayers()){
+            if (bg.getBoard().get(p.getPositionY()).get(p.getPositionX()).isSunk()){
+                PopUp.RELOCATE.loadRelocate(p);
+            }
+        }
         refreshDisplay();
     }
 
     public void skipAll(ActionEvent actionEvent) {
         while (cardsDrawn < cardsToDraw){
             drawNext();
+            if (bg.isLost()){
+                System.out.println("help");
+                return;
+            }
         }
         close();
     }
@@ -210,5 +219,16 @@ public class DrawPopUp implements Poppable{
         refreshTiles();
         refreshDiscards();
         refreshButtons();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        cardInfoLabel1.setFont(ForbiddenIsland.getForbiddenIslandFont(30));
+        cardInfoLabel2.setFont(ForbiddenIsland.getForbiddenIslandFont(30));
+        floodCardInfoLabel.setFont(ForbiddenIsland.getForbiddenIslandFont(41));
+        infoLabel.setFont(ForbiddenIsland.getForbiddenIslandFont(22));
+        drawNext.setFont(ForbiddenIsland.getForbiddenIslandFont(30));
+        skipAll.setFont(ForbiddenIsland.getForbiddenIslandFont(30));
+        specialActionCard.setFont(ForbiddenIsland.getForbiddenIslandFont(30));
     }
 }

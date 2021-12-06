@@ -6,7 +6,7 @@ public class Navigator extends Role
 {
 
     public Navigator(){
-        super(Color.YELLOW);
+        super(Color.web("#fffc3d"));
     }
 
     @Override

@@ -80,6 +80,10 @@ public class Treasure implements Comparable<Treasure> {
         return names.indexOf(s);
     }
 
+    public static String IDToString(int i){
+        return names.get(i);
+    }
+
     public void setCard(HeldTreasureCard tc){
         this.card = tc;
     }

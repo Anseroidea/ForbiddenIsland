@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="1080" maxWidth="1920" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.UsePopUp">
+<AnchorPane fx:id="pane" maxHeight="1080" maxWidth="1920" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #4f98ff;" prefHeight="1080.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.UsePopUp">
     <HBox prefHeight="1080.0" prefWidth="1600.0">
         <children>
             <StackPane prefHeight="1080.0" prefWidth="520.0">
@@ -45,7 +45,7 @@
                             <Insets left="20.0" right="20.0" top="-250.0" />
                         </StackPane.margin>
                     </Label>
-               <Button mnemonicParsing="false" onAction="#cancel" text="Cancel" StackPane.alignment="BOTTOM_CENTER">
+               <Button fx:id = "cancelButton" mnemonicParsing="false" onAction="#cancel" text="Cancel" StackPane.alignment="BOTTOM_CENTER">
                   <StackPane.margin>
                      <Insets bottom="100.0" />
                   </StackPane.margin>

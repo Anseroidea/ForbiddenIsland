@@ -2,6 +2,7 @@ package player;
 
 import app.ForbiddenIsland;
 import board.BoardGame;
+import board.Treasure;
 
 import java.util.*;
 
@@ -20,6 +21,9 @@ public class TurnManager {
             put("G", "Gave ");
             put("N", "Navigated ");
             put("P", "Flew to ");
+            put("H", "Heli'd ");
+            put("B", "Sandbagged ");
+            put("C", "Claimed ");
         }
     };
 
@@ -39,6 +43,7 @@ public class TurnManager {
     public static void endTurn() {
         actions = 0;
         actionStrings.clear();
+        totalActionStrings.clear();
         currentPlayer = playerQueue.remove();
         playerQueue.add(currentPlayer);
     }
@@ -58,13 +63,16 @@ public class TurnManager {
             if (lastAction.startsWith("S") && currentPlayer.getRole().getName().equals("Engineer") && s.startsWith("S")) {
                 String shoreCoord = lastAction.substring(lastAction.indexOf("("), lastAction.indexOf("(") + 6);
                 String sShoreCoord = s.substring(s.indexOf("("), s.indexOf("(") + 6);
+                totalActionStrings.pop();
                 actionStrings.pop();
                 String finalAction = "E " + shoreCoord + ", " + sShoreCoord;
                 actionStrings.push(finalAction);
+                totalActionStrings.push(finalAction);
                 return true;
             } else if (actions == 3){
                 return false;
             } else {
+                totalActionStrings.push(s);
                 actionStrings.push(s);
                 actions++;
                 return true;
@@ -96,12 +104,13 @@ public class TurnManager {
     }
 
     public static List<String> toFormattedStrings(){
-        List<String> actions = new ArrayList<>(actionStrings);
+        List<String> actions = new ArrayList<>(totalActionStrings);
         List<String> formattedStrings = new ArrayList<>();
         for (String s : actions){
             System.out.println(s);
             StringBuilder sb = new StringBuilder();
             String move = s.substring(0, 1);
+            System.out.println(s);
             sb.append(moveMap.get(move));
             switch(move){
                 case "M":
@@ -129,7 +138,8 @@ public class TurnManager {
                     formattedStrings.add(sb.toString());
                     break;
                 }
-                case "S": {
+                case "S":
+                case "B": {
                     String coord1 = s.substring(s.indexOf("("), s.indexOf("(") + 6);
                     String[] coords1 = coord1.replace("(", "").replace(")", "").split(", ");
                     sb.append(ForbiddenIsland.getBoard().getBoard().get(Integer.parseInt(coords1[1])).get(Integer.parseInt(coords1[0])).getName());
@@ -142,6 +152,24 @@ public class TurnManager {
                     String coord1 = s.substring(s.lastIndexOf("("), s.lastIndexOf("(") + 6);
                     String[] coords1 = coord1.replace("(", "").replace(")", "").split(", ");
                     sb.append(ForbiddenIsland.getBoard().getBoard().get(Integer.parseInt(coords1[1])).get(Integer.parseInt(coords1[0])).getName());
+                    formattedStrings.add(sb.toString());
+                    break;
+                }
+                case "H": {//H [starting] [ending] [playernotations]
+                    String playersMoved = s.substring(s.lastIndexOf(" ") + 1);
+                    StringJoiner sj = new StringJoiner(", ");
+                    for (int i = 0; i < playersMoved.length(); i++){
+                        sj.add(Role.fromNotation(playersMoved.substring(i, i+1)).getName());
+                    }
+                    sb.append(sj).append(" to ");
+                    String coord1 = s.substring(s.indexOf("(", s.indexOf("(") + 1), s.indexOf("(", s.indexOf("(") + 1) + 6);
+                    String[] coords1 = coord1.replace("(", "").replace(")", "").split(", ");
+                    sb.append(ForbiddenIsland.getBoard().getBoard().get(Integer.parseInt(coords1[1])).get(Integer.parseInt(coords1[0])).getName());
+                    formattedStrings.add(sb.toString());
+                    break;
+                }
+                case "C": {//C [treasureId]
+                    sb.append(Treasure.IDToString(Integer.parseInt(s.substring(s.length() - 1))));
                     formattedStrings.add(sb.toString());
                     break;
                 }
@@ -162,5 +190,15 @@ public class TurnManager {
 
     public static Queue<Player> getPlayers() {
         return playerQueue;
+    }
+
+    public static boolean hasDoneSpecialAction(){
+        List<String> actions = new ArrayList<>(actionStrings);
+        for (String s : actions){
+            if (s.startsWith(currentPlayer.getRole().toNotation())){
+                return true;
+            }
+        }
+        return false;
     }
 }

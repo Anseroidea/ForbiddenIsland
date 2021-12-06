@@ -11,9 +11,9 @@
 
 <AnchorPane fx:id="pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.UseHandPopUp">
    <children>
-      <VBox fx:id="vBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" spacing="10.0">
+      <VBox fx:id="vBox" alignment="TOP_CENTER" maxHeight="-Infinity" style="-fx-background-color: f7dcbe;" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" spacing="10.0">
          <children>
-            <Label text="Use Special Action Cards">
+            <Label fx:id = "infoLabel" text="Use Special Action Cards">
                <font>
                   <Font size="29.0" />
                </font>
@@ -27,7 +27,7 @@
                               <Font size="20.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#cancel" text="Cancel">
+                        <Button fx:id = "cancelButton" mnemonicParsing="false" onAction="#cancel" text="Cancel">
                            <font>
                               <Font size="20.0" />
                            </font>

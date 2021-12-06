@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.HelicopterPopUp">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.HelicopterPopUp" style="-fx-background-color: f7dcbe;">
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" spacing="50.0">
             <children>
-                <Label text="Select who to take on the helicopter!">
+                <Label fx:id="selectLabel" text="Select who to take on the helicopter!">
                     <font>
                         <Font size="24.0" />
                     </font>
@@ -25,7 +25,7 @@
                                 <Font size="20.0" />
                             </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#cancel" text="Cancel">
+                        <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" text="Cancel">
                             <font>
                                 <Font size="20.0" />
                             </font>

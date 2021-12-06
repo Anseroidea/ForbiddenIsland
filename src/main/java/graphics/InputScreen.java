@@ -24,6 +24,7 @@ public class InputScreen implements Initializable{
     public List<RadioButton> numPlayersButtons;
     public Label errorText;
     public CheckBox manualFlooding;
+    public Button submitButton;
     private int difficulty;
     private int numPlayers;
 
@@ -68,9 +69,18 @@ public class InputScreen implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         numPlayersButtons = Arrays.asList(twoButton, threeButton, fourButton);
+        for (RadioButton b : numPlayersButtons){
+            b.setFont(ForbiddenIsland.getForbiddenIslandFont(40));
+        }
         difficultyButtons = Arrays.asList(noviceButton, normalButton, eliteButton, legendaryButton);
+        for (RadioButton b : difficultyButtons){
+            b.setFont(ForbiddenIsland.getForbiddenIslandFont(40));
+        }
         Tooltip t1 = new Tooltip("Enables card by card control of flooding. You can view the board after each flood card drawn and can use special action cards. (Default is yes)");
         manualFlooding.setTooltip(t1);
+        manualFlooding.setFont(ForbiddenIsland.getForbiddenIslandFont(29));
+        errorText.setFont(ForbiddenIsland.getForbiddenIslandFont(25));
+        submitButton.setFont(ForbiddenIsland.getForbiddenIslandFont(46));
         t1.setShowDelay(Duration.millis(200));
     }
 }

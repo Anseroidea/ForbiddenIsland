@@ -10,7 +10,8 @@ public enum ProgramState {
     INPUT,
     MAINMENU,
     WIN,
-    LOSE;
+    LOSE,
+    RULES;
 
     private Pane p;
 

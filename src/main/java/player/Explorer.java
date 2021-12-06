@@ -11,7 +11,7 @@ public class Explorer extends Role
 {
 
     public Explorer(){
-        super(Color.GREEN);
+        super(Color.web("#00802f"));
     }
 
     @Override

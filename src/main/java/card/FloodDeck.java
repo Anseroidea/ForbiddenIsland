@@ -32,6 +32,7 @@ public class FloodDeck{
         Collections.shuffle(discardedCards);
         activeCards.addAll(discardedCards);
         discardedCards.clear();
+        System.out.println(activeCards);
     }
 
     /* will pass the number of treasure cards to be
@@ -39,6 +40,7 @@ public class FloodDeck{
     after depleting them from activeCards */
     public List<FloodCard> draw(int floodCardsToBeDrawn) {
         List<FloodCard> drawn = new ArrayList<FloodCard>();
+        System.out.println(activeCards);
         int maxSize = activeCards.size();
         for(int i = 0 ; i < Math.min(floodCardsToBeDrawn, maxSize); i++){
             if (activeCards.isEmpty()){

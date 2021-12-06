@@ -1,9 +1,11 @@
 package graphics;
 
+import app.ForbiddenIsland;
 import app.PopUp;
 import card.SpecialActionCard;
 import card.TreasureCard;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -13,7 +15,10 @@ import javafx.stage.Stage;
 import player.Player;
 import player.TurnManager;
 
-public class DiscardPopUp implements Poppable {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class DiscardPopUp implements Poppable, Initializable {
     public Label topLabel;
     public HBox cardBox;
     public Button useButton;
@@ -56,7 +61,7 @@ public class DiscardPopUp implements Poppable {
                 selectedCard = tc;
                 cardSelected = true;
                 selection.setLayoutX(im.getLayoutX() - 3);
-                selection.setY(132);
+                selection.setY(124);
                 selection.setVisible(true);
             });
             cardBox.getChildren().add(im);
@@ -90,4 +95,10 @@ public class DiscardPopUp implements Poppable {
     }
 
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        topLabel.setFont(ForbiddenIsland.getForbiddenIslandFont(24));
+        discardButton.setFont(ForbiddenIsland.getForbiddenIslandFont(20));
+        useButton.setFont(ForbiddenIsland.getForbiddenIslandFont(20));
+    }
 }

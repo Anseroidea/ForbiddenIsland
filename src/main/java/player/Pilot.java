@@ -11,7 +11,7 @@ public class Pilot extends Role
 {
 
     public Pilot(){
-        super(Color.BLUE);
+        super(Color.web("#4538ff"));
     }
 
     @Override
@@ -21,18 +21,22 @@ public class Pilot extends Role
 
     @Override
     public List<Tile> getMovableTiles(Player p) {
-        List<Tile> getMovableTiles = new ArrayList<>();
-        int x = p.getPositionX();
-        int y = p.getPositionY();
-        List<List<Tile>> board = ForbiddenIsland.getBoard().getBoard();
-        for (int r = 0; r < 6; r++) {
-            for (int c = 0; c < 6; c++) {
-                if (!(r == y && c == x) && board.get(r).get(c) != null && board.get(r).get(c).isMovable()) {
-                    getMovableTiles.add(board.get(r).get(c));
+        if (TurnManager.hasDoneSpecialAction()){
+            return super.getMovableTiles(p);
+        } else {
+            List<Tile> getMovableTiles = new ArrayList<>();
+            int x = p.getPositionX();
+            int y = p.getPositionY();
+            List<List<Tile>> board = ForbiddenIsland.getBoard().getBoard();
+            for (int r = 0; r < 6; r++) {
+                for (int c = 0; c < 6; c++) {
+                    if (!(r == y && c == x) && board.get(r).get(c) != null && board.get(r).get(c).isMovable()) {
+                        getMovableTiles.add(board.get(r).get(c));
+                    }
                 }
             }
+            return getMovableTiles;
         }
-        return getMovableTiles;
     }
 
     @Override

@@ -230,7 +230,7 @@ public class BoardGame {
     public void nextTurn(){
         Player currentPlayer = TurnManager.getCurrentPlayer();
         List<TreasureCard> cardsDrawn = treasureDeck.draw(2);
-        lastTwoCards = cardsDrawn;
+        lastTwoCards = new ArrayList<>(cardsDrawn);
         boolean isWaterRisen = false;
         for (int i = 1; i >= 0; i--){
             if (cardsDrawn.get(i) instanceof WatersRiseCard){
@@ -249,6 +249,9 @@ public class BoardGame {
         }
         if (manualFlooding){
             PopUp.DRAW.load();
+            if (isLost()){
+                lose();
+            }
         } else {
             List<FloodCard> floodCardList = floodDeck.draw(6);
             for (FloodCard fc : floodCardList){
@@ -257,6 +260,9 @@ public class BoardGame {
                     if (board.get(p.getPositionY()).get(p.getPositionX()).isSunk()){
                         PopUp.RELOCATE.loadRelocate(p);
                     }
+                }
+                if (fc.getTile().isSunk()){
+                    floodDeck.killCard(fc);
                 }
                 if (isLost()){
                     lose();
@@ -279,11 +285,11 @@ public class BoardGame {
     }
 
     public boolean isReadyToWin(){
-        if (!treasures.stream().allMatch(Treasure::isClaimed)){
+        if (treasures.stream().anyMatch(t -> !t.isClaimed())){
             return false;
         }
         for (Player p : players){
-            if (p.getPositionX() != foolsLanding.getPositionX() && p.getPositionY() != foolsLanding.getPositionY()){
+            if (p.getPositionX() != foolsLanding.getPositionX() || p.getPositionY() != foolsLanding.getPositionY()){
                 return false;
             }
         }
@@ -292,33 +298,34 @@ public class BoardGame {
 
     public boolean isLost(){
         if (foolsLanding.isSunk()){
+            ForbiddenIsland.getLose().setLoseReason("Fools Landing sunk!");
             return true;
         }
         for (Treasure t : treasures){
-            for (TreasureTile ti : t.getTreasureTiles()){
-                System.out.println(ti.getName() + " " + ti.isSunk());
-            }
-            if (t.getTreasureTiles().stream().allMatch(TreasureTile::isSunk)){
+            if (!t.isClaimed() && t.getTreasureTiles().stream().allMatch(TreasureTile::isSunk)){
+                ForbiddenIsland.getLose().setLoseReason("Both treasure tiles for the " + t.getName() + " have sunk");
                 return true;
             }
         }
         for (Player p : players){
             if (board.get(p.getPositionY()).get(p.getPositionX()).isSunk()){
                 if (p.getRole().getFloodRelocTiles(p).isEmpty()){
+                    ForbiddenIsland.getLose().setLoseReason(p.getRole().getName() + " has drowned as they were not able to swim ashore!");
                     return true;
                 }
             }
         }
-        return waterLevel.toFullNotation() == WaterLevel.DEATH;
+        if (waterLevel.toFullNotation() == WaterLevel.DEATH){
+            ForbiddenIsland.getLose().setLoseReason("The water level has reached death!");
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void lose(){
         ProgramStateManager.goToState(ProgramState.LOSE);
         ForbiddenIsland.refreshDisplay();
-    }
-
-    public void win(){
-
     }
 
     public List<List<Tile>> getBoard(){

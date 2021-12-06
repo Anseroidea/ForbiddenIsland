@@ -5,6 +5,7 @@ import board.Tile;
 import board.Treasure;
 import board.TreasureTile;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -15,14 +16,17 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 
 import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class BoardGraphics{
+public class BoardGraphics implements Initializable {
     public GridPane board;
     public static Font castellar = Font.loadFont(ForbiddenIsland.class.getResource("/fonts/castellar.ttf").toExternalForm(), 10);
     public ImageView stick;
     public final int initialStickY = 287;
     public HBox claimedTreasures;
+    public Label treasuresClaimed;
 
     public void refreshTiles(){
         List<List<Tile>> board = ForbiddenIsland.getBoard().getBoard();
@@ -85,6 +89,11 @@ public class BoardGraphics{
         refreshTiles();
         refreshWaterLevel();
         refreshHeldTreasures();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        treasuresClaimed.setFont(ForbiddenIsland.getForbiddenIslandFont(24));
     }
 }
 

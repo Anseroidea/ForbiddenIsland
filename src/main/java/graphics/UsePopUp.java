@@ -2,6 +2,8 @@ package graphics;
 
 import app.ForbiddenIsland;
 import app.PopUp;
+import app.ProgramState;
+import app.ProgramStateManager;
 import board.Tile;
 import board.Treasure;
 import board.TreasureTile;
@@ -9,10 +11,15 @@ import card.SpecialActionCard;
 import card.TreasureCard;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -21,16 +28,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import player.Player;
+import player.TurnManager;
 
 import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import static graphics.PlayerGraphics.selectIcon;
 import static graphics.PlayerGraphics.to1DArrayIndex;
 
-public class UsePopUp extends NonDefaultPoppable{
+public class UsePopUp extends NonDefaultPoppable implements Initializable {
     public Rectangle topLabelBox;
     public Label topLabel;
     public ImageView cardUsed;
@@ -38,6 +48,7 @@ public class UsePopUp extends NonDefaultPoppable{
     public GridPane tileBoard;
     public GridPane selectionBoard;
     public AnchorPane pane;
+    public Button cancelButton;
     private boolean destination;
 
     public void refreshSelections(Player p, TreasureCard tc) {
@@ -59,43 +70,51 @@ public class UsePopUp extends NonDefaultPoppable{
                     ImageView c = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
                     StackPane pa = new StackPane(c);
                     pa.setOnMouseClicked((event2) -> {
-                        destination = true;
-                        List<Player> playersHere = new ArrayList<>();
-                        for (Player pl1 : ForbiddenIsland.getBoard().getPlayers()) {
-                            if (pl1.getPositionX() == x && pl1.getPositionY() == y) {
-                                playersHere.add(pl1);
+                        if (ForbiddenIsland.getBoard().getBoard().get(y).get(x).getName().equals("Fools Landing") && ForbiddenIsland.getBoard().isReadyToWin()){
+                            ProgramStateManager.goToState(ProgramState.WIN);
+                            ForbiddenIsland.refreshDisplay();
+                        } else {
+                            destination = true;
+                            List<Player> playersHere = new ArrayList<>();
+                            for (Player pl1 : ForbiddenIsland.getBoard().getPlayers()) {
+                                if (pl1.getPositionX() == x && pl1.getPositionY() == y) {
+                                    playersHere.add(pl1);
+                                }
                             }
-                        }
-                        for (List<Tile> ti : ForbiddenIsland.getBoard().getBoard()) {
-                            for (Tile t : ti) {
-                                if (t != null && t.isMovable()) {
-                                    StackPane sp1 = (StackPane) selectionBoard.getChildren().get(to1DArrayIndex(t.getPositionX(), t.getPositionY()));
-                                    if (t.getPositionX() == x && t.getPositionY() == y) {
-                                        for (int i1 = 0; i1 < sp1.getChildren().size(); i1++) {
-                                            if (sp1.getChildren().get(i1) instanceof StackPane) {
-                                                sp1.getChildren().remove(i1--);
-                                            }
-                                        }
-                                    } else {
-                                        ImageView c1 = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
-                                        StackPane pa1 = new StackPane(c1);
-                                        pa1.setOnMouseClicked(event3 -> {
-                                            List<Player> playersSelected;
-                                            if (playersHere.size() > 1) {
-                                                playersSelected = Objects.requireNonNull(PopUp.HELICOPTER.loadHelicopter(playersHere));
-                                            } else {
-                                                playersSelected = new ArrayList<>(playersHere);
-                                            }
-                                            if (playersSelected.size() >= 1) {
-                                                for (Player pla : playersSelected) {
-                                                    pla.move(t.getPositionX(), t.getPositionY());
+                            for (List<Tile> ti : ForbiddenIsland.getBoard().getBoard()) {
+                                for (Tile t : ti) {
+                                    if (t != null && t.isMovable()) {
+                                        StackPane sp1 = (StackPane) selectionBoard.getChildren().get(to1DArrayIndex(t.getPositionX(), t.getPositionY()));
+                                        if (t.getPositionX() == x && t.getPositionY() == y) {
+                                            for (int i1 = 0; i1 < sp1.getChildren().size(); i1++) {
+                                                if (sp1.getChildren().get(i1) instanceof StackPane) {
+                                                    sp1.getChildren().remove(i1--);
                                                 }
-                                                p.discardCard(tc);
-                                                BoardStateGraphicsInitializer.getPg().refreshDisplay();
-                                                close();
                                             }
-                                        });
-                                        sp1.getChildren().add(pa1);
+                                        } else {
+                                            ImageView c1 = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
+                                            StackPane pa1 = new StackPane(c1);
+                                            pa1.setOnMouseClicked(event3 -> {
+                                                List<Player> playersSelected;
+                                                if (playersHere.size() > 1) {
+                                                    playersSelected = Objects.requireNonNull(PopUp.HELICOPTER.loadHelicopter(playersHere));
+                                                } else {
+                                                    playersSelected = new ArrayList<>(playersHere);
+                                                }
+                                                if (playersSelected.size() >= 1) {
+                                                    String people = "H (" + x + ", " + y + ") (" + t.getPositionX() + ", " + t.getPositionY() + ") ";
+                                                    for (Player pla : playersSelected) {
+                                                        people += pla.getRole().toNotation();
+                                                        pla.move(t.getPositionX(), t.getPositionY());
+                                                    }
+                                                    TurnManager.addNonAction(people);
+                                                    p.discardCard(tc);
+                                                    BoardStateGraphicsInitializer.getPg().refreshDisplay();
+                                                    close();
+                                                }
+                                            });
+                                            sp1.getChildren().add(pa1);
+                                        }
                                     }
                                 }
                             }
@@ -193,10 +212,11 @@ public class UsePopUp extends NonDefaultPoppable{
                         ImageView c = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
                         StackPane pa = new StackPane(c);
                         pa.setOnMouseClicked((event2) -> {
+                            TurnManager.addNonAction("B (" + x1 + ", " + y1 + ")");
                             p.discardCard(tc);
                             t.shoreUp();
                             close();
-                            BoardStateGraphicsInitializer.refreshTiles();
+                            BoardStateGraphicsInitializer.refreshDisplay();
                         });
                         sp.getChildren().add(pa);
                     }
@@ -214,5 +234,12 @@ public class UsePopUp extends NonDefaultPoppable{
 
     public void cancel(ActionEvent actionEvent) {
         close();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        topLabel.setFont(ForbiddenIsland.getForbiddenIslandFont(55));
+        infoLabel.setFont(ForbiddenIsland.getForbiddenIslandFont(41));
+        cancelButton.setFont(ForbiddenIsland.getForbiddenIslandFont(30));
     }
 }
