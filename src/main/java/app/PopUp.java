@@ -92,6 +92,7 @@ public enum PopUp {
                 popup.getScene().setRoot(new AnchorPane());
                 popup.setScene(new Scene(p));
                 popup.showAndWait();
+                BoardStateGraphicsInitializer.refreshDisplay();
             } else {
                 popup.showAndWait();
             }

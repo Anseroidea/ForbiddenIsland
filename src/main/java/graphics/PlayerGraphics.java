@@ -188,6 +188,9 @@ public class PlayerGraphics implements Initializable {
                                         }
                                     }
                                 });
+                                if (card instanceof SpecialActionCard) {
+                                    sp.setVisible(false);
+                                }
                                 h2.getChildren().add(sp);
                             });;
                         });
@@ -243,7 +246,6 @@ public class PlayerGraphics implements Initializable {
         for (int i = 0; i < 5 && i < deck1.size(); i++){
             TreasureCard tc = deck1.get(i);
             ImageView e = new ImageView(SwingFXUtils.toFXImage(tc.getGraphic(), null));
-            e.setStyle("-fx-border-color: black;");
             if (tc instanceof SpecialActionCard){
                 if (tc.getName().equals("Helicopter")){
                     e.setOnMouseClicked(event -> {

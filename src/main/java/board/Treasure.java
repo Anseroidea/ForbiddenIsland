@@ -10,7 +10,6 @@ import java.util.List;
 
 public class Treasure implements Comparable<Treasure> {
 
-    public static final List<Treasure> treasures = new ArrayList<>();
     public static final List<String> names = Arrays.asList("Crystal of Fire", "Ocean's Chalice", "Statue of the Wind", "Earth Stone");
     private int id;
     private String name;
@@ -65,7 +64,8 @@ public class Treasure implements Comparable<Treasure> {
     }
 
     public boolean equals(Object o){
-        if (o instanceof Treasure t){
+        if (o instanceof Treasure){
+            Treasure t = (Treasure) o;
             return t.id == this.id;
         } else {
             return false;

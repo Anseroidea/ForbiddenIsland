@@ -139,7 +139,7 @@
          </font>
       </Button>
       <StackPane layoutX="1483.0" layoutY="206.0" prefHeight="155.0" prefWidth="155.0">
-         <Circle fill="DODGERBLUE" radius="77.0" stroke="BLACK" strokeType="INSIDE" />
+         <Circle radius="77.0" stroke="BLACK" strokeType="INSIDE" fill="#f7dcbe" />
          <Label fx:id="actionsLeftLabel">
             <font>
                <Font name="Baskerville Old Face" size="96.0" />

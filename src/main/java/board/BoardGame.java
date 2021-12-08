@@ -5,6 +5,11 @@ import app.PopUp;
 import app.ProgramState;
 import app.ProgramStateManager;
 import card.*;
+import graphics.BoardStateGraphicsInitializer;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
+import javafx.scene.robot.Robot;
 import player.Player;
 import player.Role;
 import player.TurnManager;
@@ -253,20 +258,24 @@ public class BoardGame {
                 lose();
             }
         } else {
-            List<FloodCard> floodCardList = floodDeck.draw(6);
+            List<FloodCard> floodCardList = floodDeck.draw(waterLevel.getLevel());
             for (FloodCard fc : floodCardList){
                 fc.getTile().floodTile();
-                for (Player p : players){
-                    if (board.get(p.getPositionY()).get(p.getPositionX()).isSunk()){
-                        PopUp.RELOCATE.loadRelocate(p);
-                    }
-                }
                 if (fc.getTile().isSunk()){
                     floodDeck.killCard(fc);
                 }
                 if (isLost()){
                     lose();
                 }
+                for (Player p : players){
+                    if (board.get(p.getPositionY()).get(p.getPositionX()).isSunk()){
+                        PopUp.RELOCATE.loadRelocate(p);
+                    }
+                }
+                if (isLost()){
+                    lose();
+                }
+
             }
         }
         TurnManager.endTurn();
@@ -324,8 +333,22 @@ public class BoardGame {
     }
 
     public void lose(){
+        BoardStateGraphicsInitializer.refreshDisplay();
+        ProgramStateManager.goToState(ProgramState.BOARD);
+        BoardStateGraphicsInitializer.refreshTiles();
+        ForbiddenIsland.refreshDisplay();
+        ForbiddenIsland.getPrimaryStage().setFullScreen(true);
+        Robot r = new Robot();
+        WritableImage im = r.getScreenCapture(null, new Rectangle2D(ForbiddenIsland.getPrimaryStage().getX(), ForbiddenIsland.getPrimaryStage().getY(), 1920, 1080));
+        ForbiddenIsland.getLose().setBoardPreview(im);
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         ProgramStateManager.goToState(ProgramState.LOSE);
         ForbiddenIsland.refreshDisplay();
+
     }
 
     public List<List<Tile>> getBoard(){

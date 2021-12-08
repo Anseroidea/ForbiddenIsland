@@ -41,7 +41,8 @@ public class DiscardPilePopUp extends NonDefaultPoppable implements Initializabl
             img.setFitHeight(180);
             img.setFitWidth(121);
             img.setPickOnBounds(true);
-            discardGrid.add(img, i % 5, i/5);
+            int index = cardList.size() - 1 - i;
+            discardGrid.add(img, index % 5, index/5);
             Tooltip tooltip = new Tooltip(cardList.get(i).getName());
             tooltip.setShowDelay(Duration.millis(100));
             Tooltip.install(img, tooltip);

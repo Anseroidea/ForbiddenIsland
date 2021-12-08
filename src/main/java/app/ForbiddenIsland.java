@@ -5,10 +5,12 @@ import graphics.BoardStateGraphicsInitializer;
 import graphics.Lose;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -36,6 +38,12 @@ ForbiddenIsland extends Application {
     public static void refreshDisplay() {
         primaryStage.getScene().setRoot(new AnchorPane());
         primaryStage.setScene(ProgramStateManager.getCurrentState().getScene());
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        primaryStage.setX(primaryScreenBounds.getMinX());
+        primaryStage.setY(primaryScreenBounds.getMinY());
+        primaryStage.setWidth(primaryScreenBounds.getWidth());
+        primaryStage.setHeight(primaryScreenBounds.getHeight());
+        primaryStage.show();
     }
 
     public static Stage getPrimaryStage() {
@@ -86,7 +94,6 @@ ForbiddenIsland extends Application {
         ProgramStateManager.goToState(ProgramState.MAINMENU);
         Scene s = new Scene(ProgramStateManager.getCurrentState().getPane(), 1920, 1080);
         primaryStage.setScene(s);
-        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 

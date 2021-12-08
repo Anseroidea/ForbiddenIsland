@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class FloodDeck{
     private Stack<FloodCard> activeCards;
@@ -32,7 +33,6 @@ public class FloodDeck{
         Collections.shuffle(discardedCards);
         activeCards.addAll(discardedCards);
         discardedCards.clear();
-        System.out.println(activeCards);
     }
 
     /* will pass the number of treasure cards to be
@@ -40,8 +40,10 @@ public class FloodDeck{
     after depleting them from activeCards */
     public List<FloodCard> draw(int floodCardsToBeDrawn) {
         List<FloodCard> drawn = new ArrayList<FloodCard>();
-        System.out.println(activeCards);
-        int maxSize = activeCards.size();
+        System.out.println("active: " + activeCards.stream().map(FloodCard::getName).collect(Collectors.toList()));;
+        System.out.println("discarded: " + discardedCards.stream().map(FloodCard::getName).collect(Collectors.toList()));
+        System.out.println("dead: " + deadCards.stream().map(FloodCard::getName).collect(Collectors.toList()));
+        int maxSize = activeCards.size() + discardedCards.size();
         for(int i = 0 ; i < Math.min(floodCardsToBeDrawn, maxSize); i++){
             if (activeCards.isEmpty()){
                 reset();

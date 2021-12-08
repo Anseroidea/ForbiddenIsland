@@ -178,13 +178,9 @@ public class TurnManager {
         return formattedStrings;
     }
 
-    public static boolean undoAction(){
-        if (actions > 0){
-            actionStrings.pop();
-            actions--;
-            return true;
-        } else {
-            return false;
+    public static void undoAction(){
+        if (actions > 0) {
+
         }
     }
 

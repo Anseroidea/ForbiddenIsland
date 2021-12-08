@@ -61,6 +61,7 @@ public class DrawPopUp implements Poppable, Initializable {
         cardInfoLabel1.setText(currentPlayer.getRole().getName() + " drew " + bg.getLastTwoCards().get(0).getName());
         cardInfoLabel2.setText(currentPlayer.getRole().getName() + " drew " + bg.getLastTwoCards().get(1).getName());
         refreshWaterLevel();
+        refreshDisplay();
     }
 
     public void refreshTiles(){
@@ -203,7 +204,6 @@ public class DrawPopUp implements Poppable, Initializable {
         while (cardsDrawn < cardsToDraw){
             drawNext();
             if (bg.isLost()){
-                System.out.println("help");
                 return;
             }
         }
