@@ -184,6 +184,7 @@ public class PlayerGraphics implements Initializable {
                                     if (TurnManager.addAction("G" + p.getRole().toNotation() + " " + card.getName())){
                                         currentPlayer.giveCard(p, card);
                                         refreshDisplay();
+                                        System.out.println(p.getDeck());
                                         if (p.getDeck().size() > 5){
                                             PopUp.DISCARD.loadDiscard(p);
                                         }

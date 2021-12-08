@@ -185,7 +185,7 @@ public enum PopUp {
     }
 
     public void loadDiscard(Player pl) {
-        if (this == DISCARDPILE) {
+        if (this == DISCARD) {
             DiscardPopUp controller1 = (DiscardPopUp) controller;
             controller1.initializePopUp(pl);
             Stage popup = new Stage();

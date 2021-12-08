@@ -269,7 +269,7 @@ public class TurnManager {
                     List<TreasureCard> deckList = new ArrayList<>(deck.getDiscardedStack());
                     int count = 0;
                     for (int i = deckList.size() - 1; i >= 0 && count < 4; i--) {
-                        if (deckList.get(i).getName().equalsIgnoreCase("Helicopter")){
+                        if (deckList.get(i).getName().equals(Treasure.IDToString(Integer.parseInt(s.substring(s.indexOf(" ") + 1))))){
                             currentPlayer.addCard(deckList.get(i));
                             deckList.remove(i);
                             count++;
