@@ -131,7 +131,7 @@ public class Player
             int cardsRemoved = 0;
             for (int i = deck.size() - 1; i >= 0 && cardsRemoved <= 3; i--){
                 if (deck.get(i).equals(treasureHELD.getCard())){
-                    removeCard(deck.get(i));
+                    discardCard(deck.get(i));
                     cardsRemoved++;
                 }
             }

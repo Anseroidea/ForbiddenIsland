@@ -250,7 +250,7 @@ public class BoardGame {
         currentPlayer.addCards(cardsDrawn);
         Collections.sort(currentPlayer.getDeck());
         if (currentPlayer.getDeck().size() > 5){
-            PopUp.DISCARD.load();
+            PopUp.DISCARD.loadDiscard(currentPlayer);
         }
         if (manualFlooding){
             PopUp.DRAW.load();

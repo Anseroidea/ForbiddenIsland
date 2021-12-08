@@ -216,6 +216,7 @@ public class TurnManager {
                     for (int i = deckList.size() - 1; i >= 0; i--) {
                         if (deckList.get(i).getName().equalsIgnoreCase("Sand Bag")){
                             destination.addCard(deckList.get(i));
+                            deckList.remove(i);
                             break;
                         }
                     }
@@ -242,14 +243,41 @@ public class TurnManager {
                     for (int i = deckList.size() - 1; i >= 0; i--) {
                         if (deckList.get(i).getName().equalsIgnoreCase("Helicopter")){
                             destination.addCard(deckList.get(i));
+                            deckList.remove(i);
                             break;
                         }
                     }
                     String moveStuff = s.substring(10);
+                    System.out.println(s);
                     String[] playerNames = moveStuff.substring(0, moveStuff.indexOf(" ")).split("");
+                    System.out.println(Arrays.toString(playerNames));
+                    String starting = moveStuff.substring(moveStuff.indexOf(" ") + 1);
+                    String coords = starting.substring(0, 6);
+                    String[] coords1 = coords.replace("(", "").replace(")", "").split(", ");
+                    System.out.println(coords);
+                    for (int i = 0; i < playerNames.length; i++){
+                        int finalI = i;
+                        Player playerToMove = ForbiddenIsland.getBoard().getPlayers().stream().filter(p -> p.getRole().toNotation().equals(playerNames[finalI])).findFirst().get();
+                        playerToMove.move(Integer.parseInt(coords1[0]), Integer.parseInt(coords1[1]));
+                    }
+                    deck.getDiscardedStack().clear();
+                    deck.getDiscardedStack().addAll(deckList);
                     break;
                 }
                 case "C": {//C [treasureId];
+                    TreasureDeck deck = ForbiddenIsland.getBoard().getTreasureDeck();
+                    List<TreasureCard> deckList = new ArrayList<>(deck.getDiscardedStack());
+                    int count = 0;
+                    for (int i = deckList.size() - 1; i >= 0 && count < 4; i--) {
+                        if (deckList.get(i).getName().equalsIgnoreCase("Helicopter")){
+                            currentPlayer.addCard(deckList.get(i));
+                            deckList.remove(i);
+                            count++;
+                        }
+                    }
+                    ForbiddenIsland.getBoard().getTreasures().get(Integer.parseInt(s.substring(s.indexOf(" ") + 1))).unclaim();
+                    deck.getDiscardedStack().clear();
+                    deck.getDiscardedStack().addAll(deckList);
                     break;
                 }
             }
@@ -272,5 +300,9 @@ public class TurnManager {
             }
         }
         return false;
+    }
+
+    public static Stack<Action> getTotalActionStrings() {
+        return totalActionStrings;
     }
 }

@@ -68,7 +68,8 @@ public class PlayerGraphics implements Initializable {
     }
 
     public void undo(MouseEvent mouseEvent) {
-        System.out.println("The player wants to undo!");
+        TurnManager.undoAction();
+        BoardStateGraphicsInitializer.refreshDisplay();
     }
 
 
@@ -292,12 +293,12 @@ public class PlayerGraphics implements Initializable {
                                                             }
                                                             if (playersSelected.size() >= 1){
                                                                 String people = "H" + currentPlayer.getRole().toNotation() + " (" + t.getPositionX() + ", " + t.getPositionY() + ") " ;
+                                                                String starting = " (" + playersSelected.get(0).getPositionX() + ", " + playersSelected.get(0).getPositionY() + ") ";
                                                                 for (Player pla : playersSelected){
                                                                     people += pla.getRole().toNotation();
                                                                     pla.move(t.getPositionX(), t.getPositionY());
-                                                                    people += "(" + pla.getPositionX() + ", " + pla.getPositionY() + ") ";
                                                                 }
-                                                                TurnManager.addNonAction(people);
+                                                                TurnManager.addNonAction(people + starting);
                                                                 currentPlayer.discardCard(tc);
                                                                 refreshDisplay();
                                                             }
@@ -425,7 +426,7 @@ public class PlayerGraphics implements Initializable {
         actionLog.setFont(ForbiddenIsland.getForbiddenIslandFont(28));
         actionStrings.setFont(ForbiddenIsland.getForbiddenIslandFont(18));
         undoButton.setFont(ForbiddenIsland.getForbiddenIslandFont(27));
-        undoButton.setVisible(false);
+        undoButton.setDisable(true);
         endTurn.setFont(ForbiddenIsland.getForbiddenIslandFont(27));
         specialCards.setFont(ForbiddenIsland.getForbiddenIslandFont(25));
     }
@@ -452,6 +453,11 @@ public class PlayerGraphics implements Initializable {
         refreshPlayers();
         refreshActions();
         refreshDiscardPiles();
+        if (TurnManager.getTotalActionStrings().size() == 0){
+            undoButton.setDisable(true);
+        } else {
+            undoButton.setDisable(false);
+        }
     }
 
     private void refreshDiscardPiles() {

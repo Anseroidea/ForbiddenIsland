@@ -103,12 +103,12 @@ public class UsePopUp extends NonDefaultPoppable implements Initializable {
                                                 }
                                                 if (playersSelected.size() >= 1) {
                                                     String people = "H" + p.getRole().toNotation() + " (" + t.getPositionX() + ", " + t.getPositionY() + ") " ;
+                                                    String starting = " (" + playersSelected.get(0).getPositionX() + ", " + playersSelected.get(0).getPositionY() + ") ";
                                                     for (Player pla : playersSelected){
                                                         people += pla.getRole().toNotation();
                                                         pla.move(t.getPositionX(), t.getPositionY());
-                                                        people += "(" + pla.getPositionX() + ", " + pla.getPositionY() + ") ";
                                                     }
-                                                    TurnManager.addNonAction(people);
+                                                    TurnManager.addNonAction(people + starting);
                                                     p.discardCard(tc);
                                                     BoardStateGraphicsInitializer.getPg().refreshDisplay();
                                                     close();

@@ -104,4 +104,8 @@ public class Treasure implements Comparable<Treasure> {
     public List<TreasureTile> getTreasureTiles(){
         return tiles;
     }
+
+    public void unclaim() {
+        isClaimed = false;
+    }
 }
