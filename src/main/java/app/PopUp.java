@@ -53,7 +53,7 @@ public enum PopUp {
     }
 
     public void load(){
-        if (this == HELICOPTER || this == RELOCATE){
+        if (this == HELICOPTER || this == RELOCATE || this == DISCARD){
             System.out.println(this.name() + " POPUP CANNOT BE LOADED FROM DEFAULT LOAD");
         } else {
             controller.initializePopUp();
@@ -181,6 +181,25 @@ public enum PopUp {
             popup.showAndWait();
         } else {
             System.out.println("NONDISCARDPILE POPUPS CANNOT BE LOADED FROM THIS METHOD");
+        }
+    }
+
+    public void loadDiscard(Player pl) {
+        if (this == DISCARDPILE) {
+            DiscardPopUp controller1 = (DiscardPopUp) controller;
+            controller1.initializePopUp(pl);
+            Stage popup = new Stage();
+            popup.setScene(new Scene(p));
+            popup.initModality(Modality.APPLICATION_MODAL);
+            popup.setResizable(false);
+            popup.setResizable(false);
+            popup.setOnCloseRequest(event -> {
+                event.consume();
+                controller1.close();
+            });
+            popup.showAndWait();
+        } else {
+            System.out.println("NONDISCARD POPUPS CANNOT BE LOADED FROM THIS METHOD");
         }
     }
 }

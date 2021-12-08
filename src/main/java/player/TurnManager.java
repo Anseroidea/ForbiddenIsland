@@ -3,14 +3,17 @@ package player;
 import app.ForbiddenIsland;
 import board.BoardGame;
 import board.Treasure;
+import card.FloodCard;
+import card.FloodDeck;
+import card.TreasureCard;
+import card.TreasureDeck;
 
 import java.util.*;
 
 public class TurnManager {
 
     private static int actions;
-    private static Stack<String> actionStrings = new Stack<>(); //notation [role first letter] [coords]
-    private static Stack<String> totalActionStrings = new Stack<>();
+    private static Stack<Action> totalActionStrings = new Stack<>();
     private static Player currentPlayer;
     private static Queue<Player> playerQueue = new LinkedList<>();
     private static Map<String, String> moveMap = new HashMap<>(){
@@ -42,38 +45,40 @@ public class TurnManager {
 
     public static void endTurn() {
         actions = 0;
-        actionStrings.clear();
         totalActionStrings.clear();
         currentPlayer = playerQueue.remove();
         playerQueue.add(currentPlayer);
     }
 
     public static void addNonAction(String s){
-        totalActionStrings.push(s);
+        totalActionStrings.push(new Action(s, false));
     }
 
     public static boolean addAction(String s){
         if (actions == 0){
-            actionStrings.push(s);
-            totalActionStrings.push(s);
+            totalActionStrings.push(new Action(s, true));
             actions++;
             return true;
         } else if (actions <= 3){
-            String lastAction = actionStrings.peek();
+            String lastAction = null;
+            List<Action> actionsList = new ArrayList<>(totalActionStrings);
+            for (int i = actionsList.size() - 1; i >= 0; i--){
+                if (actionsList.get(i).isCounts()){
+                    lastAction = actionsList.get(i).getAction();
+                    break;
+                }
+            }
             if (lastAction.startsWith("S") && currentPlayer.getRole().getName().equals("Engineer") && s.startsWith("S")) {
                 String shoreCoord = lastAction.substring(lastAction.indexOf("("), lastAction.indexOf("(") + 6);
                 String sShoreCoord = s.substring(s.indexOf("("), s.indexOf("(") + 6);
                 totalActionStrings.pop();
-                actionStrings.pop();
                 String finalAction = "E " + shoreCoord + ", " + sShoreCoord;
-                actionStrings.push(finalAction);
-                totalActionStrings.push(finalAction);
+                totalActionStrings.push(new Action(finalAction, true));
                 return true;
             } else if (actions == 3){
                 return false;
             } else {
-                totalActionStrings.push(s);
-                actionStrings.push(s);
+                totalActionStrings.push(new Action(s, true));
                 actions++;
                 return true;
             }
@@ -104,10 +109,10 @@ public class TurnManager {
     }
 
     public static List<String> toFormattedStrings(){
-        List<String> actions = new ArrayList<>(totalActionStrings);
+        List<Action> actions = new ArrayList<>(totalActionStrings);
         List<String> formattedStrings = new ArrayList<>();
-        for (String s : actions){
-            System.out.println(s);
+        for (Action ac : actions){
+            String s = ac.getAction();
             StringBuilder sb = new StringBuilder();
             String move = s.substring(0, 1);
             System.out.println(s);
@@ -148,21 +153,20 @@ public class TurnManager {
                 }
                 case "N": {
                     sb.append(Role.fromNotation(s.substring(1, 2)).getName()).append(" to ");
-                    System.out.println(Role.fromNotation("N"));
                     String coord1 = s.substring(s.lastIndexOf("("), s.lastIndexOf("(") + 6);
                     String[] coords1 = coord1.replace("(", "").replace(")", "").split(", ");
                     sb.append(ForbiddenIsland.getBoard().getBoard().get(Integer.parseInt(coords1[1])).get(Integer.parseInt(coords1[0])).getName());
                     formattedStrings.add(sb.toString());
                     break;
                 }
-                case "H": {//H [starting] [ending] [playernotations]
+                case "H": {//H [destination] [playernotations] [starting1] [starting2] [starting3...]
                     String playersMoved = s.substring(s.lastIndexOf(" ") + 1);
                     StringJoiner sj = new StringJoiner(", ");
                     for (int i = 0; i < playersMoved.length(); i++){
                         sj.add(Role.fromNotation(playersMoved.substring(i, i+1)).getName());
                     }
                     sb.append(sj).append(" to ");
-                    String coord1 = s.substring(s.indexOf("(", s.indexOf("(") + 1), s.indexOf("(", s.indexOf("(") + 1) + 6);
+                    String coord1 = s.substring(s.indexOf("("), s.indexOf("(") + 6);
                     String[] coords1 = coord1.replace("(", "").replace(")", "").split(", ");
                     sb.append(ForbiddenIsland.getBoard().getBoard().get(Integer.parseInt(coords1[1])).get(Integer.parseInt(coords1[0])).getName());
                     formattedStrings.add(sb.toString());
@@ -179,8 +183,80 @@ public class TurnManager {
     }
 
     public static void undoAction(){
-        if (actions > 0) {
-
+        if (totalActionStrings.size() > 0) {
+            Action lastAction = totalActionStrings.peek();
+            String s = lastAction.getAction();
+            String firstLetter = s.substring(0, 1);
+            switch (firstLetter){
+                case "M":
+                case "P": {
+                    String start = s.substring(s.indexOf("("), s.indexOf("(") + 6);
+                    String[] start1 = start.replace("(", "").replace(")", "").split(", ");
+                    currentPlayer.move(Integer.parseInt(start1[0]), Integer.parseInt(start1[1]));
+                    break;
+                }
+                case "E": {
+                    String coord1 = s.substring(s.indexOf("("), s.indexOf("(") + 6);
+                    String[] coords1 = coord1.replace("(", "").replace(")", "").split(", ");
+                    String coord2 = s.substring(s.lastIndexOf("("), s.lastIndexOf("(") + 6);
+                    String[] coords2 = coord2.replace("(", "").replace(")", "").split(", ");
+                    ForbiddenIsland.getBoard().getBoard().get(Integer.parseInt(coords1[1])).get(Integer.parseInt(coords1[0])).floodTile();
+                    ForbiddenIsland.getBoard().getBoard().get(Integer.parseInt(coords2[1])).get(Integer.parseInt(coords2[0])).floodTile();
+                    break;
+                }
+                case "G": {
+                    Player destination = ForbiddenIsland.getBoard().getPlayers().stream().filter(p -> p.getRole().equals(Role.fromNotation(s.substring(1, 2)))).findFirst().get();
+                    destination.giveCard(currentPlayer, s.substring(s.indexOf(" ") + 1));
+                    break;
+                }
+                case "B": {
+                    TreasureDeck deck = ForbiddenIsland.getBoard().getTreasureDeck();
+                    Player destination = ForbiddenIsland.getBoard().getPlayers().stream().filter(p -> p.getRole().equals(Role.fromNotation(s.substring(1, 2)))).findFirst().get();
+                    List<TreasureCard> deckList = new ArrayList<>(deck.getDiscardedStack());
+                    for (int i = deckList.size() - 1; i >= 0; i--) {
+                        if (deckList.get(i).getName().equalsIgnoreCase("Sand Bag")){
+                            destination.addCard(deckList.get(i));
+                            break;
+                        }
+                    }
+                    deck.getDiscardedStack().clear();
+                    deck.getDiscardedStack().addAll(deckList);
+                }
+                case "S": {
+                    String coord1 = s.substring(s.indexOf("("), s.indexOf("(") + 6);
+                    String[] coords1 = coord1.replace("(", "").replace(")", "").split(", ");
+                    ForbiddenIsland.getBoard().getBoard().get(Integer.parseInt(coords1[1])).get(Integer.parseInt(coords1[0])).floodTile();
+                    break;
+                }
+                case "N": {
+                    String coord1 = s.substring(s.indexOf("("), s.indexOf("(") + 6);
+                    String[] coords1 = coord1.replace("(", "").replace(")", "").split(", ");
+                    Player destination = ForbiddenIsland.getBoard().getPlayers().stream().filter(p -> p.getRole().equals(Role.fromNotation(s.substring(1, 2)))).findFirst().get();
+                    destination.move(Integer.parseInt(coords1[0]), Integer.parseInt(coords1[1]));
+                    break;
+                }
+                case "H": {//H[player] [destination] [playernotations] [starting1] [starting2] [starting3...]
+                    TreasureDeck deck = ForbiddenIsland.getBoard().getTreasureDeck();
+                    Player destination = ForbiddenIsland.getBoard().getPlayers().stream().filter(p -> p.getRole().equals(Role.fromNotation(s.substring(1, 2)))).findFirst().get();
+                    List<TreasureCard> deckList = new ArrayList<>(deck.getDiscardedStack());
+                    for (int i = deckList.size() - 1; i >= 0; i--) {
+                        if (deckList.get(i).getName().equalsIgnoreCase("Helicopter")){
+                            destination.addCard(deckList.get(i));
+                            break;
+                        }
+                    }
+                    String moveStuff = s.substring(10);
+                    String[] playerNames = moveStuff.substring(0, moveStuff.indexOf(" ")).split("");
+                    break;
+                }
+                case "C": {//C [treasureId];
+                    break;
+                }
+            }
+            if (lastAction.isCounts()){
+                actions--;
+            }
+            totalActionStrings.pop();
         }
     }
 
@@ -189,9 +265,9 @@ public class TurnManager {
     }
 
     public static boolean hasDoneSpecialAction(){
-        List<String> actions = new ArrayList<>(actionStrings);
-        for (String s : actions){
-            if (s.startsWith(currentPlayer.getRole().toNotation())){
+        List<Action> actions = new ArrayList<>(totalActionStrings);
+        for (Action s : actions){
+            if (s.getAction().startsWith(currentPlayer.getRole().toNotation())){
                 return true;
             }
         }

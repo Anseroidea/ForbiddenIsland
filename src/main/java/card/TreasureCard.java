@@ -50,4 +50,5 @@ public class TreasureCard extends Card implements Comparable<TreasureCard> {
     public Treasure getTreasure(){
         return null;
     }
+
 }

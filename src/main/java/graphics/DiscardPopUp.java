@@ -18,7 +18,7 @@ import player.TurnManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class DiscardPopUp implements Poppable, Initializable {
+public class DiscardPopUp extends NonDefaultPoppable implements Initializable {
     public Label topLabel;
     public HBox cardBox;
     public Button useButton;
@@ -29,7 +29,7 @@ public class DiscardPopUp implements Poppable, Initializable {
     private TreasureCard selectedCard;
     private Player curr;
 
-    public void initializePopUp(){
+    public void initializePopUp(Player p){
         selection.setVisible(false);
         discardButton.setDisable(true);
         useButton.setDisable(true);
@@ -48,7 +48,7 @@ public class DiscardPopUp implements Poppable, Initializable {
                 cardSelected = false;
             }
         });
-        curr = TurnManager.getCurrentPlayer();
+        curr = p;
         topLabel.setText(TurnManager.getCurrentPlayer().getRole().getName() + " has " + curr.getDeck().size() + " cards! Discard or use them until you have 5 left.");
         cardBox.getChildren().clear();
         for(TreasureCard tc : curr.getDeck()){

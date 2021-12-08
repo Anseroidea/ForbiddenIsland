@@ -184,7 +184,7 @@ public class PlayerGraphics implements Initializable {
                                         currentPlayer.giveCard(p, card);
                                         refreshDisplay();
                                         if (p.getDeck().size() > 5){
-                                            PopUp.DISCARD.load();
+                                            PopUp.DISCARD.loadDiscard(p);
                                         }
                                     }
                                 });
@@ -291,10 +291,11 @@ public class PlayerGraphics implements Initializable {
                                                                 playersSelected = new ArrayList<>(playersHere);
                                                             }
                                                             if (playersSelected.size() >= 1){
-                                                                String people = "H (" + x + ", " + y + ") (" + t.getPositionX() + ", " + t.getPositionY() + ") " ;
+                                                                String people = "H" + currentPlayer.getRole().toNotation() + " (" + t.getPositionX() + ", " + t.getPositionY() + ") " ;
                                                                 for (Player pla : playersSelected){
                                                                     people += pla.getRole().toNotation();
                                                                     pla.move(t.getPositionX(), t.getPositionY());
+                                                                    people += "(" + pla.getPositionX() + ", " + pla.getPositionY() + ") ";
                                                                 }
                                                                 TurnManager.addNonAction(people);
                                                                 currentPlayer.discardCard(tc);
@@ -325,7 +326,7 @@ public class PlayerGraphics implements Initializable {
                                     ImageView c = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
                                     StackPane pa = new StackPane(c);
                                     pa.setOnMouseClicked((event2) -> {
-                                        TurnManager.addNonAction("B (" + x1 + ", " + y1 + ")");
+                                        TurnManager.addNonAction("B" + currentPlayer.getRole().toNotation() + " (" + x1 + ", " + y1 + ")");
                                         currentPlayer.discardCard(tc);
                                         t.shoreUp();
                                         BoardStateGraphicsInitializer.refreshDisplay();

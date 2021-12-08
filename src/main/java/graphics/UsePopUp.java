@@ -102,10 +102,11 @@ public class UsePopUp extends NonDefaultPoppable implements Initializable {
                                                     playersSelected = new ArrayList<>(playersHere);
                                                 }
                                                 if (playersSelected.size() >= 1) {
-                                                    String people = "H (" + x + ", " + y + ") (" + t.getPositionX() + ", " + t.getPositionY() + ") ";
-                                                    for (Player pla : playersSelected) {
+                                                    String people = "H" + p.getRole().toNotation() + " (" + t.getPositionX() + ", " + t.getPositionY() + ") " ;
+                                                    for (Player pla : playersSelected){
                                                         people += pla.getRole().toNotation();
                                                         pla.move(t.getPositionX(), t.getPositionY());
+                                                        people += "(" + pla.getPositionX() + ", " + pla.getPositionY() + ") ";
                                                     }
                                                     TurnManager.addNonAction(people);
                                                     p.discardCard(tc);
@@ -212,7 +213,7 @@ public class UsePopUp extends NonDefaultPoppable implements Initializable {
                         ImageView c = new ImageView(SwingFXUtils.toFXImage(selectIcon, null));
                         StackPane pa = new StackPane(c);
                         pa.setOnMouseClicked((event2) -> {
-                            TurnManager.addNonAction("B (" + x1 + ", " + y1 + ")");
+                            TurnManager.addNonAction("B" + p.getRole().toNotation() + " (" + x1 + ", " + y1 + ")");
                             p.discardCard(tc);
                             t.shoreUp();
                             close();

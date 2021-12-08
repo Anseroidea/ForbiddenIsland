@@ -86,6 +86,21 @@ public class Player
         p.addCard(t);
     }
 
+    public void giveCard(Player p, String t){
+        TreasureCard tc = null;
+        for (TreasureCard tca : deck){
+            if (tca.getName().equalsIgnoreCase(t)){
+                tc = tca;
+            }
+        }
+        if (tc == null){
+            System.out.println("Card not found!");
+        } else {
+            this.removeCard(tc);
+            p.addCard(tc);
+        }
+    }
+
     public int getPositionX(){
         return positionX;
     }
