@@ -59,7 +59,8 @@ public class Treasure implements Comparable<Treasure> {
     }
 
     @Override
-    public int compareTo(Treasure o) {
+    public int compareTo(Treasure o)
+    {
         return id - o.id;
     }
 
